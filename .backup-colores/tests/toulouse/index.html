@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Toulouse-Piéron - Escencial Consultora</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            background-image: url('../../img/fondo-escencial.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 50%, rgba(11, 74, 110, 0.2) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(2, 15, 39, 0.3) 0%, transparent 50%);
+            pointer-events: none;
+            animation: backgroundPulse 15s ease-in-out infinite;
+        }
+
+        @keyframes backgroundPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            padding: 40px;
+            position: relative;
+            animation: fadeInUp 0.6s ease-out;
+            backdrop-filter: blur(10px);
+        }
+        
+        .logo {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            height: 64px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+        
+        h1 {
+            color: #020f27;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            text-align: center;
+            background: linear-gradient(135deg, #020f27 0%, #0b4a6e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 32px;
+            font-size: 16px;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 15px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #0b4a6e;
+            box-shadow: 0 0 0 4px rgba(11, 74, 110, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input:hover {
+            border-color: #0b4a6e;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 16px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(2, 15, 39, 0.5);
+        }
+        
+        .btn:active:not(:disabled) {
+            transform: translateY(0);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #020f27 0%, #0b4a6e 100%);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+        }
+        
+        .info-box {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 24px;
+            border-left: 4px solid #0b4a6e;
+        }
+        
+        .info-box p {
+            color: #374151;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .instructions {
+            background: linear-gradient(135deg, #fff9e6 0%, #fff4d4 100%);
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            color: #374151;
+            border-left: 4px solid #ffc107;
+        }
+
+        .instructions strong {
+            color: #020f27;
+        }
+        
+        .reference {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 24px;
+            background: linear-gradient(135deg, #fff9e6 0%, #fffbf0 100%);
+            border-radius: 12px;
+            border: 2px solid #ffc107;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .reference h3 {
+            color: #020f27;
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        
+        .reference-symbols {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .ref-symbol {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #ffc107;
+            transition: transform 0.2s ease;
+        }
+
+        .ref-symbol:hover {
+            transform: scale(1.1);
+        }
+
+        .ref-symbol span {
+            font-size: 12px;
+            color: #666;
+            font-weight: 600;
+        }
+        
+        .stats-panel {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 24px;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            padding: 16px;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 12px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+
+        .stat:hover {
+            border-color: #0b4a6e;
+            transform: translateY(-2px);
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 13px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            color: #020f27;
+            font-size: 28px;
+            font-weight: 800;
+        }
+        
+        .grid-container {
+            max-height: 700px;
+            overflow-y: auto;
+            border: 3px solid #0b4a6e;
+            border-radius: 16px;
+            padding: 20px;
+            background: white;
+            box-shadow: inset 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .grid-container::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        .grid-container::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .grid-container::-webkit-scrollbar-thumb {
+            background: #0b4a6e;
+            border-radius: 10px;
+        }
+
+        .grid-container::-webkit-scrollbar-thumb:hover {
+            background: #020f27;
+        }
+        
+        .symbol-grid {
+            display: grid;
+            grid-template-columns: repeat(40, 1fr);
+            gap: 4px;
+            margin-bottom: 24px;
+            transition: filter 0.3s ease;
+        }
+
+        .symbol-grid.blurred {
+            filter: blur(8px);
+            pointer-events: none;
+        }
+        
+        .symbol {
+            aspect-ratio: 1;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 2px solid #e5e7eb;
+            background: white;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4px;
+        }
+
+        .symbol:hover:not(.selected) {
+            background: #f1f5f9;
+            border-color: #0b4a6e;
+            transform: scale(1.1);
+        }
+        
+        .symbol.selected {
+            background: linear-gradient(135deg, #020f27 0%, #0b4a6e 100%);
+            border-color: #020f27;
+            transform: scale(1.05);
+        }
+
+        .symbol.selected svg {
+            filter: brightness(0) invert(1);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .controls .btn {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .results-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+            padding: 32px;
+            border-radius: 16px;
+            border: 2px solid #0b4a6e;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .results-card h2 {
+            color: #020f27;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        .results-card p {
+            color: #666;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #020f27 !important;
+            border: 2px solid #020f27;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: #020f27;
+            color: white !important;
+            box-shadow: 0 6px 15px rgba(2, 15, 39, 0.2);
+        }
+
+        .btn-back svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* ═══════════════════════════════════════════════════ */
+        /* RESPONSIVE BREAKPOINTS                              */
+        /* ═══════════════════════════════════════════════════ */
+
+        @media (max-width: 1200px) {
+            .symbol-grid {
+                grid-template-columns: repeat(30, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+                padding-top: 60px;
+            }
+
+            .container {
+                padding: 20px 16px;
+                border-radius: 16px;
+            }
+
+            h1 {
+                font-size: 22px;
+                padding-right: 50px;
+            }
+
+            .subtitle {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+
+            .logo {
+                height: 40px;
+                top: 16px;
+                right: 16px;
+            }
+
+            .symbol-grid {
+                grid-template-columns: repeat(15, 1fr);
+                gap: 3px;
+            }
+
+            .symbol {
+                border-radius: 4px;
+                border-width: 1.5px;
+                padding: 2px;
+            }
+
+            .stats-panel {
+                gap: 8px;
+                margin-bottom: 16px;
+            }
+
+            .stat {
+                min-width: 0;
+                padding: 10px 8px;
+                border-radius: 10px;
+            }
+
+            .stat-label {
+                font-size: 10px;
+                margin-bottom: 4px;
+                letter-spacing: 0.3px;
+            }
+
+            .stat-value {
+                font-size: 22px;
+            }
+
+            .grid-container {
+                max-height: 450px;
+                padding: 10px;
+                border-radius: 12px;
+                border-width: 2px;
+            }
+
+            .reference {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .reference h3 {
+                font-size: 16px;
+                margin-bottom: 12px;
+            }
+
+            .ref-symbol {
+                padding: 8px;
+            }
+
+            .controls {
+                gap: 10px;
+                margin-bottom: 16px;
+            }
+
+            .controls .btn {
+                min-width: unset;
+                padding: 14px 20px;
+                font-size: 15px;
+            }
+
+            .btn-back {
+                padding: 8px 14px;
+                font-size: 12px;
+                top: 12px;
+                left: 12px;
+            }
+
+            .instructions {
+                padding: 16px;
+                margin-bottom: 20px;
+            }
+
+            .instructions p {
+                font-size: 14px;
+            }
+
+            .form-group {
+                margin-bottom: 16px;
+            }
+
+            .results-card {
+                padding: 24px 16px;
+            }
+
+            .results-card h2 {
+                font-size: 22px;
+            }
+
+            .results-card p {
+                font-size: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+                padding-top: 56px;
+            }
+
+            .container {
+                padding: 16px 12px;
+                border-radius: 14px;
+            }
+
+            h1 {
+                font-size: 19px;
+                padding-right: 44px;
+            }
+
+            .subtitle {
+                font-size: 13px;
+                margin-bottom: 16px;
+            }
+
+            .logo {
+                height: 34px;
+                top: 14px;
+                right: 12px;
+            }
+
+            .symbol-grid {
+                grid-template-columns: repeat(10, 1fr);
+                gap: 3px;
+            }
+
+            .symbol {
+                border-radius: 3px;
+                padding: 2px;
+                min-width: 0;
+                /* Ensure minimum touch target */
+                min-height: 28px;
+            }
+
+            .stats-panel {
+                flex-direction: row;
+                gap: 6px;
+                margin-bottom: 12px;
+            }
+
+            .stat {
+                padding: 8px 6px;
+                border-radius: 8px;
+            }
+
+            .stat-label {
+                font-size: 9px;
+                letter-spacing: 0.2px;
+            }
+
+            .stat-value {
+                font-size: 18px;
+            }
+
+            .grid-container {
+                max-height: 400px;
+                padding: 8px;
+                border-radius: 10px;
+            }
+
+            .reference {
+                padding: 12px;
+                margin-bottom: 12px;
+            }
+
+            .reference h3 {
+                font-size: 14px;
+                margin-bottom: 10px;
+            }
+
+            .reference-symbols {
+                gap: 12px;
+            }
+
+            .ref-symbol {
+                padding: 6px;
+            }
+
+            .controls .btn {
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+
+            .btn-back {
+                padding: 6px 12px;
+                font-size: 11px;
+                top: 8px;
+                left: 8px;
+            }
+
+            .instructions p {
+                font-size: 13px;
+                line-height: 1.5;
+            }
+
+            input {
+                padding: 12px 14px;
+                font-size: 16px; /* Prevents iOS zoom */
+            }
+
+            .btn {
+                padding: 14px 20px;
+                font-size: 16px;
+            }
+
+            .info-box {
+                padding: 14px;
+            }
+
+            .info-box p {
+                font-size: 13px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .symbol-grid {
+                grid-template-columns: repeat(8, 1fr);
+                gap: 2px;
+            }
+
+            .stat-value {
+                font-size: 16px;
+            }
+
+            .stat-label {
+                font-size: 8px;
+            }
+
+            h1 {
+                font-size: 17px;
+            }
+        }
+
+        @media print {
+            .btn-back { display: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <a href="../../usuarios.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Volver a Usuarios
+    </a>
+
+    <div class="container">
+        <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+        
+        <!-- PANTALLA 1: REGISTRO -->
+        <div id="registrationScreen">
+            <h1>Test de Toulouse-Piéron</h1>
+            <p class="subtitle">Evaluación de capacidad de concentración y atención sostenida</p>
+            
+            <div class="form-group">
+                <label for="userName">Nombre</label>
+                <input type="text" id="userName" placeholder="Ingresa tu nombre">
+            </div>
+            
+            <div class="form-group">
+                <label for="userLastName">Apellido</label>
+                <input type="text" id="userLastName" placeholder="Ingresa tu apellido">
+            </div>
+            
+            <div class="form-group">
+                <label for="userEmail">Correo Electrónico</label>
+                <input type="email" id="userEmail" placeholder="tucorreo@ejemplo.com">
+            </div>
+            
+            <button class="btn btn-primary" id="registerBtn">Continuar</button>
+            
+            <div class="info-box">
+                <p><strong>Importante:</strong> Este test requiere concentración total. Asegúrate de estar en un lugar tranquilo y sin interrupciones antes de comenzar.</p>
+            </div>
+        </div>
+        
+        <!-- PANTALLA 2: INSTRUCCIONES -->
+        <div id="instructionsScreen" class="hidden">
+            <h1>Instrucciones del Test</h1>
+            <p class="subtitle">Lee atentamente antes de comenzar</p>
+            
+            <div class="instructions">
+                <p><strong>Objetivo:</strong> Deberás marcar TODOS los cuadrados que contengan uno de los 2 símbolos de referencia que aparecerán arriba.</p>
+                <p style="margin-top: 12px;"><strong>Tiempo:</strong> Tendrás 10 minutos para completar el test.</p>
+                <p style="margin-top: 12px;"><strong>Cómo marcar:</strong> Haz clic en cada cuadrado que contenga el símbolo de referencia. Puedes desmarcar haciendo clic nuevamente.</p>
+                <p style="margin-top: 12px;"><strong>Consejo:</strong> Trabaja de forma sistemática (fila por fila) para no omitir cuadrados.</p>
+            </div>
+            
+            <button class="btn btn-primary" id="beginTestBtn">Comenzar Test</button>
+        </div>
+        
+        <!-- PANTALLA 3: TEST -->
+        <div id="testScreen" class="hidden">
+            <h1>Test de Toulouse-Piéron</h1>
+            
+            <div class="reference">
+                <h3>🎯 Marca SOLO estos cuadrados:</h3>
+                <div class="reference-symbols" id="referenceSymbols"></div>
+            </div>
+            
+            <div class="stats-panel">
+                <div class="stat">
+                    <div class="stat-label">Tiempo</div>
+                    <div class="stat-value" id="timer">10:00</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Marcados</div>
+                    <div class="stat-value" id="marked">0</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Procesados</div>
+                    <div class="stat-value" id="processed">0</div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="btn btn-primary" id="startBtn">▶ Iniciar Cronómetro</button>
+                <button class="btn btn-danger hidden" id="finishBtn">⏹ Finalizar Test</button>
+            </div>
+            
+            <div class="grid-container">
+                <div class="symbol-grid blurred" id="symbolGrid"></div>
+            </div>
+        </div>
+        
+        <!-- PANTALLA 4: RESULTADOS -->
+        <div id="resultsScreen" class="hidden">
+            <h1>✅ Test Completado</h1>
+            
+            <div class="results-card">
+                <h2>¡Gracias!</h2>
+                <p style="margin-top: 16px; color: #10b981; font-weight: 600;">
+                    ✓ Tus resultados han sido registrados exitosamente
+                </p>
+            </div>
+            
+            <button class="btn btn-primary" id="restartBtn">Realizar Nuevo Test</button>
+        </div>
+    </div>
+
+    <script>
+        (function guard() {
+            const logged = localStorage.getItem('sessionLoggedIn') === '1';
+            if (!logged) {
+                window.location.href = '../../evaluaciones.html';
+            }
+        })();
+        // ══════════════════════════════════════════════════════════
+        // CONFIGURACIÓN
+        // ══════════════════════════════════════════════════════════
+        const GOOGLE_SHEET_URL = 'https://script.google.com/macros/s/AKfycbzwwwMCtvHtNxv6fNEIfLaVsMxMgSi4FHkvOn4so-rHRL2_BoP1XtjNffA5YMNc3NT2/exec';
+
+        // ══════════════════════════════════════════════════════════
+        // VARIABLES GLOBALES
+        // ══════════════════════════════════════════════════════════
+        let userName = '';
+        let userLastName = '';
+        let userEmail = '';
+        let symbols = [];
+        let selectedCount = 0;
+        let testActive = false;
+        let timeLeft = 600;
+        let timer = null;
+        let targetSymbols = [];
+        let startTime = null;
+        let respuestasNumericas = [];
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: CREAR CUADRADO SVG
+        // ══════════════════════════════════════════════════════════
+        function createSymbol(type) {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 50 50");
+            svg.style.width = "100%";
+            svg.style.height = "100%";
+
+            const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+            rect.setAttribute("x", "10");
+            rect.setAttribute("y", "10");
+            rect.setAttribute("width", "30");
+            rect.setAttribute("height", "30");
+            rect.setAttribute("fill", "none");
+            rect.setAttribute("stroke", "#020f27");
+            rect.setAttribute("stroke-width", "2");
+
+            const positions = [
+                [10, 10], [40, 10], [40, 40], [10, 40],
+                [25, 10], [40, 25], [25, 40], [10, 25]
+            ];
+
+            const hasLine = (type >> 0) % 2;
+            const hasLine1 = (type >> 1) % 2;
+            const hasLine2 = (type >> 2) % 2;
+
+            svg.appendChild(rect);
+
+            if (hasLine) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", positions[0][0]);
+                line.setAttribute("y1", positions[0][1]);
+                line.setAttribute("x2", positions[0][0]);
+                line.setAttribute("y2", positions[0][1] - 6);
+                line.setAttribute("stroke", "#020f27");
+                line.setAttribute("stroke-width", "2.5");
+                svg.appendChild(line);
+            }
+
+            if (hasLine1) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", positions[1][0]);
+                line.setAttribute("y1", positions[1][1]);
+                line.setAttribute("x2", positions[1][0]);
+                line.setAttribute("y2", positions[1][1] - 6);
+                line.setAttribute("stroke", "#020f27");
+                line.setAttribute("stroke-width", "2.5");
+                svg.appendChild(line);
+            }
+
+            if (hasLine2) {
+                const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+                line.setAttribute("x1", positions[2][0]);
+                line.setAttribute("y1", positions[2][1]);
+                line.setAttribute("x2", positions[2][0]);
+                line.setAttribute("y2", positions[2][1] + 6);
+                line.setAttribute("stroke", "#020f27");
+                line.setAttribute("stroke-width", "2.5");
+                svg.appendChild(line);
+            }
+
+            return svg;
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: REGISTRO
+        // ══════════════════════════════════════════════════════════
+        function register() {
+            userName = document.getElementById('userName').value.trim();
+            userLastName = document.getElementById('userLastName').value.trim();
+            userEmail = document.getElementById('userEmail').value.trim();
+            
+            if (!userName || !userLastName || !userEmail) {
+                alert('⚠️ Por favor, completa todos los campos');
+                return;
+            }
+            
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(userEmail)) {
+                alert('⚠️ Por favor, ingresa un correo electrónico válido');
+                return;
+            }
+            
+            console.log('✅ Registro exitoso:', userName, userLastName, userEmail);
+            
+            document.getElementById('registrationScreen').classList.add('hidden');
+            document.getElementById('instructionsScreen').classList.remove('hidden');
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: INICIAR TEST (GENERAR CUADRADOS)
+        // ══════════════════════════════════════════════════════════
+        function startTest() {
+            console.log('🎯 Generando cuadrados...');
+            
+            document.getElementById('instructionsScreen').classList.add('hidden');
+            document.getElementById('testScreen').classList.remove('hidden');
+            
+            targetSymbols = [
+                Math.floor(Math.random() * 8),
+                Math.floor(Math.random() * 8)
+            ];
+            
+            while (targetSymbols[0] === targetSymbols[1]) {
+                targetSymbols[1] = Math.floor(Math.random() * 8);
+            }
+            
+            const refContainer = document.getElementById('referenceSymbols');
+            refContainer.innerHTML = '';
+            
+            targetSymbols.forEach(type => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'ref-symbol';
+                
+                const svg = createSymbol(type);
+                svg.setAttribute('width', '46');
+                svg.setAttribute('height', '46');
+                
+                wrapper.appendChild(svg);
+                refContainer.appendChild(wrapper);
+            });
+            
+            symbols = [];
+            respuestasNumericas = [];
+            const grid = document.getElementById('symbolGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < 1600; i++) {
+                const type = Math.floor(Math.random() * 8);
+                const isTarget = targetSymbols.includes(type);
+                
+                const symbolDiv = document.createElement('div');
+                symbolDiv.className = 'symbol';
+                symbolDiv.appendChild(createSymbol(type));
+                symbolDiv.dataset.type = type;
+                symbolDiv.dataset.isTarget = isTarget;
+                symbolDiv.dataset.selected = 'false';
+                symbolDiv.dataset.index = i;
+                
+                symbolDiv.addEventListener('click', function() {
+                    selectSymbol(this);
+                });
+                
+                grid.appendChild(symbolDiv);
+                symbols.push(symbolDiv);
+            }
+            
+            console.log('✅ Test inicializado con', symbols.length, 'cuadrados');
+            console.log('🎯 Cuadrados objetivo:', targetSymbols);
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: SELECCIONAR CUADRADO
+        // ══════════════════════════════════════════════════════════
+        function selectSymbol(symbolDiv) {
+            if (!testActive) {
+                return;
+            }
+            
+            const index = parseInt(symbolDiv.dataset.index);
+            
+            if (symbolDiv.dataset.selected === 'true') {
+                symbolDiv.dataset.selected = 'false';
+                symbolDiv.classList.remove('selected');
+                selectedCount--;
+                
+                const idx = respuestasNumericas.indexOf(index);
+                if (idx > -1) {
+                    respuestasNumericas.splice(idx, 1);
+                }
+            } else {
+                symbolDiv.dataset.selected = 'true';
+                symbolDiv.classList.add('selected');
+                selectedCount++;
+                respuestasNumericas.push(index);
+            }
+            
+            document.getElementById('marked').textContent = selectedCount;
+            
+            if (respuestasNumericas.length > 0) {
+                const maxIndex = Math.max(...respuestasNumericas);
+                document.getElementById('processed').textContent = maxIndex + 1;
+            }
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: INICIAR CRONÓMETRO
+        // ══════════════════════════════════════════════════════════
+        function startTestTimer() {
+            console.log('🚀 Iniciando cronómetro...');
+            testActive = true;
+            timeLeft = 600;
+            selectedCount = 0;
+            respuestasNumericas = [];
+            startTime = Date.now();
+            
+            // QUITAR EFECTO BORROSO
+            document.getElementById('symbolGrid').classList.remove('blurred');
+            
+            // OCULTAR BOTÓN INICIAR Y MOSTRAR BOTÓN FINALIZAR
+            const startBtn = document.getElementById('startBtn');
+            const finishBtn = document.getElementById('finishBtn');
+            
+            startBtn.classList.add('hidden');
+            finishBtn.classList.remove('hidden');
+            
+            document.getElementById('marked').textContent = '0';
+            document.getElementById('processed').textContent = '0';
+            
+            console.log('✅ Test iniciado - Botón finalizar visible');
+            
+            timer = setInterval(() => {
+                timeLeft--;
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    console.log('⏰ Tiempo terminado');
+                    endTest('timeout');
+                }
+            }, 1000);
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: FINALIZAR TEST MANUALMENTE
+        // ══════════════════════════════════════════════════════════
+        function endTestManually() {
+            console.log('🔴 Botón Finalizar presionado');
+            
+            if (!testActive) {
+                alert('⚠️ Debes iniciar el test primero.');
+                return;
+            }
+
+            const timeUsed = 600 - timeLeft;
+            const minutesUsed = Math.floor(timeUsed / 60);
+            const secondsUsed = timeUsed % 60;
+            
+            const confirmMsg = `¿Finalizar el test?\n\nTiempo: ${minutesUsed}:${secondsUsed.toString().padStart(2, '0')}\nMarcados: ${selectedCount}`;
+            
+            if (confirm(confirmMsg)) {
+                console.log('✅ Usuario confirmó - Finalizando...');
+                endTest('manual');
+            } else {
+                console.log('❌ Usuario canceló');
+            }
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: FINALIZAR TEST Y ENVIAR DATOS
+        // ══════════════════════════════════════════════════════════
+        function endTest(reason = 'manual') {
+            console.log('🏁 FINALIZANDO TEST - Razón:', reason);
+            
+            clearInterval(timer);
+            testActive = false;
+            
+            if (reason === 'timeout') {
+                alert('⏰ ¡Tiempo terminado! Enviando resultados...');
+            }
+            
+            // ORDENAR RESPUESTAS
+            respuestasNumericas.sort((a, b) => a - b);
+            const respuestasString = respuestasNumericas.join(',');
+
+            // =========================================================
+            // LÓGICA PARA OBTENER EL EMAIL DEL ADMIN
+            // =========================================================
+            let emailParaEnviar = userEmail;
+
+            const adminData = localStorage.getItem('adminData'); 
+            if (adminData) {
+                try {
+                    const admin = JSON.parse(adminData);
+                    if (admin && admin.email) {
+                        console.log("✅ Admin encontrado:", admin.nombre || 'Sin nombre', "| Email:", admin.email);
+                        emailParaEnviar = admin.email;
+                    } else {
+                        console.log("⚠️ adminData existe pero no tiene email válido");
+                    }
+                } catch (e) {
+                    console.error("❌ Error al parsear adminData:", e);
+                }
+            } else {
+                console.log("ℹ️ No hay admin logueado, se usará el email del participante");
+            }
+
+            // Obtener fecha y hora actual en formato argentino
+            const now = new Date();
+            const fechaHora = now.toLocaleString('es-AR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+            
+            console.log('📊 Datos a enviar:');
+            console.log('- Fecha:', fechaHora);
+            console.log('- Nombre:', userName);
+            console.log('- Apellido:', userLastName);
+            console.log('- Email (Admin):', emailParaEnviar);
+            console.log('- Respuestas:', respuestasNumericas.length, 'marcadas');
+            console.log('- String respuestas:', respuestasString.substring(0, 100) + '...');
+
+            // CONSTRUIR URL
+            const params = new URLSearchParams({
+                accion: 'guardar',
+                fecha: fechaHora,
+                nombre: userName,
+                apellido: userLastName,
+                correo: emailParaEnviar,
+                respuestas: respuestasString
+            });
+            
+            const url = `${GOOGLE_SHEET_URL}?${params.toString()}`;
+
+            console.log('📤 Enviando a Google Sheets...');
+            console.log('🔗 URL:', url.substring(0, 150) + '...');
+
+
+// ✅ CORRECCIÓN: fetch no-cors en lugar de window.open
+            fetch(url, { method: 'GET', mode: 'no-cors' })
+                .then(() => console.log('✅ Datos enviados correctamente'))
+                .catch(err => console.error('❌ Error al enviar datos:', err));
+
+            // MOSTRAR PANTALLA DE RESULTADOS
+            console.log('📱 Mostrando pantalla de resultados...');
+            showResults();
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: MOSTRAR RESULTADOS
+        // ══════════════════════════════════════════════════════════
+        function showResults() {
+            console.log('🎉 Mostrando resultados');
+            document.getElementById('testScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FUNCIÓN: REINICIAR TEST
+        // ══════════════════════════════════════════════════════════
+        function restartTest() {
+            console.log('🔄 Reiniciando test...');
+            clearInterval(timer);
+            testActive = false;
+            timeLeft = 600;
+            selectedCount = 0;
+            userName = '';
+            userLastName = '';
+            userEmail = '';
+            respuestasNumericas = [];
+            
+            document.getElementById('timer').textContent = '10:00';
+            document.getElementById('startBtn').classList.remove('hidden');
+            document.getElementById('finishBtn').classList.add('hidden');
+            document.getElementById('symbolGrid').classList.add('blurred');
+            document.getElementById('userName').value = '';
+            document.getElementById('userLastName').value = '';
+            document.getElementById('userEmail').value = '';
+            
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('registrationScreen').classList.remove('hidden');
+            
+            console.log('✅ Test reiniciado');
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // INICIALIZACIÓN
+        // ══════════════════════════════════════════════════════════
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 Inicializando aplicación...');
+
+            const registerBtn = document.getElementById('registerBtn');
+            const beginTestBtn = document.getElementById('beginTestBtn');
+            const startBtn = document.getElementById('startBtn');
+            const finishBtn = document.getElementById('finishBtn');
+            const restartBtn = document.getElementById('restartBtn');
+
+            if (registerBtn) {
+                registerBtn.addEventListener('click', register);
+                console.log('✅ Botón registro conectado');
+            }
+
+            if (beginTestBtn) {
+                beginTestBtn.addEventListener('click', startTest);
+                console.log('✅ Botón comenzar test conectado');
+            }
+
+            if (startBtn) {
+                startBtn.addEventListener('click', startTestTimer);
+                console.log('✅ Botón iniciar cronómetro conectado');
+            }
+
+            if (finishBtn) {
+                finishBtn.addEventListener('click', function() {
+                    console.log('🔴 Click en botón FINALIZAR detectado');
+                    endTestManually();
+                });
+                console.log('✅ Botón finalizar test conectado');
+            }
+
+            if (restartBtn) {
+                restartBtn.addEventListener('click', restartTest);
+                console.log('✅ Botón reiniciar conectado');
+            }
+
+            console.log('✅ Aplicación inicializada correctamente');
+        });
+    </script>
+</body>
+</html>

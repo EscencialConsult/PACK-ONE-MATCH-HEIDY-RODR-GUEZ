@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Dominó D-48 - Escencial Consultora</title>
+    <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+
+    <style>
+        /* === RESET Y BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background-color: #0b4a6e;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                linear-gradient(rgba(88, 19, 31, 0.85), rgba(58, 6, 21, 0.85)),
+                url('../../img/fondo-escencial.jpg');
+            background-size: 100% 100%;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 1;
+            filter: none;
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            padding: 28px;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .logo {
+            position: absolute;
+            top: -35px;
+            right: 16px;
+            left: auto;
+            transform: translateX(0);
+            background-image: url('../../img/logo-escencial.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 150px;
+            height: 150px;
+            z-index: 100;
+            transition: all 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        .container.modo-test .logo {
+            right: 50%;
+            transform: translateX(50%);
+            top: -35px;
+            width: 180px;
+            height: 180px;
+        }
+
+        @media (max-width: 768px) {
+            .logo {
+                width: 100px;
+                height: 100px;
+                top: -30px;
+                right: 10px;
+            }
+
+            .container.modo-test .logo {
+                width: 120px;
+                height: 120px;
+                top: -60px;
+                right: 50%;
+                transform: translateX(50%);
+            }
+
+            .container {
+                margin-top: 60px;
+                padding: 24px 16px;
+            }
+        }
+
+        .container.modo-resultados .logo {
+            left: 0;
+            right: auto;
+            transform: none;
+            top: -25px;
+            background-position: left bottom;
+            width: 200px;
+        }
+
+        .container.modo-resultados {
+            margin-top: 25px !important;
+            transition: margin-top 0.6s ease;
+        }
+
+        .screen {
+            display: none;
+        }
+
+        .screen.active {
+            display: block;
+        }
+
+        h1 {
+            color: #020f27;
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: bold;
+            padding-right: 20px;
+        }
+
+        h2 {
+            color: #020f27;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .intro-content {
+            line-height: 1.8;
+            color: #374151;
+        }
+
+        .intro-box {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+
+        .intro-box h3 {
+            color: #020f27;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .intro-box ul {
+            margin-left: 20px;
+        }
+
+        .intro-box li {
+            margin: 10px 0;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            color: white;
+            background-color: #020f27;
+        }
+
+        .btn:hover:not(:disabled) {
+            opacity: 0.9;
+        }
+
+        .btn-secondary {
+            background: #6b7280;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-success {
+            background: #10b981;
+            color: white;
+            flex: 1;
+        }
+
+        .header {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+        }
+
+        .timer {
+            background: #f5f5f5;
+            padding: 8px 18px;
+            border-radius: 8px;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #020f27;
+            border: 2px solid #0b4a6e;
+            float: right;
+        }
+
+        .domino-sequence {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+
+        .domino-sequence .domino,
+        .domino-sequence .question-mark {
+            animation: dominoSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+        }
+
+        .domino-sequence .domino:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .domino-sequence .domino:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .domino-sequence .domino:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .domino-sequence .domino:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .domino-sequence .question-mark {
+            animation-delay: 0.5s;
+        }
+
+        @keyframes dominoSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px) scale(0.8);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .domino {
+            width: 55px;
+            height: 110px;
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 3px solid #020f27;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            box-shadow:
+                0 8px 16px rgba(2, 15, 39, 0.15),
+                inset 0 2px 4px rgba(255, 255, 255, 0.8),
+                inset 0 -2px 4px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+
+        .domino::before {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            right: 2px;
+            height: 30%;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.6), transparent);
+            border-radius: 8px 8px 0 0;
+            pointer-events: none;
+        }
+
+        .domino:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                0 12px 20px rgba(2, 15, 39, 0.2),
+                inset 0 2px 4px rgba(255, 255, 255, 0.8);
+        }
+
+        .domino-small {
+            width: 48px;
+            height: 96px;
+        }
+
+        .domino-half {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .domino-half:first-child {
+            border-bottom: 3px solid #020f27;
+            border-radius: 7px 7px 0 0;
+        }
+
+        .domino-half:last-child {
+            border-radius: 0 0 7px 7px;
+        }
+
+        .dot {
+            width: 11px;
+            height: 11px;
+            background: radial-gradient(circle at 30% 30%, #1a2744, #020f27);
+            border-radius: 50%;
+            position: absolute;
+            box-shadow:
+                0 2px 4px rgba(2, 15, 39, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            animation: dotAppear 0.4s ease-out backwards;
+        }
+
+        @keyframes dotAppear {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .domino-small .dot {
+            width: 9px;
+            height: 9px;
+        }
+
+        .question-mark {
+            font-size: 2.5em;
+            color: #0b4a6e;
+            font-weight: bold;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1);
+            }
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+            gap: 18px;
+            margin: 25px 0;
+        }
+
+        .option-btn {
+            padding: 14px;
+            border: 3px solid #e5e7eb;
+            border-radius: 12px;
+            background: linear-gradient(145deg, #ffffff, #fafafa);
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .option-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(11, 74, 110, 0.1);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s ease, height 0.6s ease;
+        }
+
+        .option-btn:hover {
+            border-color: #0b4a6e;
+            background: linear-gradient(145deg, #f9fafb, #ffffff);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 16px rgba(11, 74, 110, 0.15);
+        }
+
+        .option-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .option-btn.selected {
+            border-color: #020f27;
+            background: linear-gradient(145deg, #e8f4f8, #d5ebf5);
+            transform: scale(1.08);
+            box-shadow:
+                0 0 0 4px rgba(2, 15, 39, 0.1),
+                0 8px 20px rgba(2, 15, 39, 0.25);
+            animation: selectPulse 0.6s ease-out;
+        }
+
+        @keyframes selectPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+
+            100% {
+                transform: scale(1.08);
+            }
+        }
+
+        /* Animación de aparición de opciones */
+        .option-btn {
+            animation: optionFadeIn 0.5s ease-out backwards;
+        }
+
+        .option-btn:nth-child(1) {
+            animation-delay: 0.6s;
+        }
+
+        .option-btn:nth-child(2) {
+            animation-delay: 0.7s;
+        }
+
+        .option-btn:nth-child(3) {
+            animation-delay: 0.8s;
+        }
+
+        .option-btn:nth-child(4) {
+            animation-delay: 0.9s;
+        }
+
+        .option-btn:nth-child(5) {
+            animation-delay: 1.0s;
+        }
+
+        .option-btn:nth-child(6) {
+            animation-delay: 1.1s;
+        }
+
+        @keyframes optionFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 16px;
+            margin: 25px 0;
+        }
+
+        .result-card {
+            padding: 24px;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .result-card.green {
+            background: #d1fae5;
+        }
+
+        .result-card.blue {
+            background: #dbeafe;
+        }
+
+        .result-card.purple {
+            background: #f0f4ff;
+        }
+
+        .result-number {
+            font-size: 2.8em;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 12px 16px;
+            font-size: 1em;
+            border: 2px solid #0b4a6e;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #020f27;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../../usuarios.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+        </svg>
+        Volver a Usuarios
+    </a>
+
+    <style>
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #020f27 !important;
+            border: 2px solid #020f27;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: #020f27;
+            color: white !important;
+            box-shadow: 0 6px 15px rgba(2, 15, 39, 0.2);
+        }
+
+        .btn-back svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Ocultar en móviles muy pequeños si molesta, o ajustar */
+        @media (max-width: 480px) {
+            .btn-back {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        @media print {
+            .btn-back {
+                display: none !important;
+            }
+        }
+    </style>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <h3 style="color: #020f27; margin-bottom: 10px;">Guardando resultados...</h3>
+            <p style="color: #666;">Por favor espera un momento</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="logo"></div>
+
+        <!-- PANTALLA DE REGISTRO -->
+        <div id="registration-screen" class="screen active" style="max-width: 500px; margin: 0 auto;">
+            <h1>Test de Dominó D-48</h1>
+            <p class="subtitle">Test de Inteligencia No Verbal - Edgar Anstey</p>
+
+            <div style="margin-top: 32px;">
+                <div class="form-group">
+                    <label>👤 Nombre</label>
+                    <input type="text" id="user-name-register" class="email-input" placeholder="Ingresa tu nombre"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>👤 Apellido</label>
+                    <input type="text" id="user-lastname-register" class="email-input" placeholder="Ingresa tu apellido"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>✉️ Email</label>
+                    <input type="email" id="user-email-register" class="email-input" placeholder="tu.email@ejemplo.com"
+                        required>
+                </div>
+
+                <button class="btn" onclick="showInstructions()">Continuar</button>
+
+                <div class="intro-box" style="margin-top: 24px;">
+                    <p><strong>Información:</strong> Escencial Consultora<br>
+                        Catamarca 873 - San Miguel de Tucumán<br>
+                        Tel: +54 9 3816 22-1565</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE INSTRUCCIONES -->
+        <div id="intro-screen" class="screen">
+            <h1>Test de Dominó D-48</h1>
+            <p class="subtitle" id="participant-name"></p>
+            <div class="intro-content">
+                <p style="font-size: 1em; margin-bottom: 20px; color: #374151;">
+                    El Test de Dominó D-48 es una prueba de <strong>inteligencia no verbal</strong> que evalúa tu
+                    capacidad de razonamiento lógico, abstracción y comprensión de patrones.
+                </p>
+                <div class="intro-box">
+                    <h3>Instrucciones:</h3>
+                    <ul>
+                        <li>Se te presentarán 48 secuencias de fichas de dominó</li>
+                        <li>Cada secuencia tiene un patrón lógico que debes descubrir</li>
+                        <li>Debes seleccionar qué ficha completa correctamente la secuencia</li>
+                        <li>Tienes <strong>30 minutos</strong> para completar las 48 preguntas</li>
+                        <li>La dificultad aumenta progresivamente</li>
+                        <li>Puedes navegar entre preguntas con los botones "Anterior" y "Siguiente"</li>
+                    </ul>
+                </div>
+                <button class="btn" onclick="startTest()">Comenzar Test</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DEL TEST -->
+        <div id="test-screen" class="screen">
+            <div style="padding-right: 10px; margin-bottom: 20px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="question-info">
+                        <span id="question-number">Pregunta 1 de 48</span>
+                    </div>
+                    <div class="timer" id="timer">30:00</div>
+                </div>
+                <h2 style="margin-top: 20px;">¿Qué ficha continúa la secuencia?</h2>
+            </div>
+
+            <div class="domino-sequence" id="sequence-container"></div>
+            <h3 style="margin-top: 30px; color: #374151; font-weight: 600;">Selecciona tu respuesta:</h3>
+            <div class="options-grid" id="options-container"></div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prev-btn" onclick="prevQuestion()">Anterior</button>
+                <button class="btn" id="next-btn" onclick="nextQuestion()">Siguiente</button>
+                <button class="btn btn-success" id="finish-btn" onclick="finishTest()" style="display: none;">Finalizar
+                    Test</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE RESULTADOS -->
+        <div id="results-screen" class="screen">
+            <h1>✅ Test Completado</h1>
+
+            <div class="intro-box" style="text-align: center;">
+                <h2 style="margin-bottom: 12px;">¡Gracias!</h2>
+                <p style="color: #059669; font-weight: 600;">✓ Tus resultados han sido registrados exitosamente</p>
+            </div>
+            <button class="btn" onclick="restartTest()">Realizar Nuevo Test</button>
+
+            <!-- Elementos ocultos: se conservan para no alterar el cálculo ni el envío de datos -->
+            <div style="display: none;" aria-hidden="true">
+                <p class="subtitle" id="result-user-info"></p>
+                <div class="result-number" id="correct-count">0</div>
+                <div class="result-number" id="percentile-score">0</div>
+                <strong id="level-description">-</strong>
+                <strong id="saved-name"></strong>
+                <strong id="saved-email"></strong>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function guard() {
+            const logged = localStorage.getItem('sessionLoggedIn') === '1';
+            if (!logged) {
+                // ajusta el path según tu estructura
+                window.location.href = '../../evaluaciones.html'; // o donde esté tu login/panel
+            }
+        })();
+        // === CONFIGURACIÓN ===
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzBjDmwMnnorozFXzX8towBMk1KZJw1uiivmoqK1QoqHmHS_W3jAoBJpWem3r_VSOTb/exec';
+
+        // === EJEMPLOS DE PRÁCTICA (NO SE CUENTAN) ===
+        const practiceProblems = [
+            {
+                sequence: [[1, 1], [2, 2], [3, 3]],
+                answer: [4, 4],
+                options: [[4, 4], [3, 4], [4, 3], [5, 5], [3, 3], [2, 2]],
+                explanation: "Cada ficha aumenta en 1 tanto arriba como abajo. La secuencia es: 1-1, 2-2, 3-3, entonces sigue 4-4."
+            },
+            {
+                sequence: [[6, 0], [5, 1], [4, 2]],
+                answer: [3, 3],
+                options: [[3, 3], [2, 4], [4, 2], [3, 4], [2, 3], [4, 3]],
+                explanation: "La parte superior disminuye en 1 (6→5→4→3) y la inferior aumenta en 1 (0→1→2→3). Por lo tanto, la respuesta es 3-3."
+            }
+        ];
+
+        // === LISTA COMPLETA DE LOS 48 PROBLEMAS REALES ===
+        const problems = [
+            // P1
+            { sequence: [[1, 2], [2, 3], [3, 4], [4, 5]], answer: [5, 6], options: [[5, 6], [4, 6], [5, 5], [6, 6], [4, 5], [6, 0]] },
+            // P2
+            { sequence: [[6, 6], [5, 5], [4, 4], [3, 3]], answer: [2, 2], options: [[2, 2], [3, 2], [1, 1], [2, 3], [3, 3], [1, 2]] },
+            // P3
+            { sequence: [[1, 1], [2, 2], [3, 3], [4, 4]], answer: [5, 5], options: [[5, 5], [4, 5], [5, 4], [6, 6], [4, 6], [5, 6]] },
+            // P4
+            { sequence: [[0, 6], [1, 5], [2, 4], [3, 3]], answer: [4, 2], options: [[4, 2], [5, 1], [4, 3], [3, 4], [2, 5], [5, 2]] },
+            // P5
+            { sequence: [[0, 4], [2, 2], [4, 0], [6, 5]], answer: [1, 3], options: [[1, 3], [3, 1], [2, 6], [1, 4], [0, 2], [2, 5]] },
+            // P6
+            { sequence: [[0, 0], [1, 0], [2, 0], [3, 0]], answer: [4, 0], options: [[4, 0], [5, 0], [3, 1], [4, 1], [0, 5], [0, 6]] },
+            // P7
+            { sequence: [[6, 5], [5, 4], [4, 3], [3, 2]], answer: [2, 1], options: [[2, 1], [1, 0], [2, 0], [3, 1], [1, 2], [3, 0]] },
+            // P8
+            { sequence: [[0, 1], [1, 2], [2, 3], [3, 4]], answer: [4, 5], options: [[4, 5], [5, 6], [4, 6], [3, 5], [5, 4], [6, 5]] },
+            // P9
+            { sequence: [[0, 6], [6, 1], [1, 5], [5, 2]], answer: [2, 4], options: [[2, 4], [4, 3], [3, 2], [4, 5], [5, 3], [3, 1]] },
+            // P10
+            { sequence: [[0, 3], [1, 4], [2, 5], [3, 6]], answer: [4, 0], options: [[4, 0], [5, 1], [4, 1], [5, 0], [0, 5], [1, 6]] },
+            // P11
+            { sequence: [[1, 3], [2, 4], [3, 5], [4, 6]], answer: [5, 0], options: [[5, 0], [6, 1], [5, 1], [0, 6], [6, 0], [0, 1]] },
+            // P12
+            { sequence: [[1, 4], [2, 5], [3, 6], [4, 0]], answer: [5, 1], options: [[5, 1], [6, 2], [5, 2], [0, 6], [6, 1], [0, 2]] },
+            // P13
+            { sequence: [[0, 1], [0, 2], [1, 1], [1, 2]], answer: [2, 1], options: [[2, 1], [2, 2], [0, 3], [1, 3], [3, 1], [3, 2]] },
+            // P14
+            { sequence: [[0, 0], [0, 1], [1, 1], [1, 2]], answer: [2, 2], options: [[2, 2], [2, 3], [0, 3], [1, 3], [3, 2], [3, 3]] },
+            // P15
+            { sequence: [[0, 1], [1, 0], [1, 2], [2, 1]], answer: [2, 3], options: [[2, 3], [3, 2], [3, 4], [4, 3], [0, 2], [2, 0]] },
+            // P16
+            { sequence: [[1, 2], [1, 3], [2, 3], [2, 4]], answer: [3, 4], options: [[3, 4], [3, 5], [4, 5], [4, 6], [5, 6], [0, 3]] },
+            // P17
+            { sequence: [[0, 2], [0, 3], [1, 3], [1, 4]], answer: [2, 4], options: [[2, 4], [2, 5], [3, 5], [3, 6], [4, 6], [0, 4]] },
+            // P18
+            { sequence: [[0, 4], [0, 5], [1, 5], [1, 6]], answer: [2, 6], options: [[2, 6], [2, 0], [3, 0], [3, 1], [4, 1], [0, 6]] },
+            // P19
+            { sequence: [[1, 6], [6, 2], [2, 5], [5, 3]], answer: [3, 4], options: [[3, 4], [4, 0], [0, 4], [4, 5], [5, 0], [0, 5]] },
+            // P20
+            { sequence: [[0, 0], [1, 1], [2, 2], [3, 3]], answer: [4, 4], options: [[4, 4], [5, 5], [6, 6], [0, 1], [1, 0], [4, 5]] },
+            // P21
+            { sequence: [[6, 6], [5, 6], [5, 5], [4, 5]], answer: [4, 4], options: [[4, 4], [3, 4], [3, 3], [2, 3], [2, 2], [4, 3]] },
+            // P22
+            { sequence: [[0, 1], [2, 3], [4, 5], [6, 0]], answer: [1, 2], options: [[1, 2], [3, 4], [5, 6], [0, 2], [2, 0], [6, 1]] },
+            // P23
+            { sequence: [[0, 0], [1, 2], [2, 4], [3, 6]], answer: [4, 1], options: [[4, 1], [5, 3], [6, 5], [4, 2], [5, 2], [6, 1]] },
+            // P24
+            { sequence: [[6, 6], [5, 4], [4, 2], [3, 0]], answer: [2, 5], options: [[2, 5], [1, 3], [0, 1], [2, 4], [1, 4], [0, 3]] },
+            // P25
+            { sequence: [[0, 0], [1, 3], [2, 6], [3, 2]], answer: [4, 5], options: [[4, 5], [5, 1], [6, 4], [4, 6], [5, 0], [6, 1]] },
+            // P26
+            { sequence: [[0, 1], [3, 0], [6, 5], [2, 4]], answer: [5, 3], options: [[5, 3], [1, 2], [4, 1], [0, 6], [3, 2], [6, 0]] },
+            // P27
+            { sequence: [[0, 0], [0, 1], [1, 3], [3, 6]], answer: [6, 2], options: [[6, 2], [2, 5], [5, 1], [0, 4], [4, 0], [1, 5]] },
+            // P28
+            { sequence: [[0, 0], [0, 2], [2, 6], [6, 5]], answer: [5, 1], options: [[5, 1], [1, 4], [4, 0], [0, 3], [3, 6], [6, 2]] },
+            // P29
+            { sequence: [[0, 0], [1, 0], [2, 1], [3, 3]], answer: [4, 6], options: [[4, 6], [5, 2], [6, 5], [4, 5], [5, 4], [6, 3]] },
+            // P30
+            { sequence: [[0, 0], [1, 2], [3, 5], [6, 3]], answer: [2, 0], options: [[2, 0], [5, 6], [4, 1], [0, 4], [1, 3], [3, 0]] },
+            // P31
+            { sequence: [[0, 0], [2, 0], [4, 1], [0, 3]], answer: [2, 6], options: [[2, 6], [4, 5], [6, 4], [0, 2], [1, 4], [3, 5]] },
+            // P32
+            { sequence: [[0, 0], [3, 0], [6, 1], [2, 3]], answer: [5, 6], options: [[5, 6], [1, 2], [4, 5], [0, 5], [3, 4], [6, 3]] },
+            // P33
+            { sequence: [[0, 1], [2, 3], [4, 5], [6, 1]], answer: [0, 3], options: [[0, 3], [2, 5], [4, 0], [6, 2], [1, 4], [3, 6]] },
+            // P34
+            { sequence: [[0, 0], [1, 2], [3, 4], [5, 6]], answer: [1, 1], options: [[1, 1], [2, 2], [3, 3], [4, 4], [5, 5], [6, 6]] },
+            // P35
+            { sequence: [[0, 1], [1, 3], [3, 5], [5, 1]], answer: [1, 3], options: [[1, 3], [3, 5], [5, 1], [0, 2], [2, 4], [4, 6]] },
+            // P36
+            { sequence: [[0, 0], [0, 1], [1, 2], [3, 0]], answer: [4, 1], options: [[4, 1], [5, 2], [6, 3], [0, 2], [1, 3], [2, 4]] },
+            // P37
+            { sequence: [[0, 0], [1, 1], [2, 3], [4, 6]], answer: [0, 3], options: [[0, 3], [1, 4], [2, 5], [3, 6], [4, 0], [5, 1]] },
+            // P38
+            { sequence: [[0, 0], [1, 2], [2, 5], [4, 3]], answer: [6, 1], options: [[6, 1], [0, 4], [1, 6], [3, 0], [5, 2], [6, 4]] },
+            // P39
+            { sequence: [[0, 0], [2, 1], [4, 3], [0, 6]], answer: [2, 2], options: [[2, 2], [4, 4], [6, 6], [1, 3], [3, 5], [5, 1]] },
+            // P40
+            { sequence: [[0, 0], [3, 1], [6, 3], [2, 6]], answer: [5, 2], options: [[5, 2], [1, 5], [4, 1], [0, 4], [3, 0], [6, 3]] },
+            // P41
+            { sequence: [[0, 0], [0, 1], [2, 0], [1, 3]], answer: [3, 2], options: [[3, 2], [5, 1], [4, 0], [0, 4], [2, 6], [6, 5]] },
+            // P42
+            { sequence: [[0, 0], [1, 2], [0, 4], [2, 6]], answer: [1, 1], options: [[1, 1], [3, 3], [5, 5], [0, 3], [2, 5], [4, 0]] },
+            // P43
+            { sequence: [[0, 0], [0, 2], [1, 4], [3, 0]], answer: [5, 2], options: [[5, 2], [1, 6], [4, 5], [0, 1], [2, 3], [6, 4]] },
+            // P44
+            { sequence: [[0, 0], [1, 3], [3, 6], [6, 4]], answer: [2, 1], options: [[2, 1], [5, 3], [1, 5], [4, 0], [0, 2], [3, 5]] },
+            // P45
+            { sequence: [[0, 0], [1, 2], [3, 5], [6, 0]], answer: [2, 4], options: [[2, 4], [5, 3], [1, 6], [4, 2], [0, 1], [3, 0]] },
+            // P46
+            { sequence: [[0, 0], [0, 3], [1, 6], [4, 2]], answer: [0, 5], options: [[0, 5], [3, 1], [6, 4], [2, 0], [5, 3], [1, 6]] },
+            // P47
+            { sequence: [[0, 0], [1, 4], [3, 2], [6, 1]], answer: [5, 6], options: [[5, 6], [4, 3], [2, 5], [0, 2], [3, 4], [1, 0]] },
+            // P48
+            { sequence: [[0, 0], [2, 4], [4, 1], [1, 5]], answer: [5, 0], options: [[5, 0], [3, 6], [6, 3], [0, 6], [2, 1], [4, 3]] }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+        let timeLeft = 1800; // 30 minutos
+        let timerInterval;
+        let shuffledOptions = {};
+        let userName = '';
+        let userLastName = '';
+        let userEmail = '';
+        let isPracticeMode = true; // Control del modo práctica
+        let currentPracticeQuestion = 0; // Pregunta actual en modo práctica
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function createDomino(top, bottom, isSmall = false) {
+            const domino = document.createElement('div');
+            domino.className = isSmall ? 'domino domino-small' : 'domino';
+
+            const topHalf = document.createElement('div');
+            topHalf.className = 'domino-half';
+            topHalf.appendChild(createDots(top));
+
+            const bottomHalf = document.createElement('div');
+            bottomHalf.className = 'domino-half';
+            bottomHalf.appendChild(createDots(bottom));
+
+            domino.appendChild(topHalf);
+            domino.appendChild(bottomHalf);
+            return domino;
+        }
+
+        function createDots(number) {
+            const container = document.createElement('div');
+            container.style.position = 'relative';
+            container.style.width = '100%';
+            container.style.height = '100%';
+
+            const positions = {
+                0: [],
+                1: [[50, 50]],
+                2: [[25, 25], [75, 75]],
+                3: [[25, 25], [50, 50], [75, 75]],
+                4: [[25, 25], [75, 25], [25, 75], [75, 75]],
+                5: [[25, 25], [75, 25], [50, 50], [25, 75], [75, 75]],
+                6: [[25, 25], [75, 25], [25, 50], [75, 50], [25, 75], [75, 75]]
+            };
+
+            const dots = positions[number] || [];
+            dots.forEach(([left, top]) => {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.style.left = left + '%';
+                dot.style.top = top + '%';
+                dot.style.transform = 'translate(-50%, -50%)';
+                container.appendChild(dot);
+            });
+
+            return container;
+        }
+
+        function renderQuestion() {
+            const problem = problems[currentQuestion];
+
+            if (!shuffledOptions[currentQuestion]) {
+                shuffledOptions[currentQuestion] = shuffleArray(problem.options);
+            }
+
+            const sequenceContainer = document.getElementById('sequence-container');
+            sequenceContainer.innerHTML = '';
+
+            problem.sequence.forEach(domino => {
+                sequenceContainer.appendChild(createDomino(domino[0], domino[1]));
+            });
+
+            const questionMark = document.createElement('div');
+            questionMark.className = 'question-mark';
+            questionMark.textContent = '?';
+            sequenceContainer.appendChild(questionMark);
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            shuffledOptions[currentQuestion].forEach((option) => {
+                const optionBtn = document.createElement('div');
+                optionBtn.className = 'option-btn';
+
+                if (answers[currentQuestion] &&
+                    answers[currentQuestion][0] === option[0] &&
+                    answers[currentQuestion][1] === option[1]) {
+                    optionBtn.classList.add('selected');
+                }
+
+                optionBtn.onclick = () => selectAnswer(option);
+                optionBtn.appendChild(createDomino(option[0], option[1], true));
+                optionsContainer.appendChild(optionBtn);
+            });
+
+            document.getElementById('question-number').textContent = `Pregunta ${currentQuestion + 1} de ${problems.length}`;
+
+            document.getElementById('prev-btn').disabled = currentQuestion === 0;
+
+            if (currentQuestion === problems.length - 1) {
+                document.getElementById('next-btn').style.display = 'none';
+                document.getElementById('finish-btn').style.display = 'block';
+            } else {
+                document.getElementById('next-btn').style.display = 'block';
+                document.getElementById('finish-btn').style.display = 'none';
+            }
+        }
+
+        function selectAnswer(answer) {
+            answers[currentQuestion] = answer;
+            renderQuestion();
+        }
+
+        // === FUNCIONES PARA MODO PRÁCTICA ===
+        function renderPracticeQuestion() {
+            const problem = practiceProblems[currentPracticeQuestion];
+
+            // Mezclar opciones solo la primera vez
+            if (!shuffledOptions['practice_' + currentPracticeQuestion]) {
+                shuffledOptions['practice_' + currentPracticeQuestion] = shuffleArray(problem.options);
+            }
+
+            // Mostrar secuencia
+            const sequenceContainer = document.getElementById('sequence-container');
+            sequenceContainer.innerHTML = '';
+
+            problem.sequence.forEach(domino => {
+                sequenceContainer.appendChild(createDomino(domino[0], domino[1]));
+            });
+
+            const questionMark = document.createElement('div');
+            questionMark.className = 'question-mark';
+            questionMark.textContent = '?';
+            sequenceContainer.appendChild(questionMark);
+
+            // Mostrar opciones
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            shuffledOptions['practice_' + currentPracticeQuestion].forEach((option) => {
+                const optionBtn = document.createElement('div');
+                optionBtn.className = 'option-btn';
+                optionBtn.onclick = () => checkPracticeAnswer(option, problem.answer, problem.explanation);
+                optionBtn.appendChild(createDomino(option[0], option[1], true));
+                optionsContainer.appendChild(optionBtn);
+            });
+
+            // Actualizar controles
+            document.getElementById('question-number').textContent =
+                `Ejemplo de Práctica ${currentPracticeQuestion + 1} de ${practiceProblems.length}`;
+            document.getElementById('timer').textContent = 'PRÁCTICA';
+            document.getElementById('timer').style.background = '#10b981';
+            document.getElementById('timer').style.color = 'white';
+
+            document.getElementById('prev-btn').style.display = 'none';
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'none';
+        }
+
+        function checkPracticeAnswer(selected, correct, explanation) {
+            const isCorrect = selected[0] === correct[0] && selected[1] === correct[1];
+
+            if (isCorrect) {
+                // Mostrar mensaje de éxito
+                const message = document.createElement('div');
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 40px;
+                    border-radius: 16px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    text-align: center;
+                    max-width: 500px;
+                    animation: slideIn 0.5s ease-out;
+                `;
+
+                message.innerHTML = `
+                    <div style="font-size: 4em; margin-bottom: 20px;">✅</div>
+                    <h2 style="color: #10b981; margin-bottom: 15px; font-size: 24px;">¡Correcto!</h2>
+                    <p style="color: #374151; line-height: 1.6; margin-bottom: 25px;">${explanation}</p>
+                    <button onclick="nextPractice()" class="btn">
+                        ${currentPracticeQuestion < practiceProblems.length - 1 ? 'Siguiente Ejemplo' : 'Comenzar Test Real'}
+                    </button>
+                `;
+
+                document.body.appendChild(message);
+            } else {
+                // Mostrar mensaje de error
+                const message = document.createElement('div');
+                message.style.cssText = `
+                    position: fixed;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    background: white;
+                    padding: 40px;
+                    border-radius: 16px;
+                    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                    z-index: 10000;
+                    text-align: center;
+                    max-width: 500px;
+                `;
+
+                message.innerHTML = `
+                    <div style="font-size: 4em; margin-bottom: 20px;">❌</div>
+                    <h2 style="color: #ef4444; margin-bottom: 15px; font-size: 24px;">No es correcta</h2>
+                    <p style="color: #374151; line-height: 1.6; margin-bottom: 25px;">${explanation}</p>
+                    <button onclick="document.querySelector('[style*=\\'z-index: 10000\\']').remove()" class="btn">
+                        Intentar de Nuevo
+                    </button>
+                `;
+
+                document.body.appendChild(message);
+            }
+        }
+
+        function nextPractice() {
+            // Remover mensaje
+            document.querySelectorAll('[style*="z-index: 10000"]').forEach(el => el.remove());
+
+            currentPracticeQuestion++;
+
+            if (currentPracticeQuestion < practiceProblems.length) {
+                renderPracticeQuestion();
+            } else {
+                // Terminar práctica, iniciar test real
+                startRealTest();
+            }
+        }
+
+        function startRealTest() {
+            isPracticeMode = false;
+            currentQuestion = 0;
+            answers = {};
+            shuffledOptions = {};
+
+            // Iniciar temporizador
+            timerInterval = setInterval(updateTimer, 1000);
+
+            // Restaurar estilo del timer
+            document.getElementById('timer').style.background = '#f5f5f5';
+            document.getElementById('timer').style.color = '#020f27';
+
+            // Mostrar pregunta 1
+            renderQuestion();
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < problems.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer').textContent =
+                `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                finishTest();
+            } else {
+                timeLeft--;
+            }
+        }
+
+        function showInstructions() {
+            userName = document.getElementById('user-name-register').value.trim();
+            userLastName = document.getElementById('user-lastname-register').value.trim();
+            userEmail = document.getElementById('user-email-register').value.trim();
+
+            if (!userName || !userLastName || !userEmail) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+
+            if (!userEmail.includes('@')) {
+                alert('Por favor ingresa un email válido');
+                return;
+            }
+
+            document.getElementById('registration-screen').classList.remove('active');
+            document.getElementById('intro-screen').classList.add('active');
+            document.getElementById('participant-name').textContent = 'Participante: ' + userName + ' ' + userLastName;
+        }
+
+        function startTest() {
+            answers = {};
+            currentQuestion = 0;
+            currentPracticeQuestion = 0;
+            isPracticeMode = true;
+            timeLeft = 1800;
+            shuffledOptions = {};
+
+            document.querySelector('.container').classList.add('modo-test');
+
+            document.getElementById('intro-screen').classList.remove('active');
+            document.getElementById('test-screen').classList.add('active');
+
+            // Iniciar con los ejemplos de práctica
+            renderPracticeQuestion();
+        }
+
+        async function finishTest() {
+            clearInterval(timerInterval);
+
+            const container = document.querySelector('.container');
+            container.classList.remove('modo-test');
+            container.classList.add('modo-resultados');
+
+            let correct = 0;
+            problems.forEach((problem, index) => {
+                const userAnswer = answers[index];
+                if (userAnswer &&
+                    userAnswer[0] === problem.answer[0] &&
+                    userAnswer[1] === problem.answer[1]) {
+                    correct++;
+                }
+            });
+
+            let percentile;
+            let levelDescription;
+
+            if (correct >= 44) { percentile = 99; levelDescription = "SUPERIOR"; }
+            else if (correct >= 40) { percentile = 95; levelDescription = "SUPERIOR"; }
+            else if (correct >= 37) { percentile = 90; levelDescription = "SUPERIOR AL TÉRMINO MEDIO"; }
+            else if (correct >= 33) { percentile = 75; levelDescription = "SUPERIOR AL TÉRMINO MEDIO"; }
+            else if (correct >= 28) { percentile = 60; levelDescription = "SUPERIOR AL TÉRMINO MEDIO"; }
+            else if (correct >= 23) { percentile = 50; levelDescription = "TÉRMINO MEDIO"; }
+            else if (correct >= 18) { percentile = 40; levelDescription = "TÉRMINO MEDIO"; }
+            else if (correct >= 14) { percentile = 25; levelDescription = "INFERIOR AL TÉRMINO MEDIO"; }
+            else if (correct >= 10) { percentile = 10; levelDescription = "INFERIOR AL TÉRMINO MEDIO"; }
+            else if (correct >= 6) { percentile = 5; levelDescription = "DEFICIENTE"; }
+            else { percentile = 1; levelDescription = "DEFICIENTE"; }
+
+            document.getElementById('correct-count').textContent = correct;
+            document.getElementById('percentile-score').textContent = percentile;
+            document.getElementById('level-description').textContent = levelDescription;
+
+            document.getElementById('result-user-info').innerHTML = `<strong>Participante:</strong> ${userName} ${userLastName}`;
+            document.getElementById('saved-name').textContent = userName + ' ' + userLastName;
+            document.getElementById('saved-email').textContent = userEmail;
+
+            // Guardar resultados en Google Sheets
+            await sendResultsToGoogleSheets(correct, percentile, levelDescription);
+
+            document.getElementById('test-screen').classList.remove('active');
+            document.getElementById('results-screen').classList.add('active');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        async function sendResultsToGoogleSheets(correct, percentile, levelDescription) {
+            // Mostrar loading
+            document.getElementById('loading-overlay').classList.add('active');
+
+            // Crear string de respuestas en formato "1:1,2:0,3:1,..."
+            // 1 = correcta, 0 = incorrecta o sin respuesta
+            let respuestasString = '';
+            for (let i = 0; i < problems.length; i++) {
+                const problem = problems[i];
+                const userAnswer = answers[i];
+
+                let esCorrecta = 0;
+
+                if (userAnswer &&
+                    userAnswer[0] === problem.answer[0] &&
+                    userAnswer[1] === problem.answer[1]) {
+                    esCorrecta = 1;
+                }
+
+                respuestasString += `${i + 1}:${esCorrecta}`;
+
+                if (i < problems.length - 1) {
+                    respuestasString += ',';
+                }
+            }
+
+            const adminData = localStorage.getItem('adminData');
+            let admin;
+            if (adminData) {
+                admin = JSON.parse(adminData);
+                console.log("Admin logueado:", admin.nombre);
+            } else {
+                console.log("No hay admin logueado.");
+            }
+
+            const data = {
+                accion: 'guardar',
+                nombre: userName,
+                apellido: userLastName,
+                // Si querés guardar el email del participante en vez del admin,
+                // podés cambiar esta línea a: email: userEmail,
+                email: admin.email,
+                respuestas: respuestasString
+            };
+
+            console.log('📊 Enviando datos a Google Sheets...', data);
+
+            try {
+                // Construir URL con parámetros
+                const params = new URLSearchParams(data);
+                const url = `${APPS_SCRIPT_URL}?${params.toString()}`;
+
+                const response = await fetch(url, {
+                    method: 'GET',
+                    redirect: 'follow'
+                });
+
+                const result = await response.json();
+
+                console.log('✅ Respuesta del servidor:', result);
+
+                if (result.status === 'success') {
+                    console.log('✅ Datos guardados correctamente en Google Sheets');
+                } else {
+                    console.error('❌ Error al guardar:', result.mensaje);
+                    alert('Hubo un problema al guardar los datos. Por favor contacta al administrador.');
+                }
+            } catch (error) {
+                console.error('❌ Error de red:', error);
+                alert('Error de conexión. Por favor verifica tu conexión a internet.');
+            } finally {
+                // Ocultar loading
+                document.getElementById('loading-overlay').classList.remove('active');
+            }
+        }
+
+
+        function restartTest() {
+            location.reload();
+        }
+    </script>
+</body>
+
+</html>

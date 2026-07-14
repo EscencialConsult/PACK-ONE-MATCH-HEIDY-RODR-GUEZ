@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test de Personalidad Big Five (IPIP-50) - Validado</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../../img/favicon.png" sizes="32x32">
+    <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../../img/favicon.png">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            background-color: #E8DCC6;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='150' viewBox='0 0 260 150'%3E%3Cg fill='none' stroke='%23B29365' stroke-opacity='0.5' stroke-width='1'%3E%3Cpath d='M50 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M85 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M155 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M50 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 90l20-12 20 12v24l-20 12-20-12z'/%3E%3C/g%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: repeat;
+            background-size: 260px 150px;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            padding: 48px;
+            position: relative;
+        }
+
+        h1 {
+            color: #2E2E2E;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: -0.5px;
+        }
+
+        h2 {
+            color: #2E2E2E;
+            font-size: 26px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin: 10px 5px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            padding: 20px;
+            border-radius: 16px;
+            margin: 28px 0;
+            border-left: 4px solid #B29365;
+        }
+
+        .info-box h3 {
+            color: #2E2E2E;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .info-box p,
+        .info-box ul {
+            color: #475569;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .info-box ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 17px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: white;
+            background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+            box-shadow: 0 4px 15px rgba(178, 147, 101, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(178, 147, 101, 0.4);
+        }
+
+        .btn:active:not(:disabled) {
+            transform: translateY(-1px);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 24px;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #B29365 0%, #2E2E2E 100%);
+            transition: width 0.4s ease;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(178, 147, 101, 0.3);
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Sistema de preguntas - MANTENER COMO ESTÁ */
+        .question-block {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .question-block.answered {
+            border-color: #B29365;
+            background: #F5EEE0;
+        }
+
+        .question-block:hover {
+            background: #f8fafc;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .question-number {
+            color: #B29365;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+.reverse-indicator {
+    display: none !important;
+}
+
+        .question-text {
+            font-size: 17px;
+            color: #2E2E2E;
+            margin-bottom: 20px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .options {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .option {
+            flex: 1;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        .option input[type="radio"] {
+            display: none;
+        }
+
+        .option label {
+            display: block;
+            padding: 12px 8px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .option input[type="radio"]:checked+label {
+            background: #B29365;
+            color: white;
+            border-color: #B29365;
+            transform: scale(1.05);
+        }
+
+        .option label:hover {
+            border-color: #B29365;
+            background: #F5EEE0;
+        }
+
+        /* Resultados - MANTENER COMO ESTÁ */
+        .result-summary {
+            background: linear-gradient(135deg, #F5EEE0 0%, #EFE4D0 100%);
+            padding: 30px;
+            border-radius: 16px;
+            margin-bottom: 30px;
+            text-align: center;
+            border: 2px solid #B29365;
+        }
+
+        .result-summary h3 {
+            color: #2E2E2E;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+
+        .result-summary p {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #475569;
+        }
+
+        .radar-chart-container {
+            margin: 30px 0;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .radar-chart-container h3 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #2E2E2E;
+            font-size: 20px;
+        }
+
+        .comparison-chart {
+            margin: 30px 0;
+            padding: 30px;
+            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+            border-radius: 16px;
+        }
+
+        .comparison-chart h3 {
+            color: #2E2E2E;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .comparison-bar {
+            margin: 15px 0;
+        }
+
+        .comparison-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .comparison-bar-bg {
+            width: 100%;
+            height: 24px;
+            background: #e2e8f0;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .comparison-bar-user {
+            height: 100%;
+            background: linear-gradient(90deg, #B29365 0%, #2E2E2E 100%);
+            transition: width 0.5s ease;
+            border-radius: 12px;
+        }
+
+        .comparison-bar-avg {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: #dc2626;
+        }
+
+        .avg-label {
+            position: absolute;
+            top: -20px;
+            font-size: 12px;
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .result-trait {
+            margin-bottom: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .trait-name {
+            font-size: 22px;
+            font-weight: bold;
+            color: #2E2E2E;
+            margin-bottom: 10px;
+        }
+
+        .trait-score {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #475569;
+            font-weight: 600;
+        }
+
+        .percentile-badge {
+            background: #B29365;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+
+        .dimension-reliability {
+            font-size: 13px;
+            color: #059669;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
+        .progress-bar-result {
+            width: 100%;
+            height: 30px;
+            background: #e2e8f0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .progress-fill-result {
+            height: 100%;
+            background: linear-gradient(90deg, #B29365 0%, #2E2E2E 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .trait-description {
+            line-height: 1.7;
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .interpretation-box {
+            background: #F5EEE0;
+            border-left: 4px solid #B29365;
+            padding: 20px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        .interpretation-box h4 {
+            color: #B29365;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .percentile-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .percentile-table th {
+            background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .percentile-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 14px;
+        }
+
+        .percentile-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .percentile-table tr:hover {
+            background: #f8fafc;
+        }
+
+        .level-muy-alto {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .level-alto {
+            color: #ea580c;
+            font-weight: 600;
+        }
+
+        .level-mod-alto {
+            color: #ca8a04;
+            font-weight: 600;
+        }
+
+        .level-bajo {
+            color: #2563eb;
+            font-weight: 600;
+        }
+
+        .level-muy-bajo {
+            color: #7c3aed;
+            font-weight: 600;
+        }
+
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .validation-message {
+            background: #fef3c7;
+            border: 2px solid #fbbf24;
+            color: #78350f;
+            padding: 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .page-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .page-buttons .btn {
+            flex: 1;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+            }
+
+            .btn {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            h2 {
+                font-size: 20px;
+            }
+
+            .options {
+                gap: 5px;
+            }
+
+            .option {
+                min-width: 60px;
+            }
+
+            .option label {
+                padding: 8px 4px;
+                font-size: 12px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <a href="../../usuarios.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6" />
+        </svg>
+        Volver a Usuarios
+    </a>
+
+    <style>
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2E2E2E !important;
+            border: 2px solid #2E2E2E;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: #2E2E2E;
+            color: white !important;
+            box-shadow: 0 6px 15px rgba(46, 46, 46, 0.2);
+        }
+
+        .btn-back svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Ocultar en móviles muy pequeños si molesta, o ajustar */
+        @media (max-width: 480px) {
+            .btn-back {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+
+        @media print {
+            .btn-back {
+                display: none !important;
+            }
+        }
+    </style>
+
+    <div class="container">
+        <!-- PANTALLA DE INTRODUCCIÓN -->
+        <div id="intro">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <img src="../../img/logo-escencial.png" alt="Logo" style="max-width: 300px; height: auto;">
+            </div>
+            <h1>Test de Personalidad Big Five</h1>
+            <p class="subtitle">Versión IPIP-50 Validada Científicamente</p>
+            <div style="text-align: center;">
+                <span class="badge">✓ Confiabilidad: α = 0.80-0.85</span>
+                <span class="badge">🔀 Aleatorizado por Bloques</span>
+            </div>
+
+            <div class="info-box">
+                <h3>📋 Acerca de este Test</h3>
+                <p>Este test utiliza el <strong>IPIP-50</strong> (International Personality Item Pool), un inventario de
+                    personalidad validado científicamente y de dominio público. Ha sido utilizado en más de 1,000
+                    estudios publicados.</p>
+                <p style="margin-top: 10px;"><strong>Tiempo estimado:</strong> 10-15 minutos</p>
+            </div>
+
+            <div class="info-box">
+                <h3>🎯 Las 5 Dimensiones que Evalúa</h3>
+                <ul>
+                    <li><strong>Apertura a la Experiencia:</strong> Creatividad, curiosidad, imaginación</li>
+                    <li><strong>Responsabilidad:</strong> Organización, disciplina, fiabilidad</li>
+                    <li><strong>Extraversión:</strong> Sociabilidad, energía, asertividad</li>
+                    <li><strong>Amabilidad:</strong> Empatía, cooperación, altruismo</li>
+                    <li><strong>Neuroticismo:</strong> Tendencia a experimentar emociones negativas, sensibilidad al
+                        estrés</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h3>📊 Metodología Validada</h3>
+                <p>• 50 preguntas (10 por dimensión)</p>
+                <p>• 50% de ítems invertidos para evitar sesgos de respuesta</p>
+                <p>• <strong>🔀 Aleatorización por bloques:</strong> Las preguntas aparecen en orden diferente cada vez
+                </p>
+                <p>• Escala Likert de 5 puntos</p>
+                <p>• Resultados con percentiles poblacionales</p>
+                <p>• Visualización con gráficos comparativos</p>
+            </div>
+
+            <div class="info-box">
+                <h3>⚠️ Importante</h3>
+                <p>Responde con honestidad según cómo realmente eres, no cómo te gustaría ser.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>👤 Tus Datos</h3>
+                <p style="margin-bottom: 15px;">Para enviarte tus resultados, necesitamos la siguiente información:</p>
+
+                <div style="margin-bottom: 15px; display: flex; gap: 12px; flex-wrap: wrap;">
+                    <div style="flex: 1 1 140px; min-width: 0;">
+                        <label for="userFirstName"
+                            style="display: block; margin-bottom: 5px; font-weight: 600; color: #2E2E2E;">Nombre
+                            *</label>
+                        <input type="text" id="userFirstName" placeholder="Ej: Juan"
+                            style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 15px; font-family: inherit;">
+                    </div>
+                    <div style="flex: 1 1 180px; min-width: 0;">
+                        <label for="userLastName"
+                            style="display: block; margin-bottom: 5px; font-weight: 600; color: #2E2E2E;">Apellidos
+                            *</label>
+                        <input type="text" id="userLastName" placeholder="Ej: Pérez"
+                            style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 15px; font-family: inherit;">
+                    </div>
+                </div>
+
+                <div style="margin-bottom: 10px;">
+                    <label for="userEmail"
+                        style="display: block; margin-bottom: 5px; font-weight: 600; color: #2E2E2E;">Email *</label>
+                    <input type="email" id="userEmail" placeholder="Ej: juan@email.com"
+                        style="width: 100%; padding: 12px; border: 2px solid #e2e8f0; border-radius: 8px; font-size: 15px; font-family: inherit;">
+                </div>
+                <div id="formError" class="validation-message hidden" style="margin-top: 15px;">
+                    ⚠️ Por favor completa todos los campos requeridos.
+                </div>
+            </div>
+
+
+            <button class="btn" onclick="startTest()">🚀 Comenzar Test</button>
+        </div>
+
+        <!-- PANTALLA DEL TEST -->
+        <div id="test" class="hidden">
+            <div style="text-align: center; margin-bottom: 20px;">
+                <img src="../../img/logo-escencial.png" alt="Logo" style="max-width: 250px; height: auto;">
+            </div>
+            <h2>Test de Personalidad Big Five</h2>
+
+            <div class="progress-text">
+                <span>Pregunta <span id="currentQ">1</span> de 50</span>
+                <span>Página <span id="currentPage">1</span> de 5</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar" style="width: 0%"></div>
+            </div>
+
+            <div class="validation-message hidden" id="validationMessage">
+                ⚠️ Por favor, responde todas las preguntas de esta página antes de continuar.
+            </div>
+
+            <form id="testForm">
+                <!-- Las preguntas se generarán dinámicamente aquí -->
+            </form>
+
+            <div class="page-buttons">
+                <button type="button" class="btn hidden" id="prevBtn" onclick="previousPage()">⬅️ Anterior</button>
+                <button type="button" class="btn" id="nextBtn" onclick="nextPage()">Siguiente ➡️</button>
+                <button type="button" class="btn hidden" id="submitBtn" onclick="submitTest()">✅ Ver Resultados</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA DE RESULTADOS -->
+        <div id="results" class="hidden">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <img src="../../img/logo-escencial.png" alt="Logo" style="max-width: 300px; height: auto;">
+            </div>
+            <h1>✅ Test Completado</h1>
+            <div class="result-summary" style="text-align: center;">
+                <h2>¡Gracias!</h2>
+                <p style="margin-top: 16px; color: #10b981; font-weight: 600; font-size: 18px;">
+                    ✓ Tus resultados han sido registrados exitosamente
+                </p>
+            </div>
+            <div class="page-buttons">
+                <button class="btn" onclick="restartTest()">🔄 Realizar Nuevo Test</button>
+            </div>
+
+            <!-- Contenido detallado oculto: se conserva intacto para no alterar el cálculo ni el envío de datos -->
+            <div style="display: none;" aria-hidden="true">
+            <h1>📊 Tus Resultados del Big Five (IPIP-50)</h1>
+            <p class="subtitle">Test validado científicamente</p>
+
+            <div class="result-summary" id="summarySection">
+                <!-- Summary will be injected here -->
+            </div>
+
+            <div class="radar-chart-container">
+                <h3>📈 Tu Perfil de Personalidad</h3>
+                <canvas id="radarChart" width="400" height="400"></canvas>
+            </div>
+
+            <div class="comparison-chart">
+                <h3>📊 Comparación con Población General</h3>
+                <p style="margin-bottom: 20px; color: #64748b;">La línea roja indica el promedio poblacional</p>
+                <div id="comparisonBars"></div>
+            </div>
+
+            <div id="resultsContent"></div>
+
+            <div class="info-box">
+                <h3>📊 Guía de Interpretación de Percentiles</h3>
+                <p style="margin-bottom: 15px;">Los percentiles indican tu posición en comparación con la población
+                    general. Por ejemplo, un percentil 75 significa que superas al 75% de las personas en esa dimensión.
+                </p>
+
+                <table class="percentile-table">
+                    <thead>
+                        <tr>
+                            <th>Rango de Percentil</th>
+                            <th>Nivel</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>90-100</strong></td>
+                            <td><span class="level-muy-alto">Muy Alto</span></td>
+                            <td>Superas a la gran mayoría (90%+) de personas en este rasgo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>75-89</strong></td>
+                            <td><span class="level-alto">Alto</span></td>
+                            <td>Estás significativamente por encima del promedio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>50-74</strong></td>
+                            <td><span class="level-mod-alto">Moderadamente Alto</span></td>
+                            <td>Estás por encima del promedio poblacional</td>
+                        </tr>
+                        <tr>
+                            <td><strong>40-49</strong></td>
+                            <td><span style="color: #059669; font-weight: 600;">Promedio</span></td>
+                            <td>Estás en el rango típico de la población</td>
+                        </tr>
+                        <tr>
+                            <td><strong>25-39</strong></td>
+                            <td><span class="level-bajo">Bajo</span></td>
+                            <td>Estás por debajo del promedio poblacional</td>
+                        </tr>
+                        <tr>
+                            <td><strong>0-24</strong></td>
+                            <td><span class="level-muy-bajo">Muy Bajo</span></td>
+                            <td>Estás significativamente por debajo del promedio (bajo 25%)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 15px; font-size: 13px; color: #64748b;"><strong>Nota:</strong> No hay respuestas
+                    "buenas" o "malas". Cada nivel tiene sus fortalezas en diferentes contextos.</p>
+            </div>
+
+            <div class="info-box">
+                <h3>📈 Acerca de la Confiabilidad</h3>
+                <p>Este test utiliza el inventario IPIP-50, que ha demostrado una <strong>confiabilidad (α de Cronbach)
+                        entre 0.77-0.86</strong> en las cinco dimensiones. Los ítems invertidos ayudan a reducir sesgos
+                    de aquiescencia y mejoran la validez de tus resultados.</p>
+                <p style="margin-top: 10px;"><strong>Aleatorización:</strong> Las preguntas se presentan en orden
+                    diferente en cada ejecución del test, lo que mejora la validez y reduce el sesgo de orden.</p>
+            </div>
+
+            <div class="page-buttons">
+                <button class="btn" onclick="exportResults()">📥 Descargar Resultados (PDF)</button>
+                <button class="btn" onclick="restartTest()">🔄 Realizar el Test Nuevamente</button>
+            </div>
+            </div><!-- /contenido detallado oculto -->
+        </div>
+    </div>
+
+    <script>
+        (function guard() {
+            const logged = localStorage.getItem('sessionLoggedIn') === '1';
+            if (!logged) {
+                // ajusta el path según tu estructura
+                window.location.href = '../../evaluaciones.html'; // o donde esté tu login/panel
+            }
+        })();
+        let currentPage = 0;
+        const questionsPerPage = 10;
+        let totalPages = 5;
+        let questionOrder = [];
+        let answers = {};
+        let currentResults = null;
+        let userFirstName = '';
+        let userLastName = '';
+        let userName = '';
+        let userEmail = '';
+
+        // Base de datos de preguntas organizada por dimensión
+        const questionDatabase = {
+            extraversion: [
+                { id: 1, text: 'Soy la vida de la fiesta', reverse: false },
+                { id: 6, text: 'No hablo mucho', reverse: true },
+                { id: 11, text: 'Me siento cómodo/a estando rodeado/a de gente', reverse: false },
+                { id: 16, text: 'Me quedo en segundo plano', reverse: true },
+                { id: 21, text: 'Inicio conversaciones', reverse: false },
+                { id: 26, text: 'Tengo poco que decir', reverse: true },
+                { id: 31, text: 'Hablo con muchas personas diferentes en las fiestas', reverse: false },
+                { id: 36, text: 'No me gusta llamar la atención', reverse: true },
+                { id: 41, text: 'Tomo el control', reverse: false },
+                { id: 46, text: 'Soy callado/a cerca de extraños', reverse: true }
+            ],
+            agreeableness: [
+                { id: 2, text: 'Siento poco interés por los demás', reverse: true },
+                { id: 7, text: 'Me interesan los problemas de otras personas', reverse: false },
+                { id: 12, text: 'Insulto a la gente', reverse: true },
+                { id: 17, text: 'Simpatizo con los sentimientos de otros', reverse: false },
+                { id: 22, text: 'No me interesan los problemas de otras personas', reverse: true },
+                { id: 27, text: 'Tengo un corazón suave', reverse: false },
+                { id: 32, text: 'No estoy realmente interesado/a en otros', reverse: true },
+                { id: 37, text: 'Me tomo tiempo para otros', reverse: false },
+                { id: 42, text: 'No estoy interesado/a en los problemas de otras personas', reverse: true },
+                { id: 47, text: 'Hago sentir cómodos a los demás', reverse: false }
+            ],
+            conscientiousness: [
+                { id: 3, text: 'Siempre estoy preparado/a', reverse: false },
+                { id: 8, text: 'Dejo mis pertenencias por ahí tiradas', reverse: true },
+                { id: 13, text: 'Presto atención a los detalles', reverse: false },
+                { id: 18, text: 'Hago un lío de las cosas', reverse: true },
+                { id: 23, text: 'Hago las cosas de acuerdo a un plan', reverse: false },
+                { id: 28, text: 'A menudo olvido poner las cosas en su lugar', reverse: true },
+                { id: 33, text: 'Me gusta el orden', reverse: false },
+                { id: 38, text: 'Evado mis deberes', reverse: true },
+                { id: 43, text: 'Sigo un horario', reverse: false },
+                { id: 48, text: 'Hago las cosas a medias', reverse: true }
+            ],
+            neuroticism: [
+                { id: 4, text: 'Me estreso fácilmente', reverse: false },
+                { id: 9, text: 'Estoy relajado/a la mayor parte del tiempo', reverse: true },
+                { id: 14, text: 'Me preocupo por las cosas', reverse: false },
+                { id: 19, text: 'Rara vez me siento triste', reverse: true },
+                { id: 24, text: 'Me irrito fácilmente', reverse: false },
+                { id: 29, text: 'Me siento cómodo/a conmigo mismo/a', reverse: true },
+                { id: 34, text: 'Cambio de humor frecuentemente', reverse: false },
+                { id: 39, text: 'Tengo frecuentes cambios de humor', reverse: false },
+                { id: 44, text: 'Me molesto fácilmente', reverse: false },
+                { id: 49, text: 'Rara vez pierdo la calma', reverse: true }
+            ],
+            openness: [
+                { id: 5, text: 'Tengo un vocabulario rico y extenso', reverse: false },
+                { id: 10, text: 'Tengo dificultad para entender ideas abstractas', reverse: true },
+                { id: 15, text: 'Tengo una imaginación vívida', reverse: false },
+                { id: 20, text: 'No me interesan las ideas abstractas', reverse: true },
+                { id: 25, text: 'Paso tiempo reflexionando sobre las cosas', reverse: false },
+                { id: 30, text: 'Evito conversaciones filosóficas', reverse: true },
+                { id: 35, text: 'No me interesan conceptos abstractos', reverse: true },
+                { id: 40, text: 'No tengo buena imaginación', reverse: true },
+                { id: 45, text: 'Tengo excelentes ideas', reverse: false },
+                { id: 50, text: 'No soy una persona muy imaginativa', reverse: true }
+            ]
+        };
+
+        const reverseItems = {
+            extraversion: [6, 16, 26, 36, 46],
+            agreeableness: [2, 12, 22, 32, 42],
+            conscientiousness: [8, 18, 28, 38, 48],
+            neuroticism: [9, 19, 29, 49],
+            openness: [10, 20, 30, 35, 40, 50]
+        };
+
+        const allReverseItems = Object.values(reverseItems).flat();
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function generateRandomizedQuestions() {
+            const dimensions = ['extraversion', 'agreeableness', 'conscientiousness', 'neuroticism', 'openness'];
+            const dimensionNames = {
+                extraversion: 'Extraversión',
+                agreeableness: 'Amabilidad',
+                conscientiousness: 'Responsabilidad',
+                neuroticism: 'Neuroticismo',
+                openness: 'Apertura'
+            };
+
+            const shuffledDimensions = shuffleArray(dimensions);
+            const randomizedQuestions = [];
+
+            shuffledDimensions.forEach(dimension => {
+                const shuffledQuestions = shuffleArray(questionDatabase[dimension]);
+                shuffledQuestions.forEach(q => {
+                    randomizedQuestions.push({
+                        ...q,
+                        dimension: dimension,
+                        dimensionName: dimensionNames[dimension]
+                    });
+                });
+            });
+
+            return randomizedQuestions;
+        }
+
+        function startTest() {
+            // Capturar datos del usuario
+            userFirstName = document.getElementById('userFirstName').value.trim();
+            userLastName = document.getElementById('userLastName').value.trim();
+            userEmail = document.getElementById('userEmail').value.trim();
+
+            // Construir nombre completo para usar donde ya se usaba userName
+            userName = `${userFirstName} ${userLastName}`.trim();
+
+            // Validar que los campos no estén vacíos
+            if (!userFirstName || !userLastName || !userEmail) {
+                const formError = document.getElementById('formError');
+                formError.textContent = '⚠️ Por favor completa todos los campos requeridos.';
+                formError.classList.remove('hidden');
+                return;
+            }
+
+            // Validar formato de email básico
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(userEmail)) {
+                const formError = document.getElementById('formError');
+                formError.textContent = '⚠️ Por favor ingresa un email válido.';
+                formError.classList.remove('hidden');
+                return;
+            }
+
+            // Ocultar mensaje de error si existía
+            document.getElementById('formError').classList.add('hidden');
+
+            // Iniciar el test
+            questionOrder = generateRandomizedQuestions();
+            currentPage = 0;
+            answers = {};
+            renderPage();
+
+            document.getElementById('intro').classList.add('hidden');
+            document.getElementById('test').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+
+        function renderPage() {
+            const startIdx = currentPage * questionsPerPage;
+            const endIdx = startIdx + questionsPerPage;
+            const pageQuestions = questionOrder.slice(startIdx, endIdx);
+
+            let html = '';
+            pageQuestions.forEach((q, idx) => {
+                const globalIdx = startIdx + idx;
+                const reverseTag = q.reverse ? '<span class="reverse-indicator">INVERSO</span>' : '';
+                const isAnswered = answers[q.id] !== undefined ? 'answered' : '';
+
+                html += `
+                    <div class="question-block ${isAnswered}" data-question="${q.id}">
+                        <div class="question-number">Pregunta ${globalIdx + 1} - ${q.dimensionName}${reverseTag}</div>
+                        <div class="question-text">${q.text}</div>
+                        <div class="options">
+                            <div class="option">
+                                <input type="radio" name="q${q.id}" value="5" id="q${q.id}-1" ${answers[q.id] === 5 ? 'checked' : ''}>
+                                <label for="q${q.id}-1">Muy de acuerdo</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q${q.id}" value="4" id="q${q.id}-2" ${answers[q.id] === 4 ? 'checked' : ''}>
+                                <label for="q${q.id}-2">De acuerdo</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q${q.id}" value="3" id="q${q.id}-3" ${answers[q.id] === 3 ? 'checked' : ''}>
+                                <label for="q${q.id}-3">Neutral</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q${q.id}" value="2" id="q${q.id}-4" ${answers[q.id] === 2 ? 'checked' : ''}>
+                                <label for="q${q.id}-4">En desacuerdo</label>
+                            </div>
+                            <div class="option">
+                                <input type="radio" name="q${q.id}" value="1" id="q${q.id}-5" ${answers[q.id] === 1 ? 'checked' : ''}>
+                                <label for="q${q.id}-5">Muy en desacuerdo</label>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('testForm').innerHTML = html;
+
+            // Event listeners para marcar como respondidas
+            document.querySelectorAll('input[type="radio"]').forEach(input => {
+                input.addEventListener('change', function () {
+                    const qId = parseInt(this.name.replace('q', ''));
+                    answers[qId] = parseInt(this.value);
+
+                    const questionBlock = this.closest('.question-block');
+                    questionBlock.classList.add('answered');
+
+                    updateProgress();
+                });
+            });
+
+            updateProgress();
+            updateButtons();
+        }
+
+        function updateProgress() {
+            const totalAnswered = Object.keys(answers).length;
+            const progress = (totalAnswered / 50) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('currentQ').textContent = totalAnswered;
+            document.getElementById('currentPage').textContent = currentPage + 1;
+        }
+
+        function updateButtons() {
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            prevBtn.classList.toggle('hidden', currentPage === 0);
+
+            if (currentPage === totalPages - 1) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        function previousPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                renderPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function nextPage() {
+            const startIdx = currentPage * questionsPerPage;
+            const endIdx = startIdx + questionsPerPage;
+            const pageQuestions = questionOrder.slice(startIdx, endIdx);
+
+            const allAnswered = pageQuestions.every(q => answers[q.id] !== undefined);
+
+            if (!allAnswered) {
+                document.getElementById('validationMessage').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            document.getElementById('validationMessage').classList.add('hidden');
+
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                renderPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function submitTest() {
+            if (Object.keys(answers).length < 50) {
+                document.getElementById('validationMessage').classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+
+            calculateResults();
+        }
+
+        function calculateResults() {
+            const responses = {};
+
+            questionOrder.forEach(q => {
+                let value = answers[q.id];
+                if (allReverseItems.includes(q.id)) {
+                    value = 6 - value;
+                }
+                responses[q.id] = value;
+            });
+
+            const extraversion = [1, 6, 11, 16, 21, 26, 31, 36, 41, 46].reduce((sum, id) => sum + (responses[id] || 0), 0);
+            const agreeableness = [2, 7, 12, 17, 22, 27, 32, 37, 42, 47].reduce((sum, id) => sum + (responses[id] || 0), 0);
+            const conscientiousness = [3, 8, 13, 18, 23, 28, 33, 38, 43, 48].reduce((sum, id) => sum + (responses[id] || 0), 0);
+            const neuroticism = [4, 9, 14, 19, 24, 29, 34, 39, 44, 49].reduce((sum, id) => sum + (responses[id] || 0), 0);
+            const openness = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50].reduce((sum, id) => sum + (responses[id] || 0), 0);
+
+            currentResults = {
+                extraversion,
+                agreeableness,
+                conscientiousness,
+                neuroticism,
+                openness
+            };
+
+            displayResults(currentResults);
+        }
+
+        function getPercentile(score, dimension) {
+            const norms = {
+                extraversion: { 10: 20, 25: 26, 50: 33, 75: 40, 90: 45 },
+                agreeableness: { 10: 28, 25: 33, 50: 38, 75: 43, 90: 47 },
+                conscientiousness: { 10: 23, 25: 29, 50: 35, 75: 41, 90: 46 },
+                neuroticism: { 10: 15, 25: 21, 50: 28, 75: 35, 90: 41 },
+                openness: { 10: 28, 25: 33, 50: 38, 75: 42, 90: 46 }
+            };
+
+            const norm = norms[dimension];
+
+            // Valores por debajo del percentil 10
+            if (score <= norm[10]) return Math.max(5, Math.round((score / norm[10]) * 10));
+
+            // Interpolar entre percentiles
+            if (score <= norm[25]) {
+                const ratio = (score - norm[10]) / (norm[25] - norm[10]);
+                return Math.round(10 + ratio * 15);
+            }
+            if (score <= norm[50]) {
+                const ratio = (score - norm[25]) / (norm[50] - norm[25]);
+                return Math.round(25 + ratio * 25);
+            }
+            if (score <= norm[75]) {
+                const ratio = (score - norm[50]) / (norm[75] - norm[50]);
+                return Math.round(50 + ratio * 25);
+            }
+            if (score <= norm[90]) {
+                const ratio = (score - norm[75]) / (norm[90] - norm[75]);
+                return Math.round(75 + ratio * 15);
+            }
+
+            // Valores por encima del percentil 90
+            return Math.min(99, Math.round(90 + ((score - norm[90]) / (50 - norm[90])) * 10));
+        }
+
+        function displayResults(scores) {
+            const traits = [
+                {
+                    name: 'Extraversión',
+                    dimension: 'extraversion',
+                    score: scores.extraversion,
+                    max: 50,
+                    alpha: 0.86,
+                    avgScore: 33,
+                    description: getExtraversionDescription(scores.extraversion)
+                },
+                {
+                    name: 'Amabilidad',
+                    dimension: 'agreeableness',
+                    score: scores.agreeableness,
+                    max: 50,
+                    alpha: 0.82,
+                    avgScore: 38,
+                    description: getAgreeablenessDescription(scores.agreeableness)
+                },
+                {
+                    name: 'Responsabilidad',
+                    dimension: 'conscientiousness',
+                    score: scores.conscientiousness,
+                    max: 50,
+                    alpha: 0.81,
+                    avgScore: 35,
+                    description: getConscientiousnessDescription(scores.conscientiousness)
+                },
+                {
+                    name: 'Neuroticismo',
+                    dimension: 'neuroticism',
+                    score: scores.neuroticism,
+                    max: 50,
+                    alpha: 0.86,
+                    avgScore: 28,
+                    description: getNeuroticismDescription(scores.neuroticism)
+                },
+                {
+                    name: 'Apertura',
+                    dimension: 'openness',
+                    score: scores.openness,
+                    max: 50,
+                    alpha: 0.84,
+                    avgScore: 38,
+                    description: getOpennessDescription(scores.openness)
+                }
+            ];
+
+            const summaryHTML = `
+                <h3>✨ Resumen de Tu Personalidad</h3>
+                <p>
+                    Basándote en tus respuestas, tu perfil de personalidad muestra 
+                    <strong>${getHighestTrait(traits)}</strong> como tu característica más destacada, 
+                    seguida por <strong>${getSecondHighestTrait(traits)}</strong>. 
+                    Este patrón de rasgos es único y refleja tu forma particular de interactuar con el mundo.
+                </p>
+            `;
+            document.getElementById('summarySection').innerHTML = summaryHTML;
+
+            createRadarChart(traits);
+            createComparisonBars(traits);
+
+            let html = '';
+            traits.forEach(trait => {
+                const percentile = getPercentile(trait.score, trait.dimension);
+
+                html += `
+                    <div class="result-trait">
+                        <div class="trait-name">
+                            ${trait.name}
+                            <span class="percentile-badge">Percentil ${percentile}</span>
+                        </div>
+                        <div class="trait-score">
+                            Puntuación: ${trait.score} de ${trait.max}
+                        </div>
+                        <div class="dimension-reliability">
+                            ✓ Confiabilidad: α = ${trait.alpha}
+                        </div>
+                        <div class="progress-bar-result">
+                            <div class="progress-fill-result" style="width: ${percentile}%">Percentil ${percentile}</div>
+                        </div>
+                        <div class="trait-description">${trait.description}</div>
+                        <div class="interpretation-box">
+                            <h4>💡 Interpretación</h4>
+                            ${getInterpretation(trait.dimension, trait.score)}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('resultsContent').innerHTML = html;
+            document.getElementById('test').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+
+            // Preparar respuestas numéricas en orden (Q1 a Q50) con valores originales (sin inversión)
+            const originalAnswers = [];
+            for (let i = 1; i <= 50; i++) {
+                originalAnswers.push(answers[i] || 0); // Respuestas originales del usuario
+            }
+
+            const adminData = localStorage.getItem('adminData');
+            let admin;
+            if (adminData) {
+                admin = JSON.parse(adminData);
+                console.log("Admin logueado:", admin.nombre);
+            } else {
+                console.log("No hay admin logueado.");
+            }
+
+            userData= localStorage.getItem("sessionUser")
+            let user 
+            if(userData){
+                user = JSON.parse(userData);
+                console.log("Usuario", user)
+            }
+
+            // Preparar datos para Google Sheets
+            const dataForSheets = {
+                fecha: new Date().toLocaleDateString('es-AR'), // Solo fecha sin hora
+                nombre: userFirstName,
+                apellido: userLastName,
+                user : user.Usuario,
+                email: userEmail,                 
+                email_admin: admin?.email || '',  
+                respuestas: originalAnswers       
+            };
+
+
+            // Enviar datos a Google Sheets
+            sendToGoogleSheets(dataForSheets);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Función helper para generar URL de gráfico radar en QuickChart
+        function generateQuickChartRadarUrl(scores) {
+            const data = [
+                scores.extraversion,
+                scores.agreeableness,
+                scores.conscientiousness,
+                scores.neuroticism,
+                scores.openness
+            ];
+
+            const chartConfig = {
+                type: 'radar',
+                data: {
+                    labels: ['Extraversión', 'Amabilidad', 'Responsabilidad', 'Neuroticismo', 'Apertura'],
+                    datasets: [{
+                        label: 'Tu Perfil',
+                        data: data,
+                        backgroundColor: 'rgba(178, 147, 101, 0.2)',
+                        borderColor: 'rgb(178, 147, 101)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    scale: {
+                        ticks: { beginAtZero: true, max: 50 }
+                    }
+                }
+            };
+
+            return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
+        }
+
+        // Función helper para generar URL de gráfico de barras en QuickChart
+        function generateQuickChartBarsUrl(scores, traits) {
+            const chartConfig = {
+                type: 'bar',
+                data: {
+                    labels: ['Extraversión', 'Amabilidad', 'Responsabilidad', 'Neuroticismo', 'Apertura'],
+                    datasets: [{
+                        label: 'Tu Puntuación',
+                        data: [
+                            scores.extraversion,
+                            scores.agreeableness,
+                            scores.conscientiousness,
+                            scores.neuroticism,
+                            scores.openness
+                        ],
+                        backgroundColor: 'rgba(178, 147, 101, 0.7)'
+                    }, {
+                        label: 'Promedio',
+                        data: traits.map(t => t.avgScore),
+                        backgroundColor: 'rgba(100, 116, 139, 0.5)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: { beginAtZero: true, max: 50 }
+                        }]
+                    }
+                }
+            };
+
+            return `https://quickchart.io/chart?c=${encodeURIComponent(JSON.stringify(chartConfig))}`;
+        }
+
+        function getHighestTrait(traits) {
+            const sorted = [...traits].sort((a, b) => {
+                const aPerc = getPercentile(a.score, a.dimension);
+                const bPerc = getPercentile(b.score, b.dimension);
+                return bPerc - aPerc;
+            });
+            return sorted[0].name;
+        }
+
+        function getSecondHighestTrait(traits) {
+            const sorted = [...traits].sort((a, b) => {
+                const aPerc = getPercentile(a.score, a.dimension);
+                const bPerc = getPercentile(b.score, b.dimension);
+                return bPerc - aPerc;
+            });
+            return sorted[1].name;
+        }
+
+        function createRadarChart(traits) {
+            const canvas = document.getElementById('radarChart');
+            const ctx = canvas.getContext('2d');
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const radius = 150;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.strokeStyle = '#e2e8f0';
+            ctx.lineWidth = 1;
+            for (let i = 1; i <= 5; i++) {
+                ctx.beginPath();
+                ctx.arc(centerX, centerY, (radius / 5) * i, 0, Math.PI * 2);
+                ctx.stroke();
+            }
+
+            const angles = [];
+            const dataPoints = [];
+
+            traits.forEach((trait, index) => {
+                const angle = (Math.PI * 2 * index) / traits.length - Math.PI / 2;
+                angles.push(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(centerX, centerY);
+                ctx.lineTo(
+                    centerX + Math.cos(angle) * radius,
+                    centerY + Math.sin(angle) * radius
+                );
+                ctx.stroke();
+
+                const labelRadius = radius + 30;
+                const labelX = centerX + Math.cos(angle) * labelRadius;
+                const labelY = centerY + Math.sin(angle) * labelRadius;
+
+                ctx.fillStyle = '#2E2E2E';
+                ctx.font = 'bold 12px Arial';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(trait.name, labelX, labelY);
+
+                const normalizedScore = (trait.score / trait.max) * radius;
+                dataPoints.push({
+                    x: centerX + Math.cos(angle) * normalizedScore,
+                    y: centerY + Math.sin(angle) * normalizedScore
+                });
+            });
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#B29365';
+            ctx.fillStyle = 'rgba(178, 147, 101, 0.2)';
+            ctx.lineWidth = 3;
+
+            dataPoints.forEach((point, index) => {
+                if (index === 0) {
+                    ctx.moveTo(point.x, point.y);
+                } else {
+                    ctx.lineTo(point.x, point.y);
+                }
+            });
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            dataPoints.forEach(point => {
+                ctx.beginPath();
+                ctx.fillStyle = '#B29365';
+                ctx.arc(point.x, point.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+        }
+
+        function createComparisonBars(traits) {
+            let html = '';
+            traits.forEach(trait => {
+                const userPercentage = (trait.score / trait.max) * 100;
+                const avgPercentage = (trait.avgScore / trait.max) * 100;
+
+                html += `
+                    <div class="comparison-bar">
+                        <div class="comparison-bar-label">
+                            <span>${trait.name}</span>
+                            <span>Tú: ${trait.score} | Promedio: ${trait.avgScore}</span>
+                        </div>
+                        <div class="comparison-bar-bg">
+                            <div class="comparison-bar-user" style="width: ${userPercentage}%"></div>
+                            <div class="comparison-bar-avg" style="left: ${avgPercentage}%">
+                                <span class="avg-label">↓</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            document.getElementById('comparisonBars').innerHTML = html;
+        }
+
+        function getInterpretation(dimension, score) {
+            const interpretations = {
+                extraversion: {
+                    high: 'Las personas con alta extraversión suelen destacar en roles de liderazgo, ventas y trabajo en equipo. Tu energía social es un activo valioso.',
+                    medium: 'Tu balance entre extroversión e introversión te permite adaptarte a diferentes contextos sociales con flexibilidad.',
+                    average: 'Tu naturaleza ambivertida te permite funcionar tanto en situaciones sociales como en entornos más tranquilos. Tienes versatilidad social.',
+                    low: 'Tu naturaleza más introvertida es ideal para trabajos que requieren concentración profunda, análisis detallado y reflexión.'
+                },
+                agreeableness: {
+                    high: 'Tu alta amabilidad te hace excelente en roles de cuidado, mediación y construcción de relaciones. Las personas confían en ti naturalmente.',
+                    medium: 'Tu equilibrio entre cooperación y firmeza te permite trabajar bien en equipo mientras defiendes tus intereses cuando es necesario.',
+                    average: 'Balanceas pragmáticamente entre empatía y asertividad. Puedes adaptar tu estilo según la situación lo requiera.',
+                    low: 'Tu objetividad y franqueza son valiosas en negociaciones, toma de decisiones difíciles y situaciones que requieren pensamiento crítico.'
+                },
+                conscientiousness: {
+                    high: 'Tu alta responsabilidad te hace confiable y efectivo en proyectos complejos. Destacas en roles que requieren planificación y atención al detalle.',
+                    medium: 'Balanceas bien entre estructura y flexibilidad, lo que te permite ser organizado sin perder espontaneidad.',
+                    average: 'Puedes ser tanto organizado como flexible según las circunstancias. Te adaptas a diferentes niveles de estructura.',
+                    low: 'Tu flexibilidad y adaptabilidad son valiosas en entornos dinámicos que requieren pensamiento creativo y respuestas rápidas.'
+                },
+                neuroticism: {
+                    high: 'Tu sensibilidad emocional puede ser una fortaleza cuando se canaliza apropiadamente. Considera técnicas de mindfulness y gestión del estrés.',
+                    medium: 'Tu estabilidad emocional moderada te permite ser sensible a situaciones importantes sin ser abrumado por el estrés cotidiano.',
+                    average: 'Tienes un balance emocional típico. Puedes experimentar estrés pero también recuperarte adecuadamente.',
+                    low: 'Tu alta estabilidad emocional es un gran activo en situaciones de presión. Mantienes la calma y piensas claramente bajo estrés.'
+                },
+                openness: {
+                    high: 'Tu apertura mental te hace excelente en campos creativos, innovación y aprendizaje continuo. Buscas activamente nuevas experiencias.',
+                    medium: 'Balanceas bien entre apreciar lo nuevo y valorar lo familiar, lo que te da flexibilidad cognitiva sin perder estabilidad.',
+                    average: 'Puedes apreciar tanto lo novedoso como lo tradicional. Tienes flexibilidad en tu enfoque hacia nuevas ideas.',
+                    low: 'Tu preferencia por lo práctico y concreto es valiosa en campos que requieren aplicación consistente de métodos probados.'
+                }
+            };
+
+            const percentile = getPercentile(score, dimension);
+            let level = 'low';
+            if (percentile >= 75) level = 'high';
+            else if (percentile >= 50) level = 'medium';
+            else if (percentile >= 40) level = 'average';
+
+            return interpretations[dimension][level];
+        }
+
+        function getExtraversionDescription(score) {
+            const percentile = getPercentile(score, 'extraversion');
+            if (percentile >= 90) return 'Tu nivel de extraversión es <strong>muy alto</strong>. Eres extremadamente sociable, enérgico/a y te sientes muy cómodo/a en situaciones sociales. Disfrutas estar rodeado/a de gente y tiendes a ser muy expresivo/a y asertivo/a.';
+            if (percentile >= 75) return 'Tu nivel de extraversión es <strong>alto</strong>. Eres sociable y enérgico/a. Te sientes cómodo/a en situaciones sociales y disfrutas de la interacción con otras personas.';
+            if (percentile >= 50) return 'Tu nivel de extraversión es <strong>moderadamente alto</strong>. Disfrutas de la compañía de otros aunque también valoras momentos de tranquilidad. Te adaptas bien a diferentes situaciones sociales.';
+            if (percentile >= 40) return 'Tu nivel de extraversión es <strong>promedio</strong>. Balanceas entre lo social y lo reservado. Puedes disfrutar de interacciones sociales pero también necesitas tiempo a solas para recargar energías.';
+            if (percentile >= 25) return 'Tu nivel de extraversión es <strong>bajo</strong> (más introvertido/a). Tiendes a ser reservado/a y prefieres grupos pequeños. Necesitas tiempo a solas para recargar energías.';
+            return 'Tu nivel de extraversión es <strong>muy bajo</strong> (muy introvertido/a). Prefieres claramente ambientes tranquilos y contacto social limitado. Te recargas con tiempo a solas y disfrutas de actividades solitarias.';
+        }
+
+        function getAgreeablenessDescription(score) {
+            const percentile = getPercentile(score, 'agreeableness');
+            if (percentile >= 90) return 'Tu nivel de amabilidad es <strong>muy alto</strong>. Eres extremadamente empático/a, cooperativo/a y considerado/a con los demás. Priorizas fuertemente la armonía en las relaciones.';
+            if (percentile >= 75) return 'Tu nivel de amabilidad es <strong>alto</strong>. Eres muy compasivo/a y cooperativo/a. Te importa mucho el bienestar de otros y construyes relaciones armoniosas.';
+            if (percentile >= 50) return 'Tu nivel de amabilidad es <strong>moderadamente alto</strong>. Eres compasivo/a y trabajas bien en equipo, aunque también puedes ser firme cuando es necesario.';
+            if (percentile >= 40) return 'Tu nivel de amabilidad es <strong>promedio</strong>. Balanceas entre ser empático/a y proteger tus propios intereses. Puedes ser cooperativo/a pero también directo/a cuando la situación lo requiere.';
+            if (percentile >= 25) return 'Tu nivel de amabilidad es <strong>bajo</strong>. Tiendes a priorizar la objetividad sobre la empatía. Eres directo/a en tus opiniones y selectivo/a al confiar.';
+            return 'Tu nivel de amabilidad es <strong>muy bajo</strong>. Eres muy directo/a y escéptico/a. Priorizas claramente tus intereses y valoras la franqueza sobre la armonía social.';
+        }
+
+        function getConscientiousnessDescription(score) {
+            const percentile = getPercentile(score, 'conscientiousness');
+            if (percentile >= 90) return 'Tu nivel de responsabilidad es <strong>muy alto</strong>. Eres extremadamente organizado/a, disciplinado/a y orientado/a a objetivos. Prestas atención meticulosa a los detalles.';
+            if (percentile >= 75) return 'Tu nivel de responsabilidad es <strong>alto</strong>. Eres muy organizado/a y trabajador/a. Planificas con anticipación y cumples consistentemente con tus compromisos.';
+            if (percentile >= 50) return 'Tu nivel de responsabilidad es <strong>moderadamente alto</strong>. Eres organizado/a y cumples con tus responsabilidades de manera generalmente confiable.';
+            if (percentile >= 40) return 'Tu nivel de responsabilidad es <strong>promedio</strong>. Balanceas entre organización y espontaneidad. Puedes planificar cuando es necesario pero también disfrutas de flexibilidad.';
+            if (percentile >= 25) return 'Tu nivel de responsabilidad es <strong>bajo</strong>. Tiendes a ser más espontáneo/a que planificador/a. Prefieres flexibilidad y puedes procrastinar ocasionalmente.';
+            return 'Tu nivel de responsabilidad es <strong>muy bajo</strong>. Prefieres claramente la espontaneidad sobre la planificación. Eres muy flexible aunque esto puede afectar el cumplimiento de plazos.';
+        }
+
+        function getNeuroticismDescription(score) {
+            const percentile = getPercentile(score, 'neuroticism');
+            if (percentile >= 90) return 'Tu nivel de neuroticismo es <strong>muy alto</strong> (estabilidad emocional muy baja). Experimentas emociones muy intensamente y eres muy sensible al estrés. Es importante desarrollar estrategias de manejo emocional.';
+            if (percentile >= 75) return 'Tu nivel de neuroticismo es <strong>alto</strong> (estabilidad emocional baja). Tiendes a experimentar preocupación y ansiedad con frecuencia. Te beneficiarías de técnicas de gestión del estrés.';
+            if (percentile >= 50) return 'Tu nivel de neuroticismo es <strong>moderadamente alto</strong>. Experimentas preocupación ocasional pero generalmente manejas el estrés de forma adecuada.';
+            if (percentile >= 40) return 'Tu nivel de neuroticismo es <strong>promedio</strong> (estabilidad emocional moderada). Tienes un equilibrio razonable en tu respuesta emocional. Manejas el estrés relativamente bien.';
+            if (percentile >= 25) return 'Tu nivel de neuroticismo es <strong>bajo</strong> (estabilidad emocional alta). Eres calmado/a y resiliente. Manejas bien el estrés y te recuperas rápidamente de contratiempos.';
+            return 'Tu nivel de neuroticismo es <strong>muy bajo</strong> (estabilidad emocional muy alta). Eres extremadamente calmado/a y emocionalmente estable. Mantienes la compostura incluso en situaciones muy difíciles.';
+        }
+
+        function getOpennessDescription(score) {
+            const percentile = getPercentile(score, 'openness');
+            if (percentile >= 90) return 'Tu nivel de apertura es <strong>muy alto</strong>. Eres extremadamente curioso/a, creativo/a y abierto/a a nuevas experiencias. Buscas activamente lo novedoso y lo intelectual.';
+            if (percentile >= 75) return 'Tu nivel de apertura es <strong>alto</strong>. Eres muy curioso/a e imaginativo/a. Disfrutas explorando ideas abstractas y valoras la creatividad y diversidad de perspectivas.';
+            if (percentile >= 50) return 'Tu nivel de apertura es <strong>moderadamente alto</strong>. Disfrutas de nuevas experiencias y eres imaginativo/a, aunque también valoras cierta estabilidad.';
+            if (percentile >= 40) return 'Tu nivel de apertura es <strong>promedio</strong>. Balanceas entre lo familiar y lo nuevo. Puedes disfrutar de nuevas experiencias ocasionalmente pero también valoras la estabilidad.';
+            if (percentile >= 25) return 'Tu nivel de apertura es <strong>bajo</strong>. Prefieres lo familiar y práctico sobre lo abstracto. Valoras la tradición y las rutinas establecidas.';
+            return 'Tu nivel de apertura es <strong>muy bajo</strong>. Prefieres claramente lo convencional y lo concreto. Valoras fuertemente las tradiciones y te sientes más cómodo/a con lo familiar.';
+        }
+
+        async function sendToGoogleSheets(data) {
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbx_l2Rdbv440jd0YghewfVaEMbZ0Fw7Z5x2j9nVday15hV_T-ZcH9B2-K95kGSJ6ruh/exec';
+
+            try {
+                // Convertir array de 50 respuestas a "5,4,3,..."
+                const respuestasString = Array.isArray(data.respuestas)
+                    ? data.respuestas.join(',')
+                    : String(data.respuestas || '');
+
+                const params = new URLSearchParams({
+                    accion: 'guardar',
+                    fecha: data.fecha || '',
+                    nombre: data.nombre || '',
+                    apellido: data.apellido || '',
+                    usuario: data.user || '',
+                    email: data.email || '',                 // ✅ email usuario
+                    email_admin: data.email_admin || '',     // ✅ email admin
+                    respuestas: respuestasString             // ✅ "5,4,3,..."
+                });
+
+
+                const fullUrl = `${scriptUrl}?${params.toString()}`;
+
+                await fetch(fullUrl, { method: 'GET', mode: 'no-cors' });
+
+                console.log('✅ Petición enviada (no-cors).');
+                return true;
+            } catch (error) {
+                console.error('❌ Error al enviar datos a Google Sheets:', error);
+                return false;
+            }
+        }
+
+
+        function exportResults() {
+            window.print();
+        }
+
+        function restartTest() {
+            currentPage = 0;
+            answers = {};
+            questionOrder = [];
+
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('intro').classList.remove('hidden');
+            document.getElementById('validationMessage').classList.add('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DNLA Personal Insight Profile - Escencial Consultora</title>
+  <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      min-height: 100vh;
+      padding: 24px;
+      background-color: #E8DCC6;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='150' viewBox='0 0 260 150'%3E%3Cg fill='none' stroke='%23B29365' stroke-opacity='0.5' stroke-width='1'%3E%3Cpath d='M50 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M85 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M155 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M50 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 90l20-12 20 12v24l-20 12-20-12z'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 260px 150px;
+      background-repeat: repeat;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      padding: 32px 48px;
+      position: relative;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 12px auto;
+      height: 80px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.15));
+    }
+
+    h1,
+    h2 {
+      color: #2E2E2E;
+      text-align: center;
+      letter-spacing: -0.3px;
+    }
+
+    h1 {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    h2 {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 24px 0;
+    }
+
+    .subtitle {
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .main-header {
+      text-align: center;
+      margin-bottom: 24px;
+      padding: 18px 20px;
+      background: linear-gradient(135deg, #B29365, #2E2E2E);
+      border-radius: 16px;
+      color: white;
+      box-shadow: 0 8px 25px rgba(178, 147, 101, 0.25);
+    }
+
+    .main-header h1 {
+      color: white;
+      font-size: 28px;
+      margin: 0;
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .main-header p {
+      color: rgba(255, 255, 255, 0.95);
+      font-size: 15px;
+      margin: 8px 0 0 0;
+      line-height: 1.5;
+    }
+
+    .form-group {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      color: #334155;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      text-align: center;
+      transition: all 0.3s ease;
+      background: white;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #B29365;
+      box-shadow: 0 0 0 4px rgba(178, 147, 101, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      color: white;
+      background: linear-gradient(135deg, #B29365, #2E2E2E);
+      box-shadow: 0 4px 15px rgba(178, 147, 101, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(178, 147, 101, 0.4);
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 24px;
+      border-left: 4px solid #B29365;
+      text-align: center;
+    }
+
+    .info-box p {
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(90deg, #e2e8f0, #cbd5e1);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #B29365, #2E2E2E);
+      transition: width 0.4s ease;
+      border-radius: 10px;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .question-box {
+      background: linear-gradient(135deg, #fff, #f8fafc);
+      padding: 32px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    .question-text {
+      font-size: 20px;
+      color: #2E2E2E;
+      text-align: center;
+      font-weight: 600;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .option {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .option:hover {
+      border-color: #B29365;
+      background: linear-gradient(135deg, #f8fafc, #fff);
+      transform: translateX(5px);
+      box-shadow: 0 4px 15px rgba(178, 147, 101, 0.1);
+    }
+
+    .option.selected {
+      border-color: #B29365;
+      background: linear-gradient(135deg, #B29365, #2E2E2E);
+      color: white;
+      transform: translateX(8px);
+    }
+
+    .success-message {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .success-message h2 {
+      color: #10b981;
+      font-size: 32px;
+      margin-bottom: 16px;
+    }
+
+    .success-message p {
+      color: #64748b;
+      font-size: 18px;
+      line-height: 1.6;
+    }
+
+    .loading {
+      text-align: center;
+      padding: 40px;
+    }
+
+    .spinner {
+      border: 4px solid #e2e8f0;
+      border-top: 4px solid #B29365;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px;
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg);
+      }
+
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 24px 20px;
+      }
+
+      body {
+        padding: 16px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .question-text {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<a href="../../usuarios.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Volver a Usuarios
+    </a>
+
+    <style>
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2E2E2E !important;
+            border: 2px solid #2E2E2E;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: #2E2E2E;
+            color: white !important;
+            box-shadow: 0 6px 15px rgba(46, 46, 46, 0.2);
+        }
+
+        .btn-back svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Ocultar en móviles muy pequeños si molesta, o ajustar */
+        @media (max-width: 480px) {
+            .btn-back {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+        
+        @media print {
+            .btn-back { display: none !important; }
+        }
+    </style>
+
+  <div class="container">
+
+    <!-- Sección de Registro -->
+    <div id="registerSection">
+      <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+
+      <div class="main-header">
+        <h1>DNLA - Percepción Personal</h1>
+        <p>Evaluación de Bienestar y Desarrollo Personal</p>
+      </div>
+
+      <div class="form-group">
+        <label for="firstName">Nombre:</label>
+        <input type="text" id="firstName" placeholder="Ingresa tu nombre" required>
+      </div>
+
+      <div class="form-group">
+        <label for="lastName">Apellido:</label>
+        <input type="text" id="lastName" placeholder="Ingresa tu apellido" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Correo Electrónico:</label>
+        <input type="email" id="email" placeholder="tu@email.com" required>
+      </div>
+
+      <button class="btn" onclick="startTest()">✨ Comenzar Evaluación</button>
+
+      <div class="info-box">
+        <p><strong>📋 Instrucciones:</strong> Responderás 24 preguntas sobre tu bienestar personal. No hay respuestas
+          correctas o incorrectas. Sé honesto contigo mismo. La evaluación toma aproximadamente 5-7 minutos.</p>
+      </div>
+    </div>
+
+    <!-- Sección de Cuestionario -->
+    <div id="questionSection" class="hidden">
+      <img src="./img/escencial-logo.png" alt="Logo Escencial" class="logo">
+
+      <div class="progress-text">
+        <span>Pregunta <span id="currentQuestion">1</span> de 24</span>
+        <span id="progressPercentage">4%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill" style="width: 4.17%;"></div>
+      </div>
+
+      <div class="question-box">
+        <div class="question-text" id="questionText"></div>
+        <div id="optionsContainer"></div>
+      </div>
+
+      <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Siguiente ➔</button>
+    </div>
+
+    <!-- Sección de Carga -->
+    <div id="loadingSection" class="hidden">
+      <div class="loading">
+        <div class="spinner"></div>
+        <h2>Procesando tus respuestas...</h2>
+        <p>Enviando datos..</p>
+      </div>
+    </div>
+
+    <!-- Sección de Confirmación -->
+    <div id="successSection" class="hidden">
+      <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+      <div class="success-message">
+        <h2>✅ Test Completado</h2>
+        <p style="margin-top: 8px; font-weight: 600;">¡Gracias!</p>
+        <p style="margin-top: 16px; color: #10b981; font-weight: 600;">✓ Tus resultados han sido registrados exitosamente</p>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function guard() {
+            const logged = localStorage.getItem('sessionLoggedIn') === '1';
+            if (!logged) {
+                // ajusta el path según tu estructura
+                window.location.href = '../../evaluaciones.html'; // o donde esté tu login/panel
+            }
+        })();
+    // Preguntas del cuestionario
+    const questions = [
+      "Reconozco mis fortalezas y las utilizo conscientemente.",
+      "Confío en mis capacidades para enfrentar desafíos.",
+      "Acepto mis errores como parte de mi aprendizaje.",
+      "Me siento valorado/a por quién soy.",
+      "Siento que mi vida tiene un propósito claro.",
+      "Tengo metas personales que me motivan.",
+      "Disfruto aprender cosas nuevas.",
+      "Cuando enfrento obstáculos, mantengo mi motivación.",
+      "Mantengo la calma en situaciones de estrés.",
+      "Me adapto fácilmente a cambios imprevistos.",
+      "Busco soluciones constructivas ante problemas.",
+      "Me recupero rápidamente de situaciones difíciles.",
+      "Escucho activamente las necesidades de los demás.",
+      "Comprendo perspectivas diferentes a la mía.",
+      "Mantengo relaciones saludables y equilibradas.",
+      "Ofrezco apoyo emocional cuando otros lo necesitan.",
+      "Mantengo un equilibrio entre vida personal y responsabilidades.",
+      "Dedico tiempo a actividades que me recargan.",
+      "Reconozco cuándo necesito descansar.",
+      "Priorizo mi bienestar sin sentir culpa.",
+      "Aprendo de mis experiencias pasadas.",
+      "Reflexiono sobre mis decisiones regularmente.",
+      "Estoy abierto/a a recibir feedback constructivo.",
+      "Siento que estoy creciendo como persona."
+    ];
+
+    const options = [
+      { text: '🔵 Siempre', value: 5 },
+      { text: '🟢 Frecuentemente', value: 4 },
+      { text: '🟡 A veces', value: 3 },
+      { text: '🟠 Rara vez', value: 2 },
+      { text: '🔴 Nunca', value: 1 }
+    ];
+
+    // Variables globales
+    let currentQuestionIndex = 0;
+    let answers = [];
+    let userName = '';
+    let userLastName = '';
+    let userEmail = '';
+
+    // Función para iniciar el test
+    function startTest() {
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName = document.getElementById('lastName').value.trim();
+      const email = document.getElementById('email').value.trim();
+
+      if (!firstName || !lastName || !email) {
+        alert('⚠️ Por favor completa todos los campos antes de continuar.');
+        return;
+      }
+
+      if (!validateEmail(email)) {
+        alert('⚠️ Por favor ingresa un correo electrónico válido.');
+        return;
+      }
+
+      userName = firstName;
+      userLastName = lastName;
+      userEmail = email;
+
+      document.getElementById('registerSection').classList.add('hidden');
+      document.getElementById('questionSection').classList.remove('hidden');
+
+      loadQuestion();
+    }
+
+    // Validar email
+    function validateEmail(email) {
+      const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return re.test(email);
+    }
+
+    // Cargar pregunta
+    function loadQuestion() {
+      const questionText = questions[currentQuestionIndex];
+      document.getElementById('questionText').textContent = questionText;
+
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+
+      options.forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        optionDiv.textContent = option.text;
+        optionDiv.onclick = () => selectOption(option.value, optionDiv);
+        optionsContainer.appendChild(optionDiv);
+      });
+
+      updateProgress();
+    }
+
+    // Seleccionar opción
+    function selectOption(value, element) {
+      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+      answers[currentQuestionIndex] = value;
+      document.getElementById('nextBtn').disabled = false;
+    }
+
+    // Siguiente pregunta
+    function nextQuestion() {
+      if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        document.getElementById('nextBtn').disabled = true;
+        loadQuestion();
+      } else {
+        finishTest();
+      }
+    }
+
+    // Actualizar progreso
+    function updateProgress() {
+      const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+      document.getElementById('progressPercentage').textContent = Math.round(progress) + '%';
+    }
+
+    // Finalizar test y enviar datos
+    function finishTest() {
+
+      const adminData = localStorage.getItem('adminData');
+      let admin;
+      if (adminData) {
+        admin = JSON.parse(adminData);
+        console.log("Admin logueado:", admin.nombre);
+      } else {
+        console.log("No hay admin logueado.");
+      }
+      // Mostrar sección de carga
+      document.getElementById('questionSection').classList.add('hidden');
+      document.getElementById('loadingSection').classList.remove('hidden');
+
+      // Preparar datos para enviar (las respuestas en formato simple separadas por coma)
+      const respuestas = answers.join(',');
+
+      // URL del Google Apps Script
+      const scriptUrl = 'https://script.google.com/macros/s/AKfycbwYUrMzxz8sh2wN9KgN6WFdnahG4NRDl0C5ZUPdEjfRyDPbE0ioIHnqLGyocXrnzBun/exec';
+
+      // Construir URL con parámetros (según el formato que espera tu Apps Script)
+      const url = `${scriptUrl}?accion=guardar&nombre=${encodeURIComponent(userName)}&apellido=${encodeURIComponent(userLastName)}&email=${encodeURIComponent(admin.email)}&respuestas=${encodeURIComponent(respuestas)}`;
+
+      console.log('Enviando datos a:', url);
+
+      // Enviar datos mediante GET
+      fetch(url, {
+        method: 'GET',
+        redirect: 'follow'
+      })
+        .then(response => response.text())
+        .then(data => {
+          console.log('Respuesta del servidor:', data);
+          setTimeout(() => {
+            document.getElementById('loadingSection').classList.add('hidden');
+            document.getElementById('successSection').classList.remove('hidden');
+          }, 1000);
+        })
+        .catch(error => {
+          console.error('Error al enviar datos:', error);
+          alert('Hubo un error al enviar tus datos. Por favor, intenta nuevamente.');
+          document.getElementById('loadingSection').classList.add('hidden');
+          document.getElementById('questionSection').classList.remove('hidden');
+        });
+    }
+  </script>
+
+</body>
+
+</html>

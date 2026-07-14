@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Informe Test CHASIDE - <?= nombre ?> <?= apellido ?></title>
+    <style>
+        @media print {
+            body { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .page-break { page-break-before: always; }
+            .no-break { page-break-inside: avoid; }
+            .no-print { display: none !important; }
+        }
+        * { margin: 0; padding: 0; }
+        body { 
+            margin: 0; padding: 0; 
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; 
+            background-color: #ffffff; 
+            line-height: 1.5; 
+            color: #1a202c; 
+            font-size: 13px;
+        }
+        .firma-linea { width: 220px; border-bottom: 1px solid #2D3748; margin: 0 auto 8px auto; }
+        .firma-texto { font-size: 12px; color: #4A5568; margin: 0; text-align: center; }
+    </style>
+</head>
+<body>
+
+<!-- ============================================================ -->
+<!-- PÁGINA 1: PORTADA + CÓDIGO + GRÁFICO + BARRAS                -->
+<!-- ============================================================ -->
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;">
+    <tr><td align="center" style="padding:0;">
+        <table width="680" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;">
+            <tr><td style="padding:30px 40px;">
+                
+                <!-- HEADER COMPACTO -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;border-bottom:2px solid #0b4a6e;padding-bottom:15px;">
+                    <tr>
+                        <td style="vertical-align:middle;">
+                            <p style="margin:0;font-size:20px;font-weight:700;color:#0b4a6e;font-family:Georgia,serif;">Test CHASIDE</p>
+                            <p style="margin:2px 0 0 0;font-size:11px;color:#64748b;">Orientación Vocacional — 7 Áreas</p>
+                        </td>
+                        <td align="right" style="vertical-align:middle;">
+                            <p style="margin:0;font-size:10px;color:#94a3b8;text-transform:uppercase;letter-spacing:1px;">Informe Vocacional</p>
+                            <p style="margin:2px 0 0 0;font-size:12px;color:#2D3748;font-weight:600;"><?= fechaActual ?></p>
+                        </td>
+                    </tr>
+                </table>
+                
+                <!-- DATOS DEL EVALUADO -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#0b4a6e;border-radius:10px;margin-bottom:20px;">
+                    <tr><td style="padding:20px 25px;">
+                        <p style="margin:0 0 4px 0;font-size:10px;color:rgba(255,255,255,0.6);text-transform:uppercase;letter-spacing:1.5px;">Evaluado/a</p>
+                        <p style="margin:0;font-family:Georgia,serif;font-size:22px;font-weight:700;color:#ffffff;"><?= nombre ?> <?= apellido ?></p>
+                    </td>
+                    <td align="right" style="padding:20px 25px;vertical-align:middle;">
+                        <p style="margin:0;font-size:11px;color:rgba(255,255,255,0.7);">Respuestas: <strong style="color:#fff;"><?= resultado.totalSI ?> SÍ</strong> / <strong style="color:#fff;"><?= resultado.totalNO ?> NO</strong></p>
+                    </td></tr>
+                </table>
+                
+                <!-- CÓDIGO DE PERFIL -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f1f5f9;border-radius:10px;margin-bottom:25px;text-align:center;">
+                    <tr><td style="padding:25px 20px;">
+                        <p style="margin:0 0 6px 0;font-size:10px;font-weight:600;color:#94a3b8;text-transform:uppercase;letter-spacing:2px;">Código de Perfil Vocacional</p>
+                        <p style="margin:0 0 8px 0;font-family:Georgia,serif;font-size:42px;font-weight:800;color:#0b4a6e;letter-spacing:6px;"><?= resultado.codigoPerfil ?></p>
+                        <p style="margin:0;font-size:14px;color:#334155;font-weight:600;"><?= resultado.top2[0].nombre ?> + <?= resultado.top2[1].nombre ?></p>
+                    </td></tr>
+                </table>
+                
+                <!-- GRÁFICO DE PERFIL -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;">
+                    <tr><td>
+                        <p style="margin:0 0 12px 0;font-family:Georgia,serif;font-size:16px;font-weight:700;color:#1A1F2E;padding-bottom:8px;border-bottom:1px solid #E2E8F0;">Perfil de Intereses Vocacionales</p>
+                    </td></tr>
+                </table>
+                
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#f8fafc;border:1px solid #E2E8F0;border-radius:10px;margin-bottom:15px;">
+                    <tr><td style="padding:20px 15px;text-align:center;">
+                        <img src="<?= chartUrl ?>" alt="Gráfico CHASIDE" style="max-width:100%;width:560px;height:auto;display:block;margin:0 auto;" />
+                    </td></tr>
+                </table>
+                <p style="margin:0 0 20px 0;font-size:10px;color:#94a3b8;text-align:center;">
+                    <span style="color:#10b981;">&#9632;</span> Muy Alto (12-14) &nbsp; 
+                    <span style="color:#0b4a6e;">&#9632;</span> Alto (9-11) &nbsp; 
+                    <span style="color:#f59e0b;">&#9632;</span> Promedio (5-8) &nbsp; 
+                    <span style="color:#ef4444;">&#9632;</span> Bajo (0-4)
+                </p>
+
+                <!-- ANÁLISIS DETALLADO COMPACTO (7 barras) -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:10px;">
+                    <tr><td>
+                        <p style="margin:0 0 10px 0;font-family:Georgia,serif;font-size:16px;font-weight:700;color:#1A1F2E;padding-bottom:8px;border-bottom:1px solid #E2E8F0;">Análisis Detallado por Área</p>
+                    </td></tr>
+                </table>
+
+                <? resultado.areasOrdenadas.forEach(function(area, index) { 
+                    var colorBarra = area.puntajeDirecto >= 12 ? '#10b981' : 
+                                     area.puntajeDirecto >= 9 ? '#0b4a6e' : 
+                                     area.puntajeDirecto >= 5 ? '#f59e0b' : '#ef4444';
+                    var porcentaje = Math.round((area.puntajeDirecto / 14) * 100);
+                ?>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:6px;">
+                    <tr>
+                        <td style="width:24px;font-size:11px;font-weight:700;color:#94a3b8;vertical-align:middle;"><?= index + 1 ?></td>
+                        <td style="width:35px;font-size:12px;font-weight:800;color:#0b4a6e;vertical-align:middle;"><?= area.letra ?></td>
+                        <td style="vertical-align:middle;">
+                            <div style="width:100%;height:18px;background:#edf2f7;border-radius:4px;overflow:hidden;position:relative;">
+                                <div style="width:<?= porcentaje ?>%;height:100%;background:<?= colorBarra ?>;border-radius:4px;"></div>
+                            </div>
+                        </td>
+                        <td style="width:50px;text-align:right;font-size:12px;font-weight:700;color:#334155;vertical-align:middle;padding-left:8px;"><?= area.puntajeDirecto ?>/14</td>
+                        <td style="width:70px;text-align:right;font-size:10px;color:#94a3b8;vertical-align:middle;">Int:<?= area.puntajeIntereses ?> Apt:<?= area.puntajeAptitudes ?></td>
+                    </tr>
+                </table>
+                <? }); ?>
+
+            </td></tr>
+        </table>
+    </td></tr>
+</table>
+
+<!-- ============================================================ -->
+<!-- PÁGINA 2: ÁREAS PREFERENTES + PROFESIONES + DESGLOSE         -->
+<!-- ============================================================ -->
+<div class="page-break"></div>
+
+<table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;">
+    <tr><td align="center" style="padding:0;">
+        <table width="680" cellpadding="0" cellspacing="0" border="0" style="background-color:#ffffff;">
+            <tr><td style="padding:30px 40px;">
+
+                <!-- MINI HEADER PÁGINA 2 -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:20px;border-bottom:1px solid #E2E8F0;padding-bottom:10px;">
+                    <tr>
+                        <td><p style="margin:0;font-size:11px;color:#94a3b8;">Test CHASIDE — <?= nombre ?> <?= apellido ?></p></td>
+                        <td align="right"><p style="margin:0;font-size:11px;color:#94a3b8;"><?= fechaActual ?> — Pág. 2</p></td>
+                    </tr>
+                </table>
+
+                <!-- ÁREAS DE INTERÉS PREFERENTE -->
+                <? if (resultado.areasAltas.length > 0) { ?>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:15px;">
+                    <tr>
+                        <td style="width:3px;background-color:#10b981;border-radius:2px;"></td>
+                        <td style="padding-left:12px;"><p style="margin:0;font-size:16px;font-weight:700;color:#1A1F2E;font-family:Georgia,serif;">Áreas de Interés Preferente</p></td>
+                    </tr>
+                </table>
+                
+                <? resultado.areasAltas.forEach(function(area) { 
+                    var colorBorde = area.puntajeDirecto >= 12 ? '#10b981' : '#0b4a6e';
+                ?>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" class="no-break" style="border:1px solid #E2E8F0;border-left:3px solid <?= colorBorde ?>;border-radius:8px;margin-bottom:12px;">
+                    <tr><td style="padding:15px 18px;">
+                        <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                            <tr>
+                                <td>
+                                    <p style="margin:0 0 2px 0;font-size:14px;font-weight:700;color:#1A1F2E;"><?= area.letra ?> — <?= area.nombre ?></p>
+                                    <p style="margin:0;font-size:10px;color:#94a3b8;">Puntaje: <?= area.puntajeDirecto ?>/14 · Intereses: <?= area.puntajeIntereses ?>/<?= area.maxIntereses ?> · Aptitudes: <?= area.puntajeAptitudes ?>/<?= area.maxAptitudes ?></p>
+                                </td>
+                                <td align="right" style="width:55px;">
+                                    <div style="display:inline-block;background:<?= colorBorde ?>;color:white;padding:6px 12px;border-radius:20px;font-size:15px;font-weight:700;"><?= area.puntajeDirecto ?></div>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="margin:10px 0 8px 0;font-size:12px;color:#475569;line-height:1.6;"><?= area.descripcion ?></p>
+                        <p style="margin:0 0 4px 0;font-size:11px;color:#64748b;"><strong>Aptitudes:</strong> <?= area.aptitudes.join(', ') ?></p>
+                        <p style="margin:0;font-size:11px;color:#0b4a6e;"><strong>Profesiones:</strong> <?= area.profesiones.slice(0, 6).join(' · ') ?></p>
+                    </td></tr>
+                </table>
+                <? }); ?>
+                <? } ?>
+                
+                <!-- PROFESIONES SUGERIDAS POR COMBINACIÓN -->
+                <? if (resultado.profesionesCombinadas.length > 0) { ?>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:20px 0 12px 0;">
+                    <tr>
+                        <td style="width:3px;background-color:#0b4a6e;border-radius:2px;"></td>
+                        <td style="padding-left:12px;"><p style="margin:0;font-size:16px;font-weight:700;color:#1A1F2E;font-family:Georgia,serif;">Profesiones Sugeridas — Código <?= resultado.codigoPerfil ?></p></td>
+                    </tr>
+                </table>
+                
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" class="no-break" style="background:#f0f9ff;border:1px solid #bae6fd;border-radius:8px;margin-bottom:20px;">
+                    <tr><td style="padding:18px 20px;">
+                        <p style="margin:0 0 10px 0;font-size:11px;color:#0369a1;">Combinación de <strong><?= resultado.top2[0].nombre ?></strong> + <strong><?= resultado.top2[1].nombre ?></strong>:</p>
+                        <? resultado.profesionesCombinadas.forEach(function(prof) { ?>
+                        <p style="margin:0 0 4px 0;font-size:12px;color:#1e40af;font-weight:500;">&#8594; <?= prof ?></p>
+                        <? }); ?>
+                    </td></tr>
+                </table>
+                <? } ?>
+                
+                <!-- TABLA DE DESGLOSE INTERESES VS APTITUDES -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:20px 0 12px 0;">
+                    <tr>
+                        <td style="width:3px;background-color:#6366f1;border-radius:2px;"></td>
+                        <td style="padding-left:12px;"><p style="margin:0;font-size:16px;font-weight:700;color:#1A1F2E;font-family:Georgia,serif;">Desglose: Intereses vs Aptitudes</p></td>
+                    </tr>
+                </table>
+
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" class="no-break" style="border:1px solid #E2E8F0;border-radius:8px;overflow:hidden;margin-bottom:20px;">
+                    <tr style="background:#0b4a6e;">
+                        <td style="padding:8px 12px;color:white;font-weight:700;font-size:11px;">Área</td>
+                        <td style="padding:8px 10px;color:white;font-weight:700;font-size:11px;text-align:center;width:85px;">Intereses</td>
+                        <td style="padding:8px 10px;color:white;font-weight:700;font-size:11px;text-align:center;width:85px;">Aptitudes</td>
+                        <td style="padding:8px 10px;color:white;font-weight:700;font-size:11px;text-align:center;width:75px;">Total</td>
+                    </tr>
+                    <? resultado.areasOrdenadas.forEach(function(area, idx) { 
+                        var bgRow = idx % 2 === 0 ? '#ffffff' : '#f8fafc';
+                        var colorTotal = area.puntajeDirecto >= 12 ? '#10b981' : 
+                                         area.puntajeDirecto >= 9 ? '#0b4a6e' : 
+                                         area.puntajeDirecto >= 5 ? '#f59e0b' : '#ef4444';
+                    ?>
+                    <tr style="background:<?= bgRow ?>;">
+                        <td style="padding:7px 12px;font-size:11px;font-weight:600;color:#334155;border-bottom:1px solid #f1f5f9;"><?= area.letra ?> — <?= area.nombre ?></td>
+                        <td style="padding:7px 10px;font-size:12px;text-align:center;color:#475569;border-bottom:1px solid #f1f5f9;"><?= area.puntajeIntereses ?> / <?= area.maxIntereses ?></td>
+                        <td style="padding:7px 10px;font-size:12px;text-align:center;color:#475569;border-bottom:1px solid #f1f5f9;"><?= area.puntajeAptitudes ?> / <?= area.maxAptitudes ?></td>
+                        <td style="padding:7px 10px;font-size:12px;text-align:center;font-weight:700;color:<?= colorTotal ?>;border-bottom:1px solid #f1f5f9;"><?= area.puntajeDirecto ?> / 14</td>
+                    </tr>
+                    <? }); ?>
+                </table>
+
+                <!-- ÁREAS DE MENOR INTERÉS -->
+                <? if (resultado.areasBajas.length > 0) { ?>
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" class="no-break" style="background:#fef2f2;border:1px solid #fecaca;border-radius:8px;margin-bottom:20px;">
+                    <tr><td style="padding:15px 18px;">
+                        <p style="margin:0 0 8px 0;font-size:12px;color:#991b1b;font-weight:700;">Áreas de Menor Interés (Puntaje &#8804; 4)</p>
+                        <? resultado.areasBajas.forEach(function(area) { ?>
+                        <p style="margin:0 0 3px 0;font-size:12px;color:#7f1d1d;">&#8226; <strong><?= area.letra ?> — <?= area.nombre ?></strong> (<?= area.puntajeDirecto ?>/14)</p>
+                        <? }); ?>
+                    </td></tr>
+                </table>
+                <? } ?>
+
+                <!-- SEPARADOR -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin:15px 0;"><tr><td style="height:1px;background-color:#E2E8F0;"></td></tr></table>
+
+                <!-- SOBRE EL TEST (compacto) -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" class="no-break" style="background-color:#1A1F2E;border-radius:10px;margin-bottom:18px;">
+                    <tr><td style="padding:22px 25px;">
+                        <p style="margin:0 0 10px 0;font-size:15px;font-weight:700;color:white;font-family:Georgia,serif;">Sobre el Test CHASIDE</p>
+                        <p style="margin:0 0 8px 0;font-size:11px;line-height:1.7;color:rgba(255,255,255,0.85);">El <strong>Test CHASIDE</strong> evalúa intereses y aptitudes en <strong>7 áreas vocacionales</strong>: Cálculo/Administrativo (C), Humanísticas (H), Artísticas (A), Servicio Social/Salud (S), Ingeniería/Computación (I), Defensa/Seguridad (D) y Ciencias Exactas/Agrarias (E). A través de 98 preguntas de respuesta SÍ/NO, revela las preferencias vocacionales del sujeto.</p>
+                        <p style="margin:0;font-size:11px;line-height:1.7;color:rgba(255,255,255,0.85);"><strong>Importante:</strong> Este test mide intereses y aptitudes autopercibidas, no habilidades objetivas. Los resultados son una guía que debe complementarse con otros instrumentos y acompañamiento profesional.</p>
+                    </td></tr>
+                </table>
+                
+                <!-- NOTA -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" class="no-break" style="background:#fffbeb;border:1px solid #fcd34d;border-radius:8px;margin-bottom:25px;">
+                    <tr><td style="padding:14px 18px;">
+                        <p style="margin:0;font-size:11px;color:#92400e;line-height:1.6;"><strong>Nota:</strong> Los resultados son orientativos y deben ser interpretados por un profesional de la orientación vocacional. Se recomienda complementar con otros instrumentos de evaluación para una orientación integral.</p>
+                    </td></tr>
+                </table>
+                
+                <!-- FIRMA -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:40px;">
+                    <tr><td style="text-align:center;">
+                        <div class="firma-linea"></div>
+                        <p class="firma-texto">Firma del Orientador/Evaluador</p>
+                    </td></tr>
+                </table>
+                
+                <!-- FOOTER -->
+                <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:30px;padding-top:15px;border-top:1px solid #E2E8F0;">
+                    <tr><td style="text-align:center;color:#94a3b8;font-size:10px;line-height:1.5;">
+                        <p style="margin:0 0 3px 0;">© 2026 JIM Juvenil Instituto Moderno — Todos los derechos reservados</p>
+                        <p style="margin:0;">Informe confidencial de uso exclusivo para <strong><?= nombre ?> <?= apellido ?></strong></p>
+                    </td></tr>
+                </table>
+                
+            </td></tr>
+        </table>
+    </td></tr>
+</table>
+
+</body>
+</html>

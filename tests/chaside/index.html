@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Test de Orientación Vocacional CHASIDE</title>
+  <link rel="icon" type="image/png" href="../../img/favicon.png" sizes="32x32">
+  <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="../../img/favicon.png">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", sans-serif;
+      min-height: 100vh;
+      padding: 24px;
+      overflow: auto;
+      background-color: #E8DCC6;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='150' viewBox='0 0 260 150'%3E%3Cg fill='none' stroke='%23B29365' stroke-opacity='0.5' stroke-width='1'%3E%3Cpath d='M50 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M85 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M155 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M50 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 90l20-12 20 12v24l-20 12-20-12z'/%3E%3C/g%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: repeat;
+      background-size: 260px 150px;
+      background-attachment: fixed;
+    }
+
+    .container {
+      width: min(850px, 100% - 48px);
+      margin: 24px auto;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      padding: 48px;
+      position: relative;
+    }
+
+    h1 {
+      color: #020f27;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: -0.5px;
+      margin-top: 30px;
+    }
+
+    h2 {
+      color: #020f27;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 30px;
+      margin-top: 10px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 28px;
+    }
+
+    label {
+      display: block;
+      color: #334155;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    input[type="text"],
+    input[type="email"] {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: #fff;
+      text-align: center;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus {
+      outline: none;
+      border-color: #0b4a6e;
+      box-shadow: 0 0 0 4px rgba(11, 74, 110, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input::placeholder {
+      color: #94a3b8;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: #fff;
+      background: linear-gradient(135deg, #0b4a6e 0%, #020f27 100%);
+      box-shadow: 0 4px 15px rgba(11, 74, 110, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover:not(:disabled)::before {
+      left: 100%;
+    }
+
+    .btn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(11, 74, 110, 0.4);
+    }
+
+    .btn:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .logo {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      height: 64px;
+      width: auto;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 10px;
+      background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #0b4a6e 0%, #020f27 100%);
+      transition: width 0.4s ease;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(11, 74, 110, 0.3);
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: 22px;
+      color: #020f27;
+      font-weight: 700;
+      margin-bottom: 5px;
+      text-align: center;
+      padding-bottom: 16px;
+    }
+
+    .instructions {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 24px;
+      border-left: 4px solid #0b4a6e;
+      text-align: center;
+    }
+
+    .instructions p {
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .instructions p:last-child {
+      margin-bottom: 0;
+    }
+
+    .question-item {
+      background: linear-gradient(135deg, #fff 0%, #f8fafc 100%);
+      padding: 24px;
+      border-radius: 16px;
+      margin-bottom: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: all 0.3s ease;
+    }
+
+    .question-item:hover {
+      border-color: #0b4a6e;
+      transform: translateX(4px);
+    }
+
+    .question-number {
+      font-size: 13px;
+      color: #fff;
+      font-weight: 700;
+      background: linear-gradient(135deg, #0b4a6e 0%, #020f27 100%);
+      min-width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .question-text {
+      flex: 1;
+      color: #334155;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .answer-buttons {
+      display: flex;
+      gap: 8px;
+      flex-shrink: 0;
+    }
+
+    .answer-btn {
+      width: 56px;
+      height: 44px;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 700;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #64748b;
+    }
+
+    .answer-btn:hover {
+      border-color: #0b4a6e;
+    }
+
+    .answer-btn.active-si {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: #fff;
+      border-color: #059669;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    }
+
+    .answer-btn.active-no {
+      background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+      color: #fff;
+      border-color: #dc2626;
+      box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+    }
+
+    .navigation-buttons {
+      display: flex;
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .navigation-buttons button {
+      flex: 1;
+    }
+
+    /* Confirmation screen */
+    .confirmation-screen {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      animation: scaleIn 0.5s ease;
+      box-shadow: 0 8px 25px rgba(16, 185, 129, 0.3);
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    .success-icon::after {
+      content: "✓";
+      color: white;
+      font-size: 50px;
+      font-weight: bold;
+    }
+
+    .confirmation-title {
+      color: #020f27;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+
+    .confirmation-text {
+      color: #64748b;
+      font-size: 16px;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    .confirmation-email {
+      color: #0b4a6e;
+      font-weight: 700;
+      font-size: 18px;
+      margin: 16px 0 32px;
+    }
+
+    /* Loading spinner */
+    .loading-container {
+      text-align: center;
+      padding: 60px 0;
+    }
+
+    .spinner {
+      border: 6px solid #e2e8f0;
+      border-top: 6px solid #0b4a6e;
+      border-radius: 50%;
+      width: 70px;
+      height: 70px;
+      animation: spin 1s linear infinite;
+      margin: 0 auto 24px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+      color: #334155;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .loading-subtext {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        padding: 24px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      h2 {
+        font-size: 20px;
+      }
+
+      .navigation-buttons {
+        flex-direction: column;
+      }
+
+      .question-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .answer-buttons {
+        align-self: flex-end;
+      }
+
+      .answer-btn {
+        width: 60px;
+        height: 40px;
+      }
+
+      .logo {
+        height: 48px;
+        top: 16px;
+        left: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- <img src="../../img/logo-escencial.png" alt="Escencial Consultora" class="logo" /> -->
+
+    <!-- REGISTRO -->
+    <div id="registrationScreen">
+      <h1>Test de Orientación Vocacional</h1>
+      <p class="subtitle">
+        <strong>Método CHASIDE</strong><br>
+        Este test te ayudará a identificar tus áreas de interés vocacional mediante el método CHASIDE,
+        evaluando tus inclinaciones hacia 7 áreas: Cálculo, Humanidades, Arte, Servicio Social, Informática, Defensa y Ecología.<br>
+        No hay respuestas correctas o incorrectas, solo tus preferencias personales.
+      </p>
+      <p class="subtitle">Complete los datos para comenzar.</p>
+
+      <div class="form-group">
+        <label for="userName">Nombre</label>
+        <input type="text" id="userName" placeholder="Ingrese su nombre" />
+      </div>
+      <div class="form-group">
+        <label for="userLastName">Apellido</label>
+        <input type="text" id="userLastName" placeholder="Ingrese su apellido" />
+      </div>
+      <div class="form-group">
+        <label for="userEmail">Correo electrónico</label>
+        <input type="email" id="userEmail" placeholder="correo@ejemplo.com" />
+      </div>
+
+      <button class="btn" id="startBtn" disabled>Comenzar Test</button>
+    </div>
+
+    <!-- TEST -->
+    <div id="testScreen" class="hidden">
+      <div class="progress-text">
+        <span id="pageIndicator">Sección 1</span>
+        <span id="progressPercent">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+
+      <div class="instructions">
+        <p><strong>Instrucciones</strong></p>
+        <p>Lee atentamente cada pregunta y responde con sinceridad.</p>
+        <p>Selecciona <strong>SÍ</strong> si la actividad te interesa o <strong>NO</strong> si no te interesa.</p>
+        <p>Responde a todas las preguntas sin omitir ninguna.</p>
+      </div>
+
+      <div id="sectionContainer"></div>
+
+      <div class="navigation-buttons">
+        <button class="btn" id="prevBtn" disabled>Anterior</button>
+        <button class="btn" id="nextBtn" disabled>Siguiente</button>
+      </div>
+    </div>
+
+    <!-- CARGANDO -->
+    <div id="loadingScreen" class="hidden">
+      <div class="loading-container">
+        <div class="spinner"></div>
+        <div class="loading-text">Procesando tus respuestas...</div>
+        <div class="loading-subtext">Estamos registrando tu perfil vocacional</div>
+      </div>
+    </div>
+
+    <!-- CONFIRMACIÓN -->
+    <div id="confirmationScreen" class="hidden">
+      <div class="confirmation-screen">
+        <div class="success-icon"></div>
+        <div class="confirmation-title">¡Test Completado!</div>
+        <p class="confirmation-text">Gracias por completar el Test de Orientación Vocacional CHASIDE.</p>
+        <div id="finalDynamicArea" style="margin-top:16px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="./script.js"></script>
+
+</body>
+
+</html>

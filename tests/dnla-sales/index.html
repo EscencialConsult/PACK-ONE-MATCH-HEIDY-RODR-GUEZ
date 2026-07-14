@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DNLA Perfil Comercial - Escencial Consultora</title>
+  <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; margin: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      min-height: 100vh;
+      padding: 24px;
+      background-color: #E8DCC6;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='150' viewBox='0 0 260 150'%3E%3Cg fill='none' stroke='%23B29365' stroke-opacity='0.5' stroke-width='1'%3E%3Cpath d='M50 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M85 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M155 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M50 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 90l20-12 20 12v24l-20 12-20-12z'/%3E%3C/g%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: repeat;
+      background-size: 260px 150px;
+      background-attachment: fixed;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+      padding: 32px 48px;
+      position: relative;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto 12px auto;
+      height: 80px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+    }
+
+    .logo-results {
+      display: block;
+      margin: 0 auto 12px auto;
+      height: 85px;
+      width: auto;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
+    }
+
+    h1 {
+      color: #2E2E2E;
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      text-align: center;
+      letter-spacing: -0.5px;
+    }
+
+    h2 {
+      color: #2E2E2E;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-align: center;
+      letter-spacing: -0.3px;
+    }
+
+    .subtitle {
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 40px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .main-header .subtitle {
+      color: rgba(255,255,255,0.95);
+      margin-bottom: 0;
+      font-size: 15px;
+    }
+
+    .form-group { margin-bottom: 28px; }
+
+    label {
+      display: block;
+      color: #334155;
+      font-weight: 600;
+      margin-bottom: 10px;
+      text-align: center;
+      font-size: 15px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px 20px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-size: 16px;
+      transition: all 0.3s ease;
+      background: white;
+      text-align: center;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #B29365;
+      box-shadow: 0 0 0 4px rgba(178, 147, 101, 0.1);
+      transform: translateY(-2px);
+    }
+
+    input::placeholder { color: #94a3b8; }
+
+    .btn {
+      width: 100%;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: white;
+      background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+      box-shadow: 0 4px 15px rgba(178, 147, 101, 0.3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+
+    .btn:hover::before { left: 100%; }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(178, 147, 101, 0.4);
+    }
+
+    .btn:active { transform: translateY(-1px); }
+
+    .btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn:disabled:hover {
+      transform: none;
+      box-shadow: 0 4px 15px rgba(178, 147, 101, 0.3);
+    }
+
+    .info-box {
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      padding: 20px;
+      border-radius: 16px;
+      margin-top: 24px;
+      border-left: 4px solid #B29365;
+      text-align: center;
+    }
+
+    .info-box p {
+      color: #475569;
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    .progress-bar {
+      width: 100%; height: 10px;
+      background: linear-gradient(90deg, #e2e8f0 0%, #cbd5e1 100%);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #B29365 0%, #2E2E2E 100%);
+      transition: width 0.4s ease;
+      border-radius: 10px;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .question-box {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      padding: 32px;
+      border-radius: 20px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+
+    .question-text {
+      font-size: 20px;
+      color: #2E2E2E;
+      margin-bottom: 24px;
+      font-weight: 600;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .option {
+      background: white;
+      border: 2px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 18px 20px;
+      margin-bottom: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+    }
+
+    .option:hover {
+      border-color: #B29365;
+      transform: translateX(8px);
+      box-shadow: 0 4px 12px rgba(178, 147, 101, 0.15);
+    }
+
+    .option.selected {
+      background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+      color: white;
+      border-color: #2E2E2E;
+      transform: scale(1.02);
+    }
+
+    .option:before {
+      content: '○';
+      font-size: 24px;
+      margin-right: 12px;
+      color: #cbd5e1;
+      transition: all 0.3s ease;
+    }
+
+    .option.selected:before {
+      content: '●';
+      color: white;
+    }
+
+    .hidden { display: none !important; }
+
+    /* Estilos para la ventana de confirmación */
+    .success-message {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .success-icon {
+      font-size: 80px;
+      margin-bottom: 24px;
+      animation: scaleIn 0.5s ease-out;
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0); }
+      to { transform: scale(1); }
+    }
+
+    .success-message h2 {
+      color: #B29365;
+      margin-bottom: 16px;
+    }
+
+    .success-message p {
+      color: #475569;
+      font-size: 16px;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .result-header {
+      background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+      color: white;
+      padding: 32px;
+      border-radius: 20px;
+      text-align: center;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(178, 147, 101, 0.2);
+    }
+
+    .result-header h2 {
+      color: white;
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #2E2E2E;
+      margin: 32px 0 20px 0;
+      padding-bottom: 12px;
+      border-bottom: 3px solid #B29365;
+    }
+
+    .result-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border: 2px solid #e2e8f0;
+      border-radius: 16px;
+      padding: 24px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .result-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      border-color: #B29365;
+    }
+
+    .result-card h3 {
+      color: #2E2E2E;
+      font-size: 20px;
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .result-card p {
+      color: #475569;
+      line-height: 1.7;
+      margin-top: 12px;
+    }
+
+    .score-container {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .score-value {
+      font-size: 36px;
+      font-weight: 700;
+      color: #B29365;
+    }
+
+    .score-badge {
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-sobresaliente { background: #dcfce7; color: #166534; }
+    .badge-fortaleza { background: #dbeafe; color: #1e40af; }
+    .badge-medio { background: #fef3c7; color: #92400e; }
+    .badge-desarrollo { background: #fed7aa; color: #9a3412; }
+    .badge-bajo { background: #fee2e2; color: #991b1b; }
+
+    .chart-container {
+      background: white;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin: 32px 0;
+    }
+
+    .global-score {
+      font-size: 56px;
+      font-weight: 700;
+      color: #B29365;
+      margin: 16px 0;
+    }
+
+    .global-badge {
+      display: inline-block;
+      padding: 12px 24px;
+      border-radius: 24px;
+      font-size: 18px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .synthesis-box {
+      background: linear-gradient(135deg, #F5EEE0 0%, #EFE4D0 100%);
+      border: 2px solid #B29365;
+      border-radius: 20px;
+      padding: 32px;
+      margin: 32px 0;
+    }
+
+    .synthesis-box h3 {
+      color: #B29365;
+      font-size: 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .synthesis-item {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(178, 147, 101, 0.2);
+    }
+
+    .synthesis-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+      margin-bottom: 0;
+    }
+
+    .synthesis-item strong {
+      display: block;
+      color: #B29365;
+      font-size: 16px;
+      margin-bottom: 8px;
+    }
+
+    .synthesis-item p {
+      color: #475569;
+      line-height: 1.7;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 16px; }
+      .container { padding: 24px; }
+      h1 { font-size: 26px; }
+      h2 { font-size: 22px; }
+      .question-text { font-size: 18px; }
+      .option { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="../../usuarios.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Volver a Usuarios
+    </a>
+
+    <style>
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2E2E2E !important;
+            border: 2px solid #2E2E2E;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: #2E2E2E;
+            color: white !important;
+            box-shadow: 0 6px 15px rgba(46, 46, 46, 0.2);
+        }
+
+        .btn-back svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Ocultar en móviles muy pequeños si molesta, o ajustar */
+        @media (max-width: 480px) {
+            .btn-back {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+        
+        @media print {
+            .btn-back { display: none !important; }
+        }
+    </style>
+
+  <!-- Pantalla de Registro -->
+  <div id="registrationScreen" class="container" style="max-width:650px;">
+    <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+    <h1>DNLA - Perfil Comercial</h1>
+    <p class="subtitle">Evaluación de Competencias de Ventas</p>
+
+    <div class="form-group">
+      <label for="userName">Nombre</label>
+      <input type="text" id="userName" placeholder="Ingresa tu nombre" autocomplete="given-name">
+    </div>
+
+    <div class="form-group">
+      <label for="userLastName">Apellido</label>
+      <input type="text" id="userLastName" placeholder="Ingresa tu apellido" autocomplete="family-name">
+    </div>
+
+    <div class="form-group">
+      <label for="userEmail">Email</label>
+      <input type="email" id="userEmail" placeholder="ejemplo@email.com" autocomplete="email">
+    </div>
+
+    <button class="btn" onclick="startForm()">Comenzar Evaluación</button>
+
+    <div class="info-box">
+      <p><strong>📋 Instrucciones:</strong><br>
+        Responde con honestidad según tu comportamiento habitual.<br>
+        Tiempo estimado: 8-10 minutos | 30 preguntas</p>
+    </div>
+  </div>
+
+  <!-- Pantalla del Test -->
+  <div id="testScreen" class="container hidden">
+    <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+    <h2 id="participantName">📊 Participante</h2>
+
+    <div class="progress-text">
+      <span id="progressText">Pregunta 1 de 30</span>
+      <span id="progressPercent">3%</span>
+    </div>
+
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width:3%;"></div>
+    </div>
+
+    <div class="question-box">
+      <div class="question-text" id="questionText">Texto de la pregunta</div>
+      <div id="optionsContainer"></div>
+    </div>
+
+    <button class="btn" id="nextBtn" onclick="nextQuestion()" disabled>Siguiente</button>
+  </div>
+
+  <!-- Pantalla de Confirmación -->
+  <div id="successScreen" class="container hidden" style="max-width:650px; padding-top:32px; padding-bottom:32px;">
+    <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+    
+    <div class="success-message">
+      <div class="success-icon">✅</div>
+      <h2>Test Completado</h2>
+      <p style="font-weight:600;">¡Gracias!</p>
+      <p style="color:#10b981; font-weight:600; margin-top:16px;">✓ Tus resultados han sido registrados exitosamente</p>
+    </div>
+
+    <div class="info-box" style="margin-top:32px;">
+      <p><strong>Escencial Consultora</strong><br>Catamarca 873 - San Miguel de Tucumán<br>Tel: +54 9 3816 22-1565</p>
+    </div>
+  </div>
+
+  <!-- Pantalla de Resultados (opcional - puedes eliminarla si no la usas) -->
+  <div id="resultsScreen" class="container hidden">
+    <img src="../../img/logo-escencial.png" alt="Logo DNLA" class="logo-results">
+    
+    <div id="globalInterpretation" class="result-card" style="text-align:center; margin-bottom:32px;">
+      <!-- Se llena dinámicamente -->
+    </div>
+
+    <div class="chart-container">
+      <canvas id="radarChart"></canvas>
+    </div>
+
+    <div id="dimensionResults"></div>
+
+    <button class="btn" onclick="restartForm()" style="margin-top:32px;">Realizar Nueva Evaluación</button>
+  </div>
+
+  <script>
+    (function guard() {
+            const logged = localStorage.getItem('sessionLoggedIn') === '1';
+            if (!logged) {
+                // ajusta el path según tu estructura
+                window.location.href = '../../evaluaciones.html'; // o donde esté tu login/panel
+            }
+        })();
+    // ============================================================================
+    // CONFIGURACIÓN
+    // ============================================================================
+    const GOOGLE_APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxRFCS8b7em4s_KI6PXZC1NebZVD6um40g4Np3xMQGGIIBznz8NHbQOrVEiCDIoyB1_sw/exec';
+
+    let currentQuestion = 0;
+    let answers = {};
+    let userName = '';
+    let userLastName = '';
+    let userEmail = '';
+    let radarChart = null;
+
+    // ============================================================================
+    // PREGUNTAS DEL TEST (30 preguntas, 6 dimensiones x 5 preguntas)
+    // ============================================================================
+    const questions = [
+      // Responsabilidad Personal (1-5)
+      { id: 1, dimension: 'Responsabilidad Personal', text: 'Cumplo mis compromisos aunque nadie me lo recuerde.' },
+      { id: 2, dimension: 'Responsabilidad Personal', text: 'Si algo sale mal, analizo qué pude haber hecho diferente.' },
+      { id: 3, dimension: 'Responsabilidad Personal', text: 'Asumo los errores en lugar de buscar culpables.' },
+      { id: 4, dimension: 'Responsabilidad Personal', text: 'Mantengo mi palabra incluso ante dificultades.' },
+      { id: 5, dimension: 'Responsabilidad Personal', text: 'Me esfuerzo por cumplir con los estándares que exijo a otros.' },
+      
+      // Compromiso y Motivación (6-10)
+      { id: 6, dimension: 'Compromiso y Motivación', text: 'Mantengo la energía y el interés incluso en tareas repetitivas.' },
+      { id: 7, dimension: 'Compromiso y Motivación', text: 'Busco superar las metas establecidas.' },
+      { id: 8, dimension: 'Compromiso y Motivación', text: 'Persevero hasta terminar lo que comienzo.' },
+      { id: 9, dimension: 'Compromiso y Motivación', text: 'Me motiva ver los resultados de mi trabajo.' },
+      { id: 10, dimension: 'Compromiso y Motivación', text: 'En momentos difíciles, encuentro razones para seguir adelante.' },
+      
+      // Autoestima y Confianza (11-15)
+      { id: 11, dimension: 'Autoestima y Confianza', text: 'Confío en mis decisiones, incluso si otros dudan.' },
+      { id: 12, dimension: 'Autoestima y Confianza', text: 'Creo en mi capacidad para resolver problemas.' },
+      { id: 13, dimension: 'Autoestima y Confianza', text: 'Afronto los desafíos sin temor al error.' },
+      { id: 14, dimension: 'Autoestima y Confianza', text: 'Suelo mantener una actitud positiva frente a los obstáculos.' },
+      { id: 15, dimension: 'Autoestima y Confianza', text: 'Me considero competente y capaz en mi función laboral.' },
+      
+      // Empatía y Relaciones (16-20)
+      { id: 16, dimension: 'Empatía y Relaciones', text: 'Escucho atentamente las necesidades de los demás.' },
+      { id: 17, dimension: 'Empatía y Relaciones', text: 'Procuro entender el punto de vista ajeno antes de opinar.' },
+      { id: 18, dimension: 'Empatía y Relaciones', text: 'Mantengo relaciones cordiales incluso bajo presión.' },
+      { id: 19, dimension: 'Empatía y Relaciones', text: 'Suelo percibir cuando alguien necesita apoyo o contención.' },
+      { id: 20, dimension: 'Empatía y Relaciones', text: 'Adapto mi forma de comunicarme según la persona o situación.' },
+      
+      // Adaptabilidad y Flexibilidad (21-25)
+      { id: 21, dimension: 'Adaptabilidad y Flexibilidad', text: 'Me ajusto con rapidez a los cambios en el entorno laboral.' },
+      { id: 22, dimension: 'Adaptabilidad y Flexibilidad', text: 'Busco soluciones nuevas ante imprevistos.' },
+      { id: 23, dimension: 'Adaptabilidad y Flexibilidad', text: 'Me adapto bien a distintos estilos de liderazgo o trabajo.' },
+      { id: 24, dimension: 'Adaptabilidad y Flexibilidad', text: 'Acepto los cambios como oportunidades para aprender.' },
+      { id: 25, dimension: 'Adaptabilidad y Flexibilidad', text: 'Puedo mantener la calma cuando algo no sale como esperaba.' },
+      
+      // Organización y Planificación (26-30)
+      { id: 26, dimension: 'Organización y Planificación', text: 'Me gusta planificar antes de actuar.' },
+      { id: 27, dimension: 'Organización y Planificación', text: 'Cumplo los plazos sin dificultad.' },
+      { id: 28, dimension: 'Organización y Planificación', text: 'Mantengo orden en mis tareas y materiales.' },
+      { id: 29, dimension: 'Organización y Planificación', text: 'Establezco prioridades claras cuando tengo varias responsabilidades.' },
+      { id: 30, dimension: 'Organización y Planificación', text: 'Reviso mis avances para asegurarme de cumplir mis objetivos.' }
+    ];
+
+    const options = [
+      { text: '🔵 Siempre', value: 5 },
+      { text: '🟢 Frecuentemente', value: 4 },
+      { text: '🟡 A veces', value: 3 },
+      { text: '🟠 Rara vez', value: 2 },
+      { text: '🔴 Nunca', value: 1 }
+    ];
+
+    // ============================================================================
+    // FUNCIONES PRINCIPALES
+    // ============================================================================
+
+    function startForm() {
+      userName = document.getElementById('userName').value.trim();
+      userLastName = document.getElementById('userLastName').value.trim();
+      userEmail = document.getElementById('userEmail').value.trim();
+
+      if (!userName || !userLastName || !userEmail) {
+        alert('Por favor completa todos los campos');
+        return;
+      }
+
+      // Validar email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(userEmail)) {
+        alert('Por favor ingresa un email válido');
+        return;
+      }
+
+      document.getElementById('registrationScreen').classList.add('hidden');
+      document.getElementById('testScreen').classList.remove('hidden');
+      document.getElementById('participantName').textContent = '📊 ' + userName + ' ' + userLastName;
+      
+      loadQuestion();
+    }
+
+    function loadQuestion() {
+      const question = questions[currentQuestion];
+      document.getElementById('questionText').textContent = question.text;
+      
+      const optionsContainer = document.getElementById('optionsContainer');
+      optionsContainer.innerHTML = '';
+      
+      options.forEach(option => {
+        const optionDiv = document.createElement('div');
+        optionDiv.className = 'option';
+        optionDiv.textContent = option.text;
+        optionDiv.onclick = () => selectOption(option.value, optionDiv);
+        optionsContainer.appendChild(optionDiv);
+      });
+      
+      updateProgress();
+    }
+
+    function selectOption(value, element) {
+      document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+      element.classList.add('selected');
+      
+      answers[questions[currentQuestion].id] = value;
+      document.getElementById('nextBtn').disabled = false;
+    }
+
+    function nextQuestion() {
+      if (!answers[questions[currentQuestion].id]) {
+        alert('Por favor selecciona una opción');
+        return;
+      }
+      
+      currentQuestion++;
+      
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+        document.getElementById('nextBtn').disabled = true;
+      } else {
+        sendDataToGoogleSheets();
+      }
+    }
+
+    function updateProgress() {
+      const progress = ((currentQuestion + 1) / questions.length) * 100;
+      document.getElementById('progressFill').style.width = progress + '%';
+      document.getElementById('progressText').textContent = `Pregunta ${currentQuestion + 1} de ${questions.length}`;
+      document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+    }
+
+    // ============================================================================
+    // ENVÍO DE DATOS A GOOGLE SHEETS
+    // ============================================================================
+
+    async function sendDataToGoogleSheets() {
+      // Ocultar pantalla del test
+      document.getElementById('testScreen').classList.add('hidden');
+      
+      // Convertir respuestas al formato: "1:5,2:4,3:3,..."
+      const respuestasArray = [];
+      for (let i = 1; i <= 30; i++) {
+        respuestasArray.push(`${i}:${answers[i]}`);
+      }
+      const respuestasFormato = respuestasArray.join(',');
+
+      const adminData = localStorage.getItem('adminData'); 
+            if (adminData) {
+                try {
+                    const admin = JSON.parse(adminData);
+                    if (admin && admin.email) {
+                        console.log("Admin encontrado:", admin.nombre || 'Sin nombre', "| Email:", admin.email);
+                        emailParaEnviar = admin.email; // USAMOS EMAIL DEL ADMIN
+                    } else {
+                        console.log("adminData existe pero no tiene email válido");
+                    }
+                } catch (e) {
+                    console.error("Error al parsear adminData:", e);
+                }
+            } else {
+                console.log("No hay admin logueado, se usará el email del participante.");
+            }
+
+      try {
+        // Construir URL con parámetros en formato correcto
+        const params = new URLSearchParams();
+        params.append('accion', 'guardar');
+        params.append('nombre', userName);
+        params.append('apellido', userLastName);
+        params.append('email', emailParaEnviar);
+        params.append('respuestas', respuestasFormato);
+
+        const url = `${GOOGLE_APPS_SCRIPT_URL}?${params.toString()}`;
+
+        console.log('Enviando datos a:', url);
+
+        // Enviar datos mediante GET
+        const response = await fetch(url, {
+          method: 'GET',
+          mode: 'no-cors'
+        });
+
+        console.log('Datos enviados correctamente a Google Sheets');
+        
+        // Esperar 2 segundos para asegurar que se guardó
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        
+        // Mostrar pantalla de éxito
+        document.getElementById('successScreen').classList.remove('hidden');
+
+      } catch (error) {
+        console.error('Error al enviar datos:', error);
+        alert('Hubo un error al enviar tus respuestas. Por favor, contacta con Escencial Consultora.');
+      }
+    }
+
+    // ═══════════════════════════════════════════════════════════════
+    // FUNCIONES DE RESULTADOS (OPCIONAL - SI QUIERES MOSTRAR RESULTADOS)
+    // ═══════════════════════════════════════════════════════════════
+    
+    function calculateResults() {
+      const dimensionScores = {
+        'Responsabilidad Personal': 0,
+        'Compromiso y Motivación': 0,
+        'Autoestima y Confianza': 0,
+        'Empatía y Relaciones': 0,
+        'Adaptabilidad y Flexibilidad': 0,
+        'Organización y Planificación': 0
+      };
+
+      const dimensionCounts = {
+        'Responsabilidad Personal': 0,
+        'Compromiso y Motivación': 0,
+        'Autoestima y Confianza': 0,
+        'Empatía y Relaciones': 0,
+        'Adaptabilidad y Flexibilidad': 0,
+        'Organización y Planificación': 0
+      };
+
+      questions.forEach(q => {
+        const answer = answers[q.id];
+        dimensionScores[q.dimension] += answer;
+        dimensionCounts[q.dimension]++;
+      });
+
+      Object.keys(dimensionScores).forEach(dim => {
+        dimensionScores[dim] = dimensionScores[dim] / dimensionCounts[dim];
+      });
+
+      const globalAverage = Object.values(dimensionScores).reduce((a, b) => a + b, 0) / Object.keys(dimensionScores).length;
+
+      return { dimensionScores, globalAverage };
+    }
+
+    function showResults() {
+      const { dimensionScores, globalAverage } = calculateResults();
+      
+      document.getElementById('testScreen').classList.add('hidden');
+      document.getElementById('resultsScreen').classList.remove('hidden');
+
+      const header = document.createElement('div');
+      header.className = 'result-header';
+      header.innerHTML = `
+        <h2>${userName} ${userLastName}</h2>
+        <p class="subtitle" style="color: rgba(255,255,255,0.95); margin-top:8px;">
+          Evaluación completada el ${new Date().toLocaleDateString('es-AR')}
+        </p>
+      `;
+      document.getElementById('resultsScreen').insertBefore(header, document.getElementById('resultsScreen').firstChild);
+
+      displayGlobalInterpretation(globalAverage);
+      createRadarChart(dimensionScores);
+      displayDimensionResults(dimensionScores);
+      displayProfileSynthesis(dimensionScores, globalAverage);
+    }
+
+    function createRadarChart(scores) {
+      const ctx = document.getElementById('radarChart').getContext('2d');
+      
+      if (radarChart) radarChart.destroy();
+
+      radarChart = new Chart(ctx, {
+        type: 'radar',
+        data: {
+          labels: Object.keys(scores),
+          datasets: [{
+            label: 'Puntuación',
+            data: Object.values(scores),
+            backgroundColor: 'rgba(178, 147, 101, 0.2)',
+            borderColor: '#B29365',
+            borderWidth: 3,
+            pointBackgroundColor: '#2E2E2E',
+            pointBorderColor: '#fff',
+            pointHoverBackgroundColor: '#fff',
+            pointHoverBorderColor: '#2E2E2E',
+            pointRadius: 6,
+            pointHoverRadius: 8
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          scales: {
+            r: {
+              beginAtZero: true,
+              min: 0,
+              max: 5,
+              ticks: {
+                stepSize: 1,
+                backdropColor: 'transparent',
+                color: '#64748b',
+                font: { size: 11 }
+              }
+            }
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: '#2E2E2E',
+              titleColor: '#fff',
+              bodyColor: '#fff',
+              padding: 12,
+              displayColors: false,
+              callbacks: {
+                label: (context) => `Puntuación: ${context.parsed.r.toFixed(2)}`
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function displayDimensionResults(scores) {
+      const container = document.getElementById('dimensionResults');
+      container.innerHTML = '<div class="section-title" style="margin-top:32px;">Análisis Detallado por Competencia</div>';
+      
+      Object.keys(scores).forEach(dim => {
+        const score = scores[dim];
+        const analysis = getDetailedAnalysis(dim, score);
+        
+        const card = document.createElement('div');
+        card.className = 'result-card';
+        card.innerHTML = `
+          <h3>
+            <span>${dim}</span>
+          </h3>
+          <div class="score-container">
+            <div class="score-value">${score.toFixed(2)}</div>
+            <div class="score-badge ${analysis.badgeClass}">${analysis.label}</div>
+          </div>
+          <p>${analysis.description}</p>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function getDetailedAnalysis(dimension, score) {
+      let label, badgeClass, description;
+      
+      const descriptors = {
+        'Responsabilidad Personal': {
+          sobresaliente: 'Demuestra excelente confiabilidad, asume compromisos con madurez y autocrítica constructiva.',
+          fortaleza: 'Cumple sus obligaciones de manera consistente y reconoce sus responsabilidades.',
+          medio: 'Cumple lo básico pero puede mejorar en la anticipación y seguimiento de compromisos.',
+          desarrollo: 'Requiere reforzar hábitos de cumplimiento y análisis de resultados propios.',
+          bajo: 'Necesita desarrollar sentido de responsabilidad y compromiso con sus tareas.'
+        },
+        'Compromiso y Motivación': {
+          sobresaliente: 'Mantiene alta energía, busca superar expectativas y persevera incluso en tareas difíciles.',
+          fortaleza: 'Demuestra motivación consistente y completa lo que inicia con determinación.',
+          medio: 'Muestra interés básico pero puede mejorar en persistencia y búsqueda de excelencia.',
+          desarrollo: 'Requiere fortalecer la motivación intrínseca y la capacidad de mantenerse enfocado.',
+          bajo: 'Presenta dificultades para mantener el interés y completar tareas con energía.'
+        },
+        'Autoestima y Confianza': {
+          sobresaliente: 'Confía plenamente en sus capacidades, afronta desafíos con seguridad y mantiene actitud positiva.',
+          fortaleza: 'Demuestra confianza en su desempeño y capacidad para resolver problemas.',
+          medio: 'Posee confianza básica pero puede fortalecerla ante situaciones complejas o críticas.',
+          desarrollo: 'Requiere trabajar en la seguridad personal y en la gestión del miedo al error.',
+          bajo: 'Necesita desarrollar confianza en sí mismo y en su capacidad profesional.'
+        },
+        'Empatía y Relaciones': {
+          sobresaliente: 'Escucha activamente, comprende perspectivas ajenas y mantiene relaciones efectivas bajo presión.',
+          fortaleza: 'Establece buenas relaciones interpersonales y adapta su comunicación según el contexto.',
+          medio: 'Se relaciona adecuadamente pero puede mejorar en comprensión de necesidades ajenas.',
+          desarrollo: 'Requiere desarrollar habilidades de escucha activa y gestión de relaciones.',
+          bajo: 'Presenta dificultades para conectar con otros y comprender perspectivas diferentes.'
+        },
+        'Adaptabilidad y Flexibilidad': {
+          sobresaliente: 'Se adapta rápidamente a cambios, busca soluciones creativas y mantiene calma ante imprevistos.',
+          fortaleza: 'Acepta cambios con apertura y ajusta su enfoque según las necesidades del entorno.',
+          medio: 'Se adapta a cambios básicos pero puede mejorar en velocidad y creatividad de respuesta.',
+          desarrollo: 'Requiere fortalecer la gestión del cambio y la búsqueda de alternativas.',
+          bajo: 'Presenta resistencia al cambio y dificultades para ajustarse a nuevas situaciones.'
+        },
+        'Organización y Planificación': {
+          sobresaliente: 'Planifica eficazmente, cumple plazos, mantiene orden y revisa constantemente su progreso.',
+          fortaleza: 'Demuestra buenas habilidades de organización y gestión del tiempo.',
+          medio: 'Organiza lo básico pero puede mejorar en planificación anticipada y seguimiento.',
+          desarrollo: 'Requiere desarrollar hábitos de planificación y gestión de prioridades.',
+          bajo: 'Presenta dificultades para organizarse, planificar y cumplir con plazos.'
+        }
+      };
+
+      if (score >= 4.6) {
+        label = 'Sobresaliente';
+        badgeClass = 'badge-sobresaliente';
+        description = descriptors[dimension].sobresaliente;
+      } else if (score >= 3.8) {
+        label = 'Fortaleza';
+        badgeClass = 'badge-fortaleza';
+        description = descriptors[dimension].fortaleza;
+      } else if (score >= 3.0) {
+        label = 'Medio';
+        badgeClass = 'badge-medio';
+        description = descriptors[dimension].medio;
+      } else if (score >= 2.0) {
+        label = 'En Desarrollo';
+        badgeClass = 'badge-desarrollo';
+        description = descriptors[dimension].desarrollo;
+      } else {
+        label = 'Bajo';
+        badgeClass = 'badge-bajo';
+        description = descriptors[dimension].bajo;
+      }
+
+      return { label, badgeClass, description };
+    }
+
+    function displayGlobalInterpretation(globalAverage) {
+      const container = document.getElementById('globalInterpretation');
+      
+      let interpretation, badgeClass, recommendations;
+      
+      if (globalAverage >= 4.6) {
+        interpretation = 'Perfil Sobresaliente';
+        badgeClass = 'badge-sobresaliente';
+        recommendations = 'Demuestra alto potencial en todas las competencias evaluadas. Considere roles de liderazgo o mentoring.';
+      } else if (globalAverage >= 3.8) {
+        interpretation = 'Perfil con Fortalezas';
+        badgeClass = 'badge-fortaleza';
+        recommendations = 'Posee competencias consolidadas. Enfoque en potenciar áreas específicas para desarrollo profesional.';
+      } else if (globalAverage >= 3.0) {
+        interpretation = 'Perfil Medio';
+        badgeClass = 'badge-medio';
+        recommendations = 'Nivel adecuado con oportunidades de mejora. Se recomienda capacitación específica en áreas de desarrollo.';
+      } else if (globalAverage >= 2.0) {
+        interpretation = 'Perfil en Desarrollo';
+        badgeClass = 'badge-desarrollo';
+        recommendations = 'Requiere atención y desarrollo en varias competencias. Plan de mejora recomendado.';
+      } else {
+        interpretation = 'Perfil Bajo';
+        badgeClass = 'badge-bajo';
+        recommendations = 'Necesita desarrollo significativo. Se sugiere acompañamiento cercano y plan de capacitación integral.';
+      }
+
+      container.innerHTML = `
+        <h3>Evaluación Global</h3>
+        <div class="global-score">${globalAverage.toFixed(2)}</div>
+        <div class="global-badge ${badgeClass}">${interpretation}</div>
+        <p style="margin-top:16px;">${recommendations}</p>
+      `;
+    }
+
+    function displayProfileSynthesis(scores, globalAverage) {
+      const sortedScores = Object.entries(scores).sort((a, b) => b[1] - a[1]);
+      const strengths = sortedScores.slice(0, 2);
+      const improvements = sortedScores.slice(-2);
+
+      const synthesisHTML = `
+        <div class="synthesis-box">
+          <h3>Síntesis del Perfil</h3>
+          
+          <div class="synthesis-item">
+            <strong>💪 Principales Fortalezas</strong>
+            <p>${strengths.map(s => `${s[0]} (${s[1].toFixed(2)})`).join(' y ')}</p>
+          </div>
+
+          <div class="synthesis-item">
+            <strong>📈 Áreas de Mejora</strong>
+            <p>${improvements.map(s => `${s[0]} (${s[1].toFixed(2)})`).join(' y ')}</p>
+          </div>
+
+          <div class="synthesis-item">
+            <strong>🎯 Recomendaciones</strong>
+            <p>Mantener y potenciar las fortalezas identificadas mientras se trabaja en el desarrollo de las áreas de mejora mediante capacitación específica y práctica constante.</p>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('globalInterpretation').insertAdjacentHTML('afterend', synthesisHTML);
+    }
+
+
+//Const. adminData (colocar correo del administrador en la plantilla de google sheets)
+            
+
+
+    function restartForm() {
+      currentQuestion = 0;
+      answers = {};
+      userName = '';
+      userLastName = '';
+      userEmail = '';
+      
+      // Limpiar elementos dinámicos
+      const header = document.querySelector('.result-header');
+      if (header) header.remove();
+      
+      const sectionTitles = document.querySelectorAll('.section-title');
+      sectionTitles.forEach(title => title.remove());
+      
+      const synthesis = document.querySelector('.synthesis-box');
+      if (synthesis) synthesis.remove();
+      
+      if (radarChart) radarChart.destroy();
+      
+      document.getElementById('resultsScreen').classList.add('hidden');
+      document.getElementById('successScreen').classList.add('hidden');
+      document.getElementById('registrationScreen').classList.remove('hidden');
+      document.getElementById('userName').value = '';
+      document.getElementById('userLastName').value = '';
+      document.getElementById('userEmail').value = '';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Supermercados Comodin — Evaluá talento con criterio profesional</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./img/favicon.png" sizes="32x32">
+  <link rel="shortcut icon" href="./img/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="./img/favicon.png">
+
+  <!-- EXO 2 (Títulos) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      /* ✅ PALETA + EFECTOS (la primera referencia) */
+      --c-black:#000000;
+      --c-ink:#1a181d;
+      --c-white:#fefeff;
+      --c-pink:#e17bd7;
+      --c-cyan:#6be1e3;
+      --c-gold:#e4c76a;
+      --c-slate:#a4a8c0;
+      --c-mist:#c6c9d7;
+
+      /* tipografías (primera referencia) */
+      --font-title: "Exo 2", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-sub: "Futura", "Futura PT", "Avenir", "Trebuchet MS", "Segoe UI", Arial, sans-serif;
+
+      /* layout */
+      --container: 1180px;
+      --radius-xl: 28px;
+      --radius-lg: 18px;
+      --shadow-soft: 0 18px 60px rgba(0,0,0,.55);
+      --glass: rgba(254,254,255,.08);
+      --glass2: rgba(254,254,255,.12);
+      --stroke: rgba(198,201,215,.25);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--c-white);
+      background: radial-gradient(1200px 700px at 70% 25%, rgba(225,123,215,.18), transparent 55%),
+                  radial-gradient(1100px 700px at 80% 60%, rgba(107,225,227,.14), transparent 55%),
+                  radial-gradient(900px 600px at 20% 70%, rgba(228,199,106,.10), transparent 60%),
+                  linear-gradient(180deg, var(--c-black), var(--c-ink));
+      font-family: var(--font-sub);
+      overflow-x:hidden;
+    }
+
+    a{ color:inherit; text-decoration:none; }
+    img{ max-width:100%; display:block; }
+
+    /* Fondo extra (hex + haze) */
+    .bg{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      z-index:0;
+    }
+    .bg::before{
+      content:"";
+      position:absolute;
+      inset:-10%;
+      background:
+        radial-gradient(circle at 25% 20%, rgba(107,225,227,.12), transparent 40%),
+        radial-gradient(circle at 80% 35%, rgba(225,123,215,.12), transparent 38%),
+        radial-gradient(circle at 55% 85%, rgba(228,199,106,.10), transparent 45%);
+      filter: blur(18px);
+      opacity:.95;
+      transform: translateZ(0);
+    }
+
+    /* patrón hex con SVG embebido */
+    .hex{
+      position:absolute;
+      inset:-20%;
+      opacity:.16;
+      filter: drop-shadow(0 0 12px rgba(107,225,227,.15));
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='150' viewBox='0 0 260 150'%3E%3Cg fill='none' stroke='%23c6c9d7' stroke-opacity='0.85' stroke-width='1'%3E%3Cpath d='M50 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M85 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M155 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M50 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 90l20-12 20 12v24l-20 12-20-12z'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 260px 150px;
+      background-repeat: repeat;
+      transform: rotate(-8deg);
+      mix-blend-mode: screen;
+    }
+
+    /* partículas en canvas */
+    canvas#stars{
+      position:absolute;
+      inset:0;
+      opacity:1;
+    }
+
+    /* layout */
+    .wrap{
+      position:relative;
+      z-index:1;
+      min-height:100%;
+      display:flex;
+      flex-direction:column;
+    }
+
+    /* =======================
+       ✅ HEADER (estética ONE)
+       Mantiene logo/nombre Comodin
+       ======================= */
+    header{
+      width:100%;
+      padding:26px 22px 8px;
+      position:sticky;
+      top:0;
+      z-index:5;
+      background: linear-gradient(180deg, rgba(0,0,0,.35), transparent);
+      backdrop-filter: blur(10px);
+    }
+    header.scrolled{
+      background: rgba(0,0,0,.35);
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+      border-bottom: 1px solid rgba(198,201,215,.10);
+    }
+
+    .nav{
+      max-width: var(--container);
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    /* ✅ Logo + nombre (Comodin) */
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      user-select:none;
+    }
+    .brand .mark{
+      width:40px;height:40px;
+      border-radius:999px;
+      background-image: url('./img/comodin.png');
+      background-size: cover;
+      background-position:center;
+      box-shadow: 0 0 0 1px rgba(198,201,215,.18), 0 0 40px rgba(107,225,227,.18);
+      position:relative;
+      overflow:hidden;
+    }
+    .brand .mark::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle at 30% 30%, rgba(254,254,255,.14), transparent 55%);
+      pointer-events:none;
+    }
+    .brand .name{
+      font-family: var(--font-title);
+      letter-spacing:.04em;
+      font-weight:800;
+      font-size:22px;
+      line-height:1.1;
+    }
+    .brand .sub{
+      display:block;
+      font-family: var(--font-sub);
+      font-weight:500;
+      font-size:12px;
+      color: rgba(198,201,215,.85);
+      letter-spacing:.02em;
+      margin-top:2px;
+    }
+
+    nav a{
+      color: rgba(254,254,255,.78);
+      text-decoration:none;
+      font-family: var(--font-sub);
+      font-weight:500;
+      letter-spacing:.02em;
+      padding:10px 12px;
+      border-radius:999px;
+      transition: background .2s ease, color .2s ease;
+    }
+    nav a:hover{
+      color: var(--c-white);
+      background: rgba(254,254,255,.06);
+    }
+
+    /* botón header (link real) */
+    .header-cta a.btn-link{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:46px;
+      padding: 10px 18px;
+      border-radius:999px;
+      border:1px solid rgba(225,123,215,.35);
+      color: var(--c-white);
+      background: rgba(254,254,255,.06);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.25);
+      font-family: var(--font-sub);
+      font-weight:600;
+      letter-spacing:.02em;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      overflow:hidden;
+      user-select:none;
+    }
+    .header-cta a.btn-link::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius:999px;
+      opacity:.75;
+      filter: blur(10px);
+      z-index:0;
+      background: radial-gradient(circle at 20% 50%, rgba(225,123,215,.55), transparent 55%),
+                  radial-gradient(circle at 80% 50%, rgba(225,123,215,.30), transparent 60%);
+    }
+    .header-cta a.btn-link > span{ position:relative; z-index:1; }
+    .header-cta a.btn-link:hover{
+      transform: translateY(-1px);
+      border-color: rgba(198,201,215,.36);
+      background: rgba(254,254,255,.085);
+      box-shadow: 0 16px 55px rgba(0,0,0,.35);
+    }
+
+    /* =======================
+       HERO
+       ======================= */
+    main{
+      flex:1;
+      width:100%;
+      padding:22px 22px 60px;
+      display:flex;
+      align-items:center;
+    }
+
+    .hero{
+      max-width: var(--container);
+      margin:0 auto;
+      width:100%;
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 28px;
+      align-items:center;
+    }
+
+    .copy{ padding:14px 0; }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background: rgba(254,254,255,.06);
+      border:1px solid rgba(198,201,215,.18);
+      color: rgba(254,254,255,.78);
+      font-size:14px;
+      letter-spacing:.04em;
+      backdrop-filter: blur(10px);
+    }
+    .dot{
+      width:8px;height:8px;border-radius:999px;
+      background: var(--c-cyan);
+      box-shadow: 0 0 18px rgba(107,225,227,.55);
+    }
+
+    h1{
+      font-family: var(--font-title);
+      font-size: clamp(42px, 5vw, 66px);
+      line-height: 1.05;
+      margin: 18px 0 14px;
+      letter-spacing:-.02em;
+      text-shadow: 0 10px 40px rgba(0,0,0,.55);
+    }
+    .grad-cyan{
+      background: linear-gradient(90deg, var(--c-cyan), rgba(107,225,227,.65));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .grad-pink{
+      background: linear-gradient(90deg, var(--c-pink), rgba(225,123,215,.65));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+
+    .lead{
+      max-width: 52ch;
+      font-size: 18px;
+      line-height: 1.7;
+      color: rgba(198,201,215,.92);
+      margin: 0 0 26px;
+    }
+
+    .cta{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+
+    /* ✅ Botones ONE (pero con funcionalidad real: navegación) */
+    .btn{
+      position:relative;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-height:56px;
+      padding: 14px 26px;
+      border-radius:999px;
+      border:1px solid rgba(198,201,215,.22);
+      color: var(--c-white);
+      background: rgba(254,254,255,.06);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 40px rgba(0,0,0,.35);
+      cursor:pointer;
+      font-family: var(--font-sub);
+      font-weight:600;
+      letter-spacing:.02em;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+      overflow:hidden;
+      user-select:none;
+    }
+    .btn:hover{
+      transform: translateY(-1px);
+      border-color: rgba(198,201,215,.36);
+      background: rgba(254,254,255,.085);
+      box-shadow: 0 16px 55px rgba(0,0,0,.45);
+    }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+
+    .btn.primary::before,
+    .btn.secondary::before{
+      content:"";
+      position:absolute;
+      inset:-2px;
+      border-radius:999px;
+      opacity:.75;
+      filter: blur(10px);
+      z-index:0;
+      transform: translateZ(0);
+    }
+    .btn.primary::before{
+      background: radial-gradient(circle at 20% 50%, rgba(107,225,227,.55), transparent 55%),
+                  radial-gradient(circle at 80% 50%, rgba(107,225,227,.30), transparent 60%);
+    }
+    .btn.secondary::before{
+      background: radial-gradient(circle at 20% 50%, rgba(225,123,215,.55), transparent 55%),
+                  radial-gradient(circle at 80% 50%, rgba(225,123,215,.30), transparent 60%);
+    }
+    .btn > span{ position:relative; z-index:1; }
+    .btn.primary{ border-color: rgba(107,225,227,.35); }
+    .btn.secondary{ border-color: rgba(225,123,215,.35); }
+
+    .hint{
+      margin-top:18px;
+      font-size:13px;
+      color: rgba(164,168,192,.95);
+    }
+
+    /* =======================
+       DERECHA: panel + recuadros (imagen)
+       Paleta/efectos ONE
+       ======================= */
+    .visual{
+      position:relative;
+      min-height: 520px;
+      border-radius: var(--radius-xl);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow: var(--shadow-soft);
+      background:
+        radial-gradient(900px 600px at 70% 35%, rgba(225,123,215,.20), transparent 55%),
+        radial-gradient(900px 600px at 45% 60%, rgba(107,225,227,.18), transparent 60%),
+        linear-gradient(180deg, rgba(254,254,255,.06), rgba(26,24,29,.55));
+      border: 1px solid rgba(198,201,215,.18);
+      backdrop-filter: blur(16px);
+      transform: translateZ(0);
+    }
+
+    .hud{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(to right, rgba(107,225,227,.0), rgba(107,225,227,.22), rgba(107,225,227,.0)) 10% 35% / 60% 1px no-repeat,
+        linear-gradient(to right, rgba(225,123,215,.0), rgba(225,123,215,.18), rgba(225,123,215,.0)) 15% 62% / 70% 1px no-repeat,
+        radial-gradient(circle at 85% 78%, rgba(228,199,106,.10), transparent 42%);
+      opacity:.9;
+      pointer-events:none;
+      mix-blend-mode: screen;
+    }
+
+    .visual::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background: radial-gradient(circle at 70% 30%, rgba(254,254,255,.12), transparent 45%);
+      pointer-events:none;
+    }
+
+    /* ✅ Recuadros (los que querés mantener) */
+    .feature-grid{
+      position:relative;
+      z-index:1;
+      width:min(640px, 92%);
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:18px;
+      padding:26px;
+    }
+
+    .feature-card{
+      border-radius: 18px;
+      background: rgba(254,254,255,.06);
+      border: 1px solid rgba(198,201,215,.20);
+      box-shadow: 0 18px 60px rgba(0,0,0,.35);
+      padding:22px 22px 20px;
+      backdrop-filter: blur(14px);
+      min-height: 140px;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
+    }
+    .feature-card:hover{
+      transform: translateY(-2px);
+      background: rgba(254,254,255,.075);
+      border-color: rgba(198,201,215,.32);
+      box-shadow: 0 22px 70px rgba(0,0,0,.45);
+    }
+
+    .feature-top{
+      display:flex;
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:10px;
+    }
+
+    .feature-ico{
+      width:36px;
+      height:36px;
+      border-radius: 14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background: rgba(107,225,227,.14);
+      border: 1px solid rgba(198,201,215,.18);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.12), 0 12px 30px rgba(0,0,0,.22);
+      flex: 0 0 auto;
+    }
+    .feature-ico.pink{ background: rgba(225,123,215,.14); }
+    .feature-ico.gold{ background: rgba(228,199,106,.14); }
+
+    .feature-title{
+      font-family: var(--font-title);
+      font-weight:700;
+      letter-spacing:-.01em;
+      font-size:18px;
+      line-height:1.2;
+      margin:0;
+    }
+    .feature-text{
+      margin:0;
+      color: rgba(198,201,215,.88);
+      font-size:14px;
+      line-height:1.6;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero{ grid-template-columns: 1fr; }
+      .visual{ min-height: 460px; }
+      header{ padding-top: 18px; }
+      .nav{ gap:12px; }
+      .feature-grid{ width:min(720px, 96%); }
+    }
+    @media (max-width: 560px){
+      nav{ display:none; }
+      .eyebrow{ font-size: 13px; }
+      .lead{ font-size: 16px; }
+      .btn{ width: 100%; justify-content:center; }
+      .feature-grid{ grid-template-columns: 1fr; padding:18px; }
+      .brand .name{ font-size:18px; }
+    }
+
+    /* accesibilidad: reduce motion */
+    @media (prefers-reduced-motion: reduce){
+      .btn, nav a, .feature-card { transition:none !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="bg" aria-hidden="true">
+    <canvas id="stars"></canvas>
+    <div class="hex"></div>
+  </div>
+
+  <div class="wrap">
+    <header id="header">
+      <div class="nav">
+        <div class="brand" aria-label="Marca Supermercados Comodin">
+          <div class="mark" aria-hidden="true"></div>
+          <div>
+            <div class="name">Supermercados Comodin</div>
+            <span class="sub">Plataforma de evaluación</span>
+          </div>
+        </div>
+
+        <nav aria-label="Navegación principal">
+          <a href="#inicio">Inicio</a>
+          <a href="usuarios.html">Evaluaciones</a>
+        </nav>
+
+        <div class="header-cta">
+          <a class="btn-link" href="dashboard.html"><span>Acceder como Admin</span></a>
+        </div>
+      </div>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="copy">
+          <div class="eyebrow">
+            <span class="dot" aria-hidden="true"></span>
+            Plataforma de evaluación psicolaboral
+          </div>
+
+          <h1>
+            Evaluá talento con<br />
+            <span class="grad-cyan">criterio</span> <span class="grad-pink">profesional</span>.
+          </h1>
+
+          <p class="lead">
+            Plataforma de evaluación psicolaboral que combina pruebas cognitivas, atencionales,
+            de competencias y personalidad para una toma de decisiones objetiva y confiable.
+          </p>
+
+          <!-- ✅ Funcionalidad: navega a las páginas reales -->
+          <div class="cta">
+            <a class="btn primary" id="btnStart" href="usuarios.html"><span>Iniciar Evaluación</span></a>
+            <a class="btn secondary" id="btnAdmin" href="dashboard.html"><span>Acceder como Admin</span></a>
+          </div>
+
+          <div class="hint" id="evaluaciones">
+            Tip: mové el mouse para un efecto sutil de profundidad ✨
+          </div>
+        </div>
+
+        <!-- ✅ Panel derecho con recuadros (imagen) -->
+        <div class="visual" id="visual">
+          <div class="hud" aria-hidden="true"></div>
+
+          <div class="feature-grid" id="featureGrid">
+            <article class="feature-card">
+              <div class="feature-top">
+                <div class="feature-ico gold" aria-hidden="true">🔒</div>
+                <h3 class="feature-title">Acceso seguro con contraseña</h3>
+              </div>
+              <p class="feature-text">
+                Acceso individual por usuario, autenticación segura y control de evaluaciones.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-top">
+                <div class="feature-ico pink" aria-hidden="true">⚡</div>
+                <h3 class="feature-title">Interfaz rápida e intuitiva</h3>
+              </div>
+              <p class="feature-text">
+                Experiencia simple y guiada para evaluaciones rápidas y sin fricción.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-top">
+                <div class="feature-ico" aria-hidden="true">📊</div>
+                <h3 class="feature-title">Resultados en tiempo real</h3>
+              </div>
+              <p class="feature-text">
+                Resultados claros y organizados para análisis y toma de decisiones.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-top">
+                <div class="feature-ico gold" aria-hidden="true">🧬</div>
+                <h3 class="feature-title">Datos protegidos y encriptados</h3>
+              </div>
+              <p class="feature-text">
+                Cumplimiento de estándares de confidencialidad y resguardo de la información.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // ====== Header "scrolled" ======
+      const header = document.getElementById('header');
+      const onScroll = () => {
+        if (window.scrollY > 10) header.classList.add('scrolled');
+        else header.classList.remove('scrolled');
+      };
+      onScroll();
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // ====== Partículas "estrellas" ======
+      const canvas = document.getElementById('stars');
+      const ctx = canvas.getContext('2d', { alpha: true });
+
+      let W = 0, H = 0, DPR = Math.min(window.devicePixelRatio || 1, 2);
+      let stars = [];
+      const STAR_COUNT_BASE = 120;
+
+      function resize(){
+        W = window.innerWidth;
+        H = window.innerHeight;
+        DPR = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.floor(W * DPR);
+        canvas.height = Math.floor(H * DPR);
+        canvas.style.width = W + 'px';
+        canvas.style.height = H + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+        const count = Math.floor(STAR_COUNT_BASE * (W * H) / (1200 * 700));
+        stars = Array.from({length: Math.max(90, Math.min(220, count))}, () => ({
+          x: Math.random()*W,
+          y: Math.random()*H,
+          r: Math.random()*1.35 + 0.25,
+          a: Math.random()*0.6 + 0.15,
+          vx: (Math.random()-0.5)*0.06,
+          vy: (Math.random()-0.5)*0.06,
+          tw: Math.random()*0.012 + 0.003
+        }));
+      }
+
+      function draw(){
+        ctx.clearRect(0, 0, W, H);
+
+        // glow haze (misma estética ONE)
+        const g = ctx.createRadialGradient(W*0.75, H*0.35, 0, W*0.75, H*0.35, Math.max(W,H)*0.8);
+        g.addColorStop(0, 'rgba(225,123,215,0.10)');
+        g.addColorStop(0.35, 'rgba(107,225,227,0.08)');
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
+        ctx.fillRect(0,0,W,H);
+
+        for(const s of stars){
+          s.x += s.vx;
+          s.y += s.vy;
+          if(s.x < -10) s.x = W + 10;
+          if(s.x > W + 10) s.x = -10;
+          if(s.y < -10) s.y = H + 10;
+          if(s.y > H + 10) s.y = -10;
+
+          s.a += Math.sin((s.x + s.y) * 0.002) * s.tw;
+          const alpha = Math.max(0.08, Math.min(0.85, s.a));
+
+          ctx.beginPath();
+          ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+          ctx.fillStyle = `rgba(254,254,255,${alpha})`;
+          ctx.fill();
+        }
+
+        requestAnimationFrame(draw);
+      }
+
+      // ====== Parallax suave en el bloque visual ======
+      const visual = document.getElementById('visual');
+      const grid = document.getElementById('featureGrid');
+      let mx = 0, my = 0;
+      let tx = 0, ty = 0;
+
+      function onMove(e){
+        const rect = visual.getBoundingClientRect();
+        const x = (e.clientX - rect.left) / rect.width;
+        const y = (e.clientY - rect.top) / rect.height;
+        mx = (x - 0.5);
+        my = (y - 0.5);
+      }
+
+      function animateParallax(){
+        tx += (mx - tx) * 0.06;
+        ty += (my - ty) * 0.06;
+
+        visual.style.transform = `translate(${tx*4}px, ${ty*4}px)`;
+        if(grid) grid.style.transform = `translate(${tx*10}px, ${ty*8}px)`;
+
+        requestAnimationFrame(animateParallax);
+      }
+
+      // Init
+      resize();
+      draw();
+      animateParallax();
+
+      // listeners
+      window.addEventListener('resize', resize);
+      visual.addEventListener('mousemove', onMove);
+      visual.addEventListener('mouseleave', () => { mx = 0; my = 0; });
+    });
+  </script>
+</body>
+</html>

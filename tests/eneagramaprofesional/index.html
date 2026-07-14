@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Eneagrama Profesional - Escencial</title>
+    <link rel="icon" type="image/png" href="../../img/favicon.png" sizes="32x32">
+    <link rel="shortcut icon" href="../../img/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="../../img/favicon.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body { height: 100%; margin: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            min-height: 100vh;
+            padding: 24px;
+            /* Fondo igual al inicio: beige + hexágonos */
+            background-color: #E8DCC6;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='150' viewBox='0 0 260 150'%3E%3Cg fill='none' stroke='%23B29365' stroke-opacity='0.5' stroke-width='1'%3E%3Cpath d='M50 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 20l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M85 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M155 55l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M50 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M120 90l20-12 20 12v24l-20 12-20-12z'/%3E%3Cpath d='M190 90l20-12 20 12v24l-20 12-20-12z'/%3E%3C/g%3E%3C/svg%3E");
+            background-position: center;
+            background-repeat: repeat;
+            background-size: 260px 150px;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            padding: 48px;
+            position: relative;
+        }
+
+        .logo {
+            position: absolute;
+            top: 24px;
+            left: 24px;
+            height: 64px;
+            width: auto;
+        }
+
+        h1 {
+            color: #2E2E2E;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: -0.5px;
+            margin-top: 40px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        .form-group {
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            color: #334155;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+            font-size: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #B29365;
+            box-shadow: 0 0 0 4px rgba(178, 147, 101, 0.1);
+            transform: translateY(-2px);
+        }
+
+        input::placeholder {
+            color: #94a3b8;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .page-info {
+            color: #64748b;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .progress-percent {
+            color: #64748b;
+            font-size: 16px;
+            font-weight: 600;
+            position: absolute;
+            right: 48px;
+            top: 48px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 32px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #8A6F4A;
+            transition: width 0.4s ease;
+            border-radius: 10px;
+        }
+
+        .questions-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .question-card {
+            background: white;
+            padding: 24px 32px;
+            border-radius: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .question-text {
+            font-size: 16px;
+            color: #1e293b;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .scale-options {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .scale-option {
+            position: relative;
+        }
+
+        .scale-option input[type="radio"] {
+            display: none;
+        }
+
+        .scale-option label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            background: white;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 18px;
+            font-weight: 600;
+            color: #64748b;
+        }
+
+        .scale-option input[type="radio"]:checked + label {
+            background: #6b7c52;
+            color: white;
+            border-color: #6b7c52;
+            transform: scale(1.05);
+        }
+
+        .scale-option label:hover {
+            border-color: #6b7c52;
+            transform: scale(1.05);
+        }
+
+        .navigation {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 14px 40px;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #475569;
+            border: 2px solid #cbd5e1;
+        }
+
+        .btn-secondary:hover:not(:disabled) {
+            border-color: #94a3b8;
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(178, 147, 101, 0.3);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(178, 147, 101, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .timer-container {
+            text-align: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background: rgba(107, 124, 82, 0.1);
+            border-radius: 12px;
+            border: 2px solid rgba(107, 124, 82, 0.2);
+        }
+
+        .timer-label {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .timer-display {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2E2E2E;
+            font-family: 'Courier New', monospace;
+            margin-bottom: 4px;
+        }
+
+        .timer-overtime {
+            color: #dc2626;
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 8px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .result-screen {
+            padding-top: 80px;
+        }
+
+        .result-screen h1 {
+            font-size: 48px;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .result-card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            margin-bottom: 32px;
+        }
+
+        .result-description {
+            color: #475569;
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 32px;
+            text-align: center;
+        }
+
+        .charts-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+        }
+
+        .chart-card h3 {
+            color: #2E2E2E;
+            margin-bottom: 20px;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .distribution-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .bar-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .bar-label {
+            color: #334155;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .bar-percent {
+            color: #64748b;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .bar-background {
+            width: 100%;
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #B29365 0%, #2E2E2E 100%);
+            width: 0;
+            transition: width 1s ease;
+            border-radius: 6px;
+        }
+
+        .success-msg {
+            background: #10b981;
+            color: white;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 32px 24px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .question-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .scale-options {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .scale-option label {
+                width: 40px;
+                height: 40px;
+                font-size: 16px;
+            }
+
+            .charts-container {
+                grid-template-columns: 1fr;
+            }
+
+            .progress-percent {
+                position: static;
+                margin-bottom: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<a href="../../usuarios.html" class="btn-back">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M15 18l-6-6 6-6"/>
+        </svg>
+        Volver a Usuarios
+    </a>
+
+    <style>
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            color: #2E2E2E !important;
+            border: 2px solid #2E2E2E;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-decoration: none;
+            font-weight: 700;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            backdrop-filter: blur(4px);
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: #2E2E2E;
+            color: white !important;
+            box-shadow: 0 6px 15px rgba(46, 46, 46, 0.2);
+        }
+
+        .btn-back svg {
+            transition: transform 0.3s ease;
+        }
+
+        .btn-back:hover svg {
+            transform: translateX(-3px);
+        }
+
+        /* Ocultar en móviles muy pequeños si molesta, o ajustar */
+        @media (max-width: 480px) {
+            .btn-back {
+                padding: 8px 14px;
+                font-size: 12px;
+            }
+        }
+        
+        @media print {
+            .btn-back { display: none !important; }
+        }
+    </style>
+
+    <div class="container">
+        <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+
+        <div id="registrationScreen">
+            <h1>Test de Eneagrama Profesional</h1>
+            <p class="subtitle">Descubre tu tipo de personalidad y potencia tu desarrollo profesional</p>
+
+            <div class="form-group">
+                <label for="userName">Nombre</label>
+                <input type="text" id="userName" placeholder="Ingresa tu nombre">
+            </div>
+
+            <div class="form-group">
+                <label for="userLastName">Apellido</label>
+                <input type="text" id="userLastName" placeholder="Ingresa tu apellido">
+            </div>
+
+            <div class="form-group">
+                <label for="userEmail">Correo Electrónico</label>
+                <input type="email" id="userEmail" placeholder="tucorreo@ejemplo.com">
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary" onclick="startTest()">Comenzar Test</button>
+            </div>
+        </div>
+
+        <div id="testScreen" class="hidden">
+            <div class="progress-percent" id="progressPercent">0%</div>
+
+            <div class="header">
+                <div class="page-info" id="pageInfo">Página 1 de 9</div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <div class="timer-container">
+                <div class="timer-label">Tiempo estimado de respuesta: 12 a 15 minutos</div>
+                <div class="timer-display" id="timerDisplay">00:00</div>
+                <div class="timer-overtime hidden" id="overtimeMsg">⏰ El tiempo continúa, sigue respondiendo</div>
+            </div>
+
+            <div class="questions-container" id="questionsContainer"></div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prevBtn" onclick="prevPage()">Anterior</button>
+                <button class="btn btn-primary" id="nextBtn" onclick="nextPage()">Siguiente</button>
+            </div>
+        </div>
+
+        <div id="resultScreen" class="result-screen hidden">
+            <h1>✅ Test Completado</h1>
+            <h2 style="text-align: center; margin-bottom: 8px;">¡Gracias!</h2>
+            <div id="successMsg" class="success-msg hidden">
+                ✓ Tus resultados han sido registrados exitosamente
+            </div>
+
+            <!-- Resultados detallados ocultos: se conservan para no alterar el cálculo ni el envío de datos -->
+            <div style="display: none;" aria-hidden="true">
+                <h1 id="resultType">Tu Eneatipo</h1>
+                <p class="result-description" id="resultDescription"></p>
+
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Distribución de Eneatipos</h3>
+                        <canvas id="radarChart"></canvas>
+                    </div>
+
+                    <div class="chart-card">
+                        <h3>Puntuaciones Detalladas</h3>
+                        <div class="distribution-bars" id="distributionBars"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navigation">
+                <button class="btn btn-primary" onclick="restartTest()">Realizar Nuevo Test</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function guard() {
+            const logged = localStorage.getItem('sessionLoggedIn') === '1';
+            if (!logged) {
+                // ajusta el path según tu estructura
+                window.location.href = '../../evaluaciones.html'; // o donde esté tu login/panel
+            }
+        })();
+        // ====================================================================
+        // IMPORTANTE: REEMPLAZA ESTA URL CON TU URL FINAL DEL SCRIPT DE GOOGLE
+        // ====================================================================
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzRisvUT6Pjutn2j9scxFPmgrbTeSJ7bhNKKNM60CunugD_oq3UeMQNFuTc5apNqI6j6A/exec';
+
+        // Variables del cronómetro
+        let timerStartTime = null;
+        let timerInterval = null;
+        let timerSeconds = 0;
+        const ESTIMATED_TIME_SECONDS = 15 * 60; // 15 minutos en segundos
+
+        const typeNames = {
+            1: 'Tipo 1: El Reformador',
+            2: 'Tipo 2: El Ayudador',
+            3: 'Tipo 3: El Triunfador',
+            4: 'Tipo 4: El Individualista',
+            5: 'Tipo 5: El Investigador',
+            6: 'Tipo 6: El Leal',
+            7: 'Tipo 7: El Entusiasta',
+            8: 'Tipo 8: El Desafiante',
+            9: 'Tipo 9: El Pacificador'
+        };
+
+        const descriptions = {
+            1: 'Perfeccionista, ético y organizado. Busca mejorar el mundo.',
+            2: 'Generoso, empático y servicial. Se enfoca en ayudar a otros.',
+            3: 'Ambicioso, adaptable y orientado al éxito. Busca logros.',
+            4: 'Creativo, auténtico y sensible. Valora la individualidad.',
+            5: 'Analítico, observador y reservado. Busca conocimiento.',
+            6: 'Leal, responsable y cauteloso. Valora la seguridad.',
+            7: 'Entusiasta, optimista y versátil. Busca nuevas experiencias.',
+            8: 'Fuerte, directo y protector. Busca el control.',
+            9: 'Pacífico, receptivo y mediador. Evita conflictos.'
+        };
+
+        // PREGUNTAS
+        const questions = [
+            {text: "¿Con qué frecuencia sientes la necesidad de corregir errores o mejorar las cosas a tu alrededor, incluso cuando nadie te lo ha pedido?", type: 1},
+            {text: "¿Tiendes a anticipar las necesidades de los demás antes de que te las expresen, sintiendo satisfacción al ayudarlos?", type: 2},
+            {text: "¿Cuán importante es para ti proyectar una imagen de éxito y logro en tu entorno profesional y social?", type: 3},
+            {text: "¿Sientes que hay algo único y diferente en ti que te distingue de las demás personas?", type: 4},
+            {text: "¿Prefieres observar y analizar las situaciones antes de participar activamente en ellas?", type: 5},
+            {text: "¿Te encuentras frecuentemente anticipando posibles problemas o escenarios negativos antes de tomar decisiones?", type: 6},
+            {text: "¿Sueles tener múltiples planes e ideas emocionantes, sintiendo inquietud cuando la rutina se vuelve monótona?", type: 7},
+            {text: "¿Te resulta natural tomar el control de las situaciones y defender tus puntos de vista con firmeza?", type: 8},
+            {text: "¿Prefieres mantener la armonía y evitar conflictos, incluso si eso significa postergar tus propias necesidades?", type: 9},
+            {text: "¿Te resulta difícil relajarte cuando sabes que hay tareas pendientes o cosas que podrían hacerse mejor?", type: 1},
+            {text: "¿Sientes incomodidad o frustración cuando tus esfuerzos por ayudar a otros no son reconocidos o valorados?", type: 2},
+            {text: "¿Adaptas tu comportamiento o presentación según el contexto para causar una mejor impresión?", type: 3},
+            {text: "¿Experimentas emociones intensas que parecen más profundas que las de quienes te rodean?", type: 4},
+            {text: "¿Necesitas tiempo a solas para recargar energías después de interacciones sociales prolongadas?", type: 5},
+            {text: "¿Buscas constantemente respaldo o confirmación antes de comprometerte con decisiones importantes?", type: 6},
+            {text: "¿Te cuesta permanecer enfocado en una sola actividad cuando surgen nuevas oportunidades interesantes?", type: 7},
+            {text: "¿Valoras la honestidad directa y te incomoda cuando las personas son evasivas o indecisas?", type: 8},
+            {text: "¿Te cuesta expresar tus opiniones cuando difieren de las del grupo o podrían generar tensión?", type: 9},
+            {text: "¿Tienes un crítico interno que constantemente evalúa si estás haciendo las cosas de manera correcta?", type: 1},
+            {text: "¿Te sientes más valorado cuando estás siendo útil o indispensable para alguien?", type: 2},
+            {text: "¿Mides tu autoestima en función de tus logros y el reconocimiento que recibes?", type: 3},
+            {text: "¿Sientes nostalgia por experiencias o conexiones que parecen más auténticas o significativas que tu realidad actual?", type: 4},
+            {text: "¿Prefieres acumular conocimiento y recursos antes de actuar, para sentirte preparado?", type: 5},
+            {text: "¿Cuestionas las intenciones de los demás hasta que demuestran ser confiables?", type: 6},
+            {text: "¿Evitas conscientemente situaciones o emociones que puedan resultar dolorosas o limitantes?", type: 7},
+            {text: "¿Sientes la necesidad de proteger a quienes percibes como vulnerables o en desventaja?", type: 8},
+            {text: "¿Postergas la toma de decisiones importantes o te distraes con tareas menos relevantes?", type: 9},
+            {text: "¿Sientes resentimiento cuando otros no cumplen con los mismos estándares de responsabilidad que tú mantienes?", type: 1},
+            {text: "¿Te resulta más fácil identificar las necesidades ajenas que reconocer las tuyas propias?", type: 2},
+            {text: "¿Te sientes incómodo con el fracaso al punto de evitar situaciones donde podrías no destacar?", type: 3},
+            {text: "¿Sientes que algo esencial falta en tu vida, incluso cuando las cosas van objetivamente bien?", type: 4},
+            {text: "¿Te resulta agotador cuando otros demandan demasiado de tu tiempo o energía emocional?", type: 5},
+            {text: "¿Alternas entre buscar autoridad y cuestionarla, dependiendo del contexto?", type: 6},
+            {text: "¿Mantienes múltiples opciones abiertas porque comprometerte con una sola te genera ansiedad?", type: 7},
+            {text: "¿Te resulta difícil mostrar vulnerabilidad, prefiriendo proyectar fortaleza en todo momento?", type: 8},
+            {text: "¿Adoptas las opiniones o preferencias de otros para mantener la paz, aunque no coincidan con las tuyas?", type: 9},
+            {text: "¿Experimentas frustración cuando las reglas o procedimientos no se siguen adecuadamente?", type: 1},
+            {text: "¿Sientes que das más en las relaciones de lo que recibes, pero te cuesta expresarlo directamente?", type: 2},
+            {text: "¿Te enfocas intensamente en tus metas, a veces descuidando tu bienestar emocional o relaciones personales?", type: 3},
+            {text: "¿Tiendes a idealizar lo que no tienes mientras desvalorizas lo que está presente en tu vida?", type: 4},
+            {text: "¿Prefieres comunicarte por escrito o con tiempo de preparación en lugar de conversaciones espontáneas?", type: 5},
+            {text: "¿Tiendes a planificar exhaustivamente para minimizar riesgos e imprevistos?", type: 6},
+            {text: "¿Reencuadras las experiencias negativas buscando el lado positivo rápidamente?", type: 7},
+            {text: "¿Prefieres el conflicto directo a la tensión no resuelta o la comunicación pasivo-agresiva?", type: 8},
+            {text: "¿Te fusionas con las agendas de otros, perdiendo contacto con tus propias prioridades y deseos?", type: 9},
+            {text: "¿Sientes que hay una forma correcta de hacer las cosas y te frustras cuando no se respeta?", type: 1},
+            {text: "¿Modificas tu comportamiento para ser querido o aceptado por las personas importantes en tu vida?", type: 2},
+            {text: "¿Te resulta difícil desconectar del trabajo o pausar tu búsqueda de objetivos para simplemente estar?", type: 3},
+            {text: "¿Sientes atracción por la belleza, el arte o experiencias que expresan profundidad emocional?", type: 4},
+            {text: "¿Estableces límites claros en tu vida para proteger tu espacio personal y privacidad?", type: 5},
+            {text: "¿Te cuesta confiar en tu propio juicio, buscando validación externa frecuentemente?", type: 6},
+            {text: "¿Prefieres mantener las conversaciones ligeras y optimistas, evitando temas pesados o dolorosos?", type: 7},
+            {text: "¿Tienes poca paciencia con la debilidad o la victimización, tanto en ti como en otros?", type: 8},
+            {text: "¿Encuentras difícil identificar qué es realmente importante para ti entre todas las demandas externas?", type: 9}
+        ];
+
+        let currentPage = 0;
+        const questionsPerPage = 6;
+        const totalPages = Math.ceil(questions.length / questionsPerPage);
+        let answers = {};
+        let userName = '';
+        let userLastName = '';
+        let userEmail = '';
+        let radarChart = null;
+
+        function startTest() {
+            userName = document.getElementById('userName').value.trim();
+            userLastName = document.getElementById('userLastName').value.trim();
+            userEmail = document.getElementById('userEmail').value.trim();
+
+            if (!userName || !userLastName || !userEmail) {
+                alert('Por favor, completa todos los campos');
+                return;
+            }
+
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(userEmail)) {
+                alert('Por favor, ingresa un correo electrónico válido');
+                return;
+            }
+
+            document.getElementById('registrationScreen').classList.add('hidden');
+            document.getElementById('testScreen').classList.remove('hidden');
+
+            startTimer();
+            showPage();
+        }
+
+        function startTimer() {
+            timerStartTime = Date.now();
+            timerSeconds = 0;
+            updateTimerDisplay();
+            
+            timerInterval = setInterval(() => {
+                timerSeconds = Math.floor((Date.now() - timerStartTime) / 1000);
+                updateTimerDisplay();
+                
+                // Mostrar mensaje cuando se pasan los 15 minutos
+                if (timerSeconds >= ESTIMATED_TIME_SECONDS) {
+                    document.getElementById('overtimeMsg').classList.remove('hidden');
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            const display = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = display;
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function getElapsedTime() {
+            const minutes = Math.floor(timerSeconds / 60);
+            const seconds = timerSeconds % 60;
+            return `${minutes}m ${seconds}s`;
+        }
+
+        function showPage() {
+            const startIdx = currentPage * questionsPerPage;
+            const endIdx = startIdx + questionsPerPage;
+            const pageQuestions = questions.slice(startIdx, endIdx);
+
+            let html = '';
+            pageQuestions.forEach((q, idx) => {
+                const questionIndex = startIdx + idx;
+                html += `
+                    <div class="question-card">
+                        <div class="question-text">${q.text}</div>
+                        <div class="scale-options">
+                            ${[1, 2, 3, 4, 5].map(value => `
+                                <div class="scale-option">
+                                    <input type="radio"
+                                           id="q${questionIndex}_${value}"
+                                           name="q${questionIndex}"
+                                           value="${value}"
+                                           ${answers[questionIndex] == value ? 'checked' : ''}
+                                           onchange="selectAnswer(${questionIndex}, ${value})">
+                                    <label for="q${questionIndex}_${value}">${value}</label>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            });
+
+            document.getElementById('questionsContainer').innerHTML = html;
+            updateUI();
+        }
+
+        function selectAnswer(questionIndex, value) {
+            answers[questionIndex] = value;
+            checkPageCompletion();
+        }
+
+        function checkPageCompletion() {
+            const startIdx = currentPage * questionsPerPage;
+            const endIdx = startIdx + questionsPerPage;
+            let allAnswered = true;
+
+            for (let i = startIdx; i < endIdx && i < questions.length; i++) {
+                if (!answers[i]) {
+                    allAnswered = false;
+                    break;
+                }
+            }
+
+            document.getElementById('nextBtn').disabled = !allAnswered;
+        }
+
+        function updateUI() {
+            document.getElementById('pageInfo').textContent = `Página ${currentPage + 1} de ${totalPages}`;
+
+            const totalAnswered = Object.keys(answers).length;
+            const progress = (totalAnswered / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressPercent').textContent = Math.round(progress) + '%';
+
+            document.getElementById('prevBtn').style.display = currentPage > 0 ? 'block' : 'none';
+
+            if (currentPage === totalPages - 1) {
+                document.getElementById('nextBtn').textContent = 'Ver Resultados';
+            } else {
+                document.getElementById('nextBtn').textContent = 'Siguiente';
+            }
+
+            checkPageCompletion();
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages - 1) {
+                currentPage++;
+                showPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                calculateResults();
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                currentPage--;
+                showPage();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function calculateResults() {
+            const scores = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0, 9: 0};
+
+            questions.forEach((q, index) => {
+                if (answers[index]) {
+                    scores[q.type] += parseInt(answers[index]);
+                }
+            });
+
+            let maxScore = 0;
+            let dominantType = 1;
+
+            for (let type in scores) {
+                if (scores[type] > maxScore) {
+                    maxScore = scores[type];
+                    dominantType = parseInt(type);
+                }
+            }
+
+            showResults(dominantType, scores);
+        }
+
+        function showResults(dominantType, scores) {
+            document.getElementById('testScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+
+            document.getElementById('resultType').textContent = typeNames[dominantType];
+            document.getElementById('resultDescription').textContent = descriptions[dominantType];
+
+            const maxPossible = 30;
+            const percentages = {};
+            for (let type in scores) {
+                percentages[type] = Math.round((scores[type] / maxPossible) * 100);
+            }
+
+            createRadarChart(percentages);
+            createDistributionBars(percentages);
+
+            // =========================================================
+            // LÓGICA MEJORADA PARA OBTENER EL EMAIL DEL ADMIN
+            // =========================================================
+            let emailParaEnviar = userEmail; // Respaldo: email del participante
+
+            const adminData = localStorage.getItem('adminData'); 
+            if (adminData) {
+                try {
+                    const admin = JSON.parse(adminData);
+                    if (admin && admin.email) {
+                        console.log("Admin encontrado:", admin.nombre || 'Sin nombre', "| Email:", admin.email);
+                        emailParaEnviar = admin.email; // USAMOS EMAIL DEL ADMIN
+                    } else {
+                        console.log("adminData existe pero no tiene email válido");
+                    }
+                } catch (e) {
+                    console.error("Error al parsear adminData:", e);
+                }
+            } else {
+                console.log("No hay admin logueado, se usará el email del participante.");
+            }
+            // Detener el cronómetro
+            stopTimer();
+            const elapsedTime = getElapsedTime();
+
+            // Obtener fecha y hora actual en formato argentino
+            const now = new Date();
+            const fechaHora = now.toLocaleString('es-AR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false
+            });
+
+            // CONSTRUCCIÓN DEL PAQUETE PARA GOOGLE SHEETS
+            // Modificar las respuestas para incluir el tiempo al inicio
+            const respuestasConTiempo = `{tiempo: ${elapsedTime} — ${JSON.stringify(answers).slice(1)}`;
+
+            const data = {
+                accion: 'guardar',
+                fecha: fechaHora,
+                nombre: userName,
+                apellido: userLastName,
+                correo: emailParaEnviar, // CAMBIADO: de 'email' a 'correo'
+                respuestas: respuestasConTiempo
+            };
+
+            console.log("Datos que se enviarán:", data);
+            sendToGoogleSheets(data);
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function sendToGoogleSheets(dataToSend) {
+            // Convertir objeto data a parámetros URL
+            const params = new URLSearchParams(dataToSend);
+            const fullUrl = `${GOOGLE_SCRIPT_URL}?${params.toString()}`;
+
+            console.log("URL completa a enviar:", fullUrl);
+
+            try {
+                // Usamos window.open para evitar problemas de CORS
+                const popup = window.open(fullUrl, '_blank', 'width=1,height=1,resizable=no,scrollbars=no');
+
+                if (popup) {
+                    setTimeout(() => { popup.close(); }, 1000);
+                    console.log('Datos enviados a Google Sheets exitosamente.');
+                    document.getElementById('successMsg').classList.remove('hidden');
+                } else {
+                    console.warn('No se pudo abrir la ventana emergente. Verifica los bloqueadores de pop-ups.');
+                }
+
+            } catch (error) {
+                console.error('Error al intentar enviar datos:', error);
+            }
+        }
+
+        function createRadarChart(percentages) {
+            if (radarChart) {
+                radarChart.destroy();
+            }
+
+            const ctx = document.getElementById('radarChart').getContext('2d');
+            radarChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: [
+                        'Tipo 1 Reformador', 'Tipo 2 Ayudador', 'Tipo 3 Triunfador',
+                        'Tipo 4 Individualista', 'Tipo 5 Investigador', 'Tipo 6 Leal',
+                        'Tipo 7 Entusiasta', 'Tipo 8 Desafiante', 'Tipo 9 Pacificador'
+                    ],
+                    datasets: [{
+                        data: Object.values(percentages),
+                        backgroundColor: 'rgba(46, 46, 46, 0.2)',
+                        borderColor: '#2E2E2E',
+                        borderWidth: 3,
+                        pointBackgroundColor: '#2E2E2E',
+                        pointBorderColor: '#fff',
+                        pointHoverBackgroundColor: '#fff',
+                        pointHoverBorderColor: '#2E2E2E',
+                        pointRadius: 5,
+                        pointHoverRadius: 7
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        r: {
+                            beginAtZero: true, max: 100, min: 0,
+                            ticks: { stepSize: 20, font: { size: 11 } },
+                            pointLabels: { font: { size: 12, weight: 'bold' }, color: '#2E2E2E' },
+                            grid: { color: '#e5e7eb' },
+                            angleLines: { color: '#e5e7eb' }
+                        }
+                    },
+                    plugins: { legend: { display: false } }
+                }
+            });
+        }
+
+        function createDistributionBars(percentages) {
+            let html = '';
+            for (let i = 1; i <= 9; i++) {
+                html += `
+                    <div class="bar-item">
+                        <div class="bar-header">
+                            <span class="bar-label">${typeNames[i]}</span>
+                            <span class="bar-percent">${percentages[i]}%</span>
+                        </div>
+                        <div class="bar-background">
+                            <div class="bar-fill" id="bar${i}"></div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            document.getElementById('distributionBars').innerHTML = html;
+
+            setTimeout(() => {
+                for (let i = 1; i <= 9; i++) {
+                    document.getElementById(`bar${i}`).style.width = percentages[i] + '%';
+                }
+            }, 100);
+        }
+
+        function restartTest() {
+            currentPage = 0;
+            answers = {};
+            userName = '';
+            userLastName = '';
+            userEmail = '';
+            
+            // Resetear cronómetro
+            stopTimer();
+            timerSeconds = 0;
+            timerStartTime = null;
+            document.getElementById('timerDisplay').textContent = '00:00';
+            document.getElementById('overtimeMsg').classList.add('hidden');
+            
+            if (radarChart) {
+                radarChart.destroy();
+                radarChart = null;
+            }
+            
+            document.getElementById('userName').value = '';
+            document.getElementById('userLastName').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('successMsg').classList.add('hidden');
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('registrationScreen').classList.remove('hidden');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
