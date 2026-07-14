@@ -436,16 +436,28 @@
         left: 16px;
       }
     }
+
+    /* Encabezado estándar unificado (logo a la derecha + nombre del test centrado) */
+    .std-header { position: relative; display: flex; align-items: center; justify-content: center; min-height: 84px; margin: 0 0 20px 0; text-align: center; }
+    .std-header .std-title { margin: 0; padding: 0 96px; font-size: 26px; font-weight: 700; color: #2E2E2E; line-height: 1.2; }
+    .std-header .std-logo { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 68px; width: auto; }
+    @media (max-width: 640px) {
+      .std-header { flex-direction: column; }
+      .std-header .std-logo { position: static; transform: none; margin: 0 auto 10px auto; height: 60px; }
+      .std-header .std-title { padding: 0; font-size: 22px; }
+    }
   </style>
 </head>
 
 <body>
   <div class="container">
-    <!-- <img src="../../img/logo-escencial.png" alt="Escencial Consultora" class="logo" /> -->
 
     <!-- REGISTRO -->
     <div id="registrationScreen">
-      <h1>Test de Orientación Vocacional</h1>
+      <div class="std-header">
+        <h1 class="std-title">Test de Orientación Vocacional</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
       <p class="subtitle">
         <strong>Método CHASIDE</strong><br>
         Este test te ayudará a identificar tus áreas de interés vocacional mediante el método CHASIDE,
@@ -472,6 +484,10 @@
 
     <!-- TEST -->
     <div id="testScreen" class="hidden">
+      <div class="std-header">
+        <h1 class="std-title">Test de Orientación Vocacional</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
       <div class="progress-text">
         <span id="pageIndicator">Sección 1</span>
         <span id="progressPercent">0%</span>
@@ -497,6 +513,10 @@
 
     <!-- CARGANDO -->
     <div id="loadingScreen" class="hidden">
+      <div class="std-header">
+        <h1 class="std-title">Test de Orientación Vocacional</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
       <div class="loading-container">
         <div class="spinner"></div>
         <div class="loading-text">Procesando tus respuestas...</div>
@@ -506,6 +526,10 @@
 
     <!-- CONFIRMACIÓN -->
     <div id="confirmationScreen" class="hidden">
+      <div class="std-header">
+        <h1 class="std-title">Test de Orientación Vocacional</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
       <div class="confirmation-screen">
         <div class="success-icon"></div>
         <div class="confirmation-title">¡Test Completado!</div>

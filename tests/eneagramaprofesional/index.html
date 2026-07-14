@@ -490,13 +490,25 @@
         @media print {
             .btn-back { display: none !important; }
         }
+
+        /* Encabezado estándar unificado (logo a la derecha + nombre del test centrado) */
+        .std-header { position: relative; display: flex; align-items: center; justify-content: center; min-height: 84px; margin: 0 0 20px 0; text-align: center; }
+        .std-header .std-title { margin: 0; padding: 0 96px; font-size: 26px; font-weight: 700; color: #2E2E2E; line-height: 1.2; }
+        .std-header .std-logo { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 68px; width: auto; }
+        @media (max-width: 640px) {
+            .std-header { flex-direction: column; }
+            .std-header .std-logo { position: static; transform: none; margin: 0 auto 10px auto; height: 60px; }
+            .std-header .std-title { padding: 0; font-size: 22px; }
+        }
     </style>
 
     <div class="container">
-        <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+        <div class="std-header">
+            <h1 class="std-title">Test de Eneagrama Profesional</h1>
+            <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+        </div>
 
         <div id="registrationScreen">
-            <h1>Test de Eneagrama Profesional</h1>
             <p class="subtitle">Descubre tu tipo de personalidad y potencia tu desarrollo profesional</p>
 
             <div class="form-group">

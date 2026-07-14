@@ -329,6 +329,16 @@
         font-size: 18px;
       }
     }
+
+        /* Encabezado estándar unificado (logo a la derecha + nombre del test centrado) */
+        .std-header { position: relative; display: flex; align-items: center; justify-content: center; min-height: 84px; margin: 0 0 20px 0; text-align: center; }
+        .std-header .std-title { margin: 0; padding: 0 96px; font-size: 26px; font-weight: 700; color: #2E2E2E; line-height: 1.2; }
+        .std-header .std-logo { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 68px; width: auto; }
+        @media (max-width: 640px) {
+            .std-header { flex-direction: column; }
+            .std-header .std-logo { position: static; transform: none; margin: 0 auto 10px auto; height: 60px; }
+            .std-header .std-title { padding: 0; font-size: 22px; }
+        }
   </style>
 </head>
 
@@ -397,10 +407,12 @@
 
     <!-- Sección de Registro -->
     <div id="registerSection">
-      <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+      <div class="std-header">
+        <h1 class="std-title">DNLA: Personal Insight</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
 
       <div class="main-header">
-        <h1>DNLA - Percepción Personal</h1>
         <p>Evaluación de Bienestar y Desarrollo Personal</p>
       </div>
 
@@ -429,7 +441,10 @@
 
     <!-- Sección de Cuestionario -->
     <div id="questionSection" class="hidden">
-      <img src="./img/escencial-logo.png" alt="Logo Escencial" class="logo">
+      <div class="std-header">
+        <h1 class="std-title">DNLA: Personal Insight</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
 
       <div class="progress-text">
         <span>Pregunta <span id="currentQuestion">1</span> de 24</span>
@@ -449,6 +464,10 @@
 
     <!-- Sección de Carga -->
     <div id="loadingSection" class="hidden">
+      <div class="std-header">
+        <h1 class="std-title">DNLA: Personal Insight</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
       <div class="loading">
         <div class="spinner"></div>
         <h2>Procesando tus respuestas...</h2>
@@ -458,7 +477,10 @@
 
     <!-- Sección de Confirmación -->
     <div id="successSection" class="hidden">
-      <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
+      <div class="std-header">
+        <h1 class="std-title">DNLA: Personal Insight</h1>
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      </div>
       <div class="success-message">
         <h2>✅ Test Completado</h2>
         <p style="margin-top: 8px; font-weight: 600;">¡Gracias!</p>
