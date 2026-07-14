@@ -50,6 +50,43 @@
       filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15));
     }
 
+    .test-header {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 70px;
+      margin-bottom: 12px;
+    }
+
+    .test-header h2 {
+      margin: 0;
+      padding: 0 90px;
+    }
+
+    .test-header .test-logo {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      margin: 0;
+      height: 64px;
+    }
+
+    @media (max-width: 640px) {
+      .test-header {
+        flex-direction: column;
+      }
+      .test-header .test-logo {
+        position: static;
+        transform: none;
+        margin: 0 auto 8px auto;
+      }
+      .test-header h2 {
+        padding: 0;
+      }
+    }
+
     h1 {
       color: #2E2E2E;
       font-size: 32px;
@@ -534,8 +571,10 @@
 
   <!-- Pantalla del Test -->
   <div id="testScreen" class="container hidden">
-    <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo">
-    <h2 id="participantName">📊 Participante</h2>
+    <div class="test-header">
+      <h2 id="participantName">📊 DNLA: Sales Profile</h2>
+      <img src="../../img/logo-escencial.png" alt="Logo Escencial" class="logo test-logo">
+    </div>
 
     <div class="progress-text">
       <span id="progressText">Pregunta 1 de 30</span>
@@ -685,8 +724,8 @@
 
       document.getElementById('registrationScreen').classList.add('hidden');
       document.getElementById('testScreen').classList.remove('hidden');
-      document.getElementById('participantName').textContent = '📊 ' + userName + ' ' + userLastName;
-      
+      document.getElementById('participantName').textContent = '📊 DNLA: Sales Profile';
+
       loadQuestion();
     }
 
