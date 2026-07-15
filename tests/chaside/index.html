@@ -438,9 +438,9 @@
     }
 
     /* Encabezado estándar unificado (logo a la derecha + nombre del test centrado) */
-    .std-header { position: relative; display: flex; align-items: center; justify-content: center; min-height: 84px; margin: 0 0 20px 0; text-align: center; }
+    .std-header { position: relative; display: flex; align-items: center; justify-content: center; min-height: 84px; margin: 0 0 20px 0; text-align: center; background: #E8DCC6; border-radius: 16px; padding: 16px 24px; }
     .std-header .std-title { margin: 0; padding: 0 118px; font-size: 24px; font-weight: 700; color: #2E2E2E; line-height: 1.25; }
-    .std-header .std-logo { position: absolute; right: 0; top: 50%; transform: translateY(-50%); height: 48px; max-width: 110px; width: auto; }
+    .std-header .std-logo { position: absolute; right: 24px; top: 50%; transform: translateY(-50%); height: 48px; max-width: 110px; width: auto; }
     @media (max-width: 640px) {
       .std-header { flex-direction: column; }
       .std-header .std-logo { position: static; transform: none; margin: 0 auto 10px auto; height: 60px; }
