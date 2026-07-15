@@ -65,6 +65,17 @@
     .contact-info strong { color: #2E2E2E; }
     .contact-info p { margin: 0; }
 
+    /* Encabezado de registro: logo con subtítulo profesional */
+    .std-header.reg-header { justify-content: space-between; gap: 18px; text-align: left; }
+    .std-header.reg-header .std-title { position: static; padding: 0; flex: 1; text-align: left; }
+    .reg-brand { flex-shrink: 0; text-align: center; max-width: 200px; }
+    .reg-brand .reg-logo { height: 58px; max-width: 150px; width: auto; display: block; margin: 0 auto 6px auto; }
+    .reg-brand .reg-brand-sub { margin: 0; font-size: 13px; line-height: 1.4; color: #6b5b45; font-weight: 600; }
+    @media (max-width: 640px) {
+      .std-header.reg-header { flex-direction: column; text-align: center; }
+      .std-header.reg-header .std-title { text-align: center; }
+    }
+
     h1 {
       color: #2E2E2E;
       font-size: 32px;
@@ -519,9 +530,12 @@
 
   <!-- Pantalla de Registro -->
   <div id="registrationScreen" class="container" style="max-width:650px;">
-    <div class="std-header">
+    <div class="std-header reg-header">
       <h1 class="std-title">DNLA: Sales Profile</h1>
-      <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="std-logo">
+      <div class="reg-brand">
+        <img src="../../img/logo-escencial.png" alt="Logo Heidy Rodríguez" class="reg-logo">
+        <p class="reg-brand-sub">Psicóloga Clínica<br>Especialista en Psicooncología<br>y Psicología Organizacional</p>
+      </div>
     </div>
     <p class="subtitle">Evaluación de Competencias de Ventas</p>
 
@@ -588,10 +602,10 @@
     </div>
 
     <div class="contact-info">
-      <p><strong>Heidy Rodríguez</strong><br>
+      <p><strong>HEIDY RODRÍGUEZ</strong><br>
       Psicóloga Clínica y Organizacional<br>
       E-mail: heidyrodriguezsuarez@gmail.com<br>
-      Cel: +59173653431 - +59178030393</p>
+      Cel: +591 73653431 - +591 78030393</p>
     </div>
   </div>
 
