@@ -350,6 +350,11 @@
     .reg-brand { flex-shrink: 0; text-align: center; max-width: 200px; }
     .reg-brand .reg-logo { height: 58px; max-width: 150px; width: auto; display: block; margin: 0 auto 6px auto; }
     .reg-brand .reg-brand-sub { margin: 0; font-size: 13px; line-height: 1.4; color: #6b5b45; font-weight: 600; }
+
+    /* Botones de acción unificados: beige plano #E8DCC6, sin degradé */
+    .btn, .btn-primary, .btn-secondary, .btn-success { background: #E8DCC6 !important; background-image: none !important; color: #2E2E2E !important; border: 1px solid #B29365 !important; box-shadow: none !important; text-shadow: none !important; }
+    .btn::before, .btn-primary::before { content: none !important; display: none !important; }
+    .btn:hover:not(:disabled), .btn-primary:hover:not(:disabled), .btn-secondary:hover:not(:disabled), .btn-success:hover:not(:disabled) { background: #DFCFB4 !important; box-shadow: 0 6px 16px rgba(178,147,101,0.25) !important; }
     @media (max-width: 640px) {
       .std-header.reg-header { flex-direction: column; text-align: center; }
       .std-header.reg-header .std-title { text-align: center; }
