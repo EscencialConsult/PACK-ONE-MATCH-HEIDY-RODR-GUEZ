@@ -947,9 +947,9 @@
 
                     <!-- NUEVO: toolbar con buscador -->
                     <div class="toolbar">
-                        <div class="search-wrap" title="Buscar por usuario, puesto o test">
+                        <div class="search-wrap" title="Buscar por usuario o test">
                             <div class="search-icon">🔎</div>
-                            <input id="user-search" type="text" placeholder="Buscar por usuario, puesto o test..."
+                            <input id="user-search" type="text" placeholder="Buscar por usuario o test..."
                                 autocomplete="off" />
                         </div>
                         <button class="btn btn-ghost btn-clear" id="clear-search"><span>Limpiar</span></button>
@@ -961,7 +961,6 @@
                                 <tr>
                                     <th class="col-username">Usuario</th>
                                     <th class="col-password">Contraseña</th>
-                                    <th class="col-puesto">Puesto</th>
                                     <th class="col-tests">Tests Habilitados</th>
                                     <th class="col-actions">Acciones</th>
                                 </tr>
@@ -997,19 +996,6 @@
                             <label for="userPassword">Contraseña</label>
                             <input id="userPassword" name="userPassword" type="password" placeholder="********"
                                 required />
-                        </div>
-
-                        <div class="field-group">
-                            <label for="userPuesto">Puesto</label>
-                            <select id="userPuesto" name="userPuesto" required>
-                                <option value="" disabled selected>Seleccione un puesto</option>
-                                <option value="Ejecutivo/a Comercial">Ejecutivo/a Comercial</option>
-                                <option value="Analista Administrativo / Back Office">Analista Administrativo / Back
-                                    Office</option>
-                                <option value="Supervisor/a o Mando Medio">Supervisor/a o Mando Medio</option>
-                                <option value="Representante de Atención al Cliente">Representante de Atención al
-                                    Cliente / Call Center</option>
-                            </select>
                         </div>
 
                         <div class="checkbox-group">
@@ -1171,7 +1157,6 @@
         const userForm = document.getElementById('user-form');
         const userNameInput = document.getElementById('userName');
         const userPasswordInput = document.getElementById('userPassword');
-        const userPuestoSelect = document.getElementById('userPuesto');
         const submitButton = document.getElementById('submit-button');
         const formError = document.getElementById('form-error');
         const formStatus = document.getElementById('form-status');
@@ -1248,14 +1233,12 @@ let currentPage = 1;
             if (!qq) return true;
 
             const uname = normalize(user.userName);
-            const puesto = normalize(user.puesto);
             const tests = (user.tests || []).map(t => normalize(t)).join(' ');
             // permite buscar "test 3" o "3"
             const testsLabel = (user.tests || []).map(t => `test ${normalize(t)}`).join(' ');
 
             return (
                 uname.includes(qq) ||
-                puesto.includes(qq) ||
                 tests.includes(qq) ||
                 testsLabel.includes(qq)
             );
@@ -1273,7 +1256,7 @@ function applySearch() {
             editingUsername = user.userName;
 
             formTitle.textContent = 'Editar usuario';
-            formSubtitle.textContent = 'Modifica contraseña, puesto y tests. El usuario (username) no se puede cambiar.';
+            formSubtitle.textContent = 'Modifica contraseña y tests. El usuario (username) no se puede cambiar.';
             editIndicator.classList.remove('hidden');
             editActions.classList.remove('hidden');
             editUsernameSpan.textContent = user.userName;
@@ -1283,7 +1266,6 @@ function applySearch() {
 
             userPasswordInput.value = user.userPassword || '';
             userPasswordInput.type = 'text';
-            userPuestoSelect.value = user.puesto && user.puesto !== '-' ? user.puesto : '';
 
             setSelectedTests(user.tests || []);
 
@@ -1371,7 +1353,6 @@ function renderUsers(list) {
   ${EYE_ICON}
 </button>
   </td>
-  <td style="color: rgba(0, 0, 0, .78); font-size: 0.9rem;">${escapeHtml(user.puesto || '-')}</td>
   <td class="col-tests">${testsDisplay}</td>
   <td class="col-actions">
     <button class="btn btn-small btn-edit" data-action="edit" data-username="${escapeHtml(user.userName)}">
@@ -1556,7 +1537,6 @@ function renderUsers(list) {
                 accion: 'guardar',
                 username: userData.username,
                 password: userData.password,
-                puesto: userData.puesto,
                 tests: Array.isArray(userData.tests) ? userData.tests.join(',') : ''
             });
 
@@ -1584,7 +1564,6 @@ function renderUsers(list) {
                 accion: 'actualizar',
                 username: updateData.username,
                 password: updateData.password,
-                puesto: updateData.puesto,
                 tests: Array.isArray(updateData.tests) ? updateData.tests.join(',') : updateData.tests
             };
             Object.keys(payload).forEach(k => payload[k] === undefined && delete payload[k]);
@@ -1612,7 +1591,6 @@ function renderUsers(list) {
                 accion: 'guardar',
                 username: userData.username,
                 password: userData.password,
-                puesto: userData.puesto,
                 pack: userData.pack,
                 admin: userData.admin,
                 tests: Array.isArray(userData.tests) ? userData.tests.join(',') : ''
@@ -1677,11 +1655,10 @@ function renderUsers(list) {
 
             const userNameValue = userNameInput.value.trim();
             const userPasswordValue = userPasswordInput.value.trim();
-            const userPuestoValue = userPuestoSelect.value.trim();
             const selectedTests = getSelectedTests();
 
-            if (!userNameValue || !userPuestoValue) {
-                formError.textContent = 'Por favor completa Usuario y Puesto.';
+            if (!userNameValue) {
+                formError.textContent = 'Por favor completa Usuario.';
                 return;
             }
             if (selectedTests.length === 0) {
@@ -1693,7 +1670,6 @@ function renderUsers(list) {
             if (isEditMode) {
                 const updatePayload = {
                     username: editingUsername,
-                    puesto: userPuestoValue,
                     tests: selectedTests
                 };
                 if (userPasswordValue) updatePayload.password = userPasswordValue;
@@ -1737,7 +1713,6 @@ function renderUsers(list) {
             const newUser = {
                 username: userNameValue,
                 password: userPasswordValue,
-                puesto: userPuestoValue,
                 tests: selectedTests
             };
 
