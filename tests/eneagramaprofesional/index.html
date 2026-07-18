@@ -172,6 +172,10 @@
 
         .scale-option {
             position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
         }
 
         .scale-option input[type="radio"] {
@@ -192,6 +196,20 @@
             font-size: 18px;
             font-weight: 600;
             color: #64748b;
+        }
+
+        .scale-caption {
+            font-size: 10px;
+            line-height: 1.2;
+            color: #64748b;
+            text-align: center;
+            width: 54px;
+            font-weight: 500;
+        }
+
+        .scale-option input[type="radio"]:checked ~ .scale-caption {
+            color: #6b7c52;
+            font-weight: 700;
         }
 
         .scale-option input[type="radio"]:checked + label {
@@ -418,6 +436,11 @@
                 width: 40px;
                 height: 40px;
                 font-size: 16px;
+            }
+
+            .scale-caption {
+                width: 46px;
+                font-size: 9px;
             }
 
             .charts-container {
@@ -659,6 +682,9 @@
             9: 'Pacífico, receptivo y mediador. Evita conflictos.'
         };
 
+        // Etiquetas de la escala 1 a 5 (frecuencia)
+        const scaleLabels = ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'];
+
         // PREGUNTAS
         const questions = [
             {text: "¿Con qué frecuencia sientes la necesidad de corregir errores o mejorar las cosas a tu alrededor, incluso cuando nadie te lo ha pedido?", type: 1},
@@ -806,6 +832,7 @@
                                            ${answers[questionIndex] == value ? 'checked' : ''}
                                            onchange="selectAnswer(${questionIndex}, ${value})">
                                     <label for="q${questionIndex}_${value}">${value}</label>
+                                    <span class="scale-caption">${scaleLabels[value - 1]}</span>
                                 </div>
                             `).join('')}
                         </div>
