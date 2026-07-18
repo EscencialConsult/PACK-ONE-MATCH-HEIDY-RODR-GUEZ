@@ -203,8 +203,10 @@
             line-height: 1.2;
             color: #64748b;
             text-align: center;
-            width: 54px;
+            width: 48px;
             font-weight: 500;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .scale-option input[type="radio"]:checked ~ .scale-caption {
@@ -439,7 +441,7 @@
             }
 
             .scale-caption {
-                width: 46px;
+                width: 40px;
                 font-size: 9px;
             }
 
@@ -683,7 +685,7 @@
         };
 
         // Etiquetas de la escala 1 a 5 (frecuencia)
-        const scaleLabels = ['Nunca', 'Rara vez', 'A veces', 'Frecuentemente', 'Siempre'];
+        const scaleLabels = ['Nunca', 'Rara vez', 'A veces', 'A menudo', 'Siempre'];
 
         // PREGUNTAS
         const questions = [
